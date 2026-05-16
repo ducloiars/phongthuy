@@ -136,6 +136,48 @@
         </main>
     </div>
 
+    <!-- Order Detail Modal -->
+    <div id="orderDetailModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="text-xl font-bold text-indigo-900">Chi tiết đơn hàng</h3>
+                <button onclick="closeOrderDetailModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="p-8 space-y-6">
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Thông tin khách hàng</h4>
+                        <p id="detCustomerName" class="text-lg font-semibold text-gray-800"></p>
+                        <p id="detCustomerPhone" class="text-gray-600"></p>
+                        <p id="detCustomerAddress" class="text-gray-600 mt-2 italic"></p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Thông tin đơn hàng</h4>
+                        <p id="detOrderId" class="text-sm font-mono text-gray-500"></p>
+                        <p id="detProductName" class="font-medium text-gray-800"></p>
+                        <p id="detAmount" class="text-xl font-bold text-indigo-600"></p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Ghi chú</h4>
+                    <p id="detGhiChu" class="text-gray-600 bg-gray-50 p-3 rounded-lg min-h-[60px]"></p>
+                </div>
+                <div class="pt-6 border-t border-gray-100 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <label class="font-semibold text-gray-700">Trạng thái:</label>
+                        <select id="detStatusSelect" class="p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none font-medium">
+                            <option value="pending">PENDING</option>
+                            <option value="success">SUCCESS</option>
+                            <option value="cancelled">CANCELLED</option>
+                        </select>
+                    </div>
+                    <button id="saveStatusBtn" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 shadow-lg transition">
+                        LƯU TRẠNG THÁI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Product Modal -->
     <div id="productModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
@@ -286,7 +328,7 @@
         async function fetchOrders() {
             const { data, error } = await db
                 .from('orders')
-                .select('*, customers(name), products(name)')
+                .select('*, customers(name, phone), products(name)')
                 .order('purchase_date', { ascending: false });
             
             if (error) return alert(error.message);
@@ -296,19 +338,76 @@
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-6 py-4 font-mono text-xs text-gray-400">${o.id.substring(0,8)}...</td>
                     <td class="px-6 py-4">
-                        <div class="font-medium">${o.customers?.name || 'Ẩn danh'}</div>
+                        <div class="font-medium text-gray-900">${o.customers?.name || 'Ẩn danh'}</div>
                         <div class="text-xs text-gray-500">${o.products?.name || 'Sản phẩm đã xóa'}</div>
                     </td>
                     <td class="px-6 py-4 font-bold text-indigo-600">${Number(o.amount).toLocaleString()}đ</td>
                     <td class="px-6 py-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${o.status === 'success' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${
+                            o.status === 'success' ? 'bg-green-100 text-green-700' : 
+                            o.status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                        }">
                             ${o.status.toUpperCase()}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-gray-500 text-sm">${new Date(o.purchase_date).toLocaleDateString('vi-VN')}</td>
+                    <td class="px-6 py-4 text-gray-500 text-sm whitespace-nowrap">${new Date(o.purchase_date).toLocaleDateString('vi-VN')}</td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="viewOrderDetail('${o.id}')" class="text-indigo-600 hover:text-indigo-900 font-semibold text-sm underline">Chi tiết</button>
+                    </td>
                 </tr>
             `).join('');
         }
+
+        // Order Detail Modal Logic
+        let currentOrderId = null;
+
+        async function viewOrderDetail(id) {
+            currentOrderId = id;
+            const { data, error } = await db
+                .from('orders')
+                .select('*, customers(*), products(*)')
+                .eq('id', id)
+                .single();
+            
+            if (error) return alert(error.message);
+
+            document.getElementById('detCustomerName').innerText = data.customers?.name || 'Ẩn danh';
+            document.getElementById('detCustomerPhone').innerText = data.customers?.phone || 'Không có SĐT';
+            document.getElementById('detCustomerAddress').innerText = data.address || 'Không có địa chỉ';
+            document.getElementById('detOrderId').innerText = 'ID: ' + data.id;
+            document.getElementById('detProductName').innerText = data.products?.name || 'Sản phẩm đã xóa';
+            document.getElementById('detAmount').innerText = Number(data.amount).toLocaleString() + 'đ';
+            document.getElementById('detGhiChu').innerText = data.ghi_chu || 'Không có ghi chú';
+            document.getElementById('detStatusSelect').value = data.status;
+
+            document.getElementById('orderDetailModal').classList.remove('hidden');
+        }
+
+        function closeOrderDetailModal() {
+            document.getElementById('orderDetailModal').classList.add('hidden');
+        }
+
+        document.getElementById('saveStatusBtn').onclick = async function() {
+            const newStatus = document.getElementById('detStatusSelect').value;
+            const btn = this;
+            btn.innerText = 'ĐANG LƯU...';
+            btn.disabled = true;
+
+            const { error } = await db
+                .from('orders')
+                .update({ status: newStatus })
+                .eq('id', currentOrderId);
+
+            if (error) {
+                alert(error.message);
+            } else {
+                alert('Cập nhật trạng thái thành công!');
+                closeOrderDetailModal();
+                fetchOrders();
+            }
+            btn.innerText = 'LƯU TRẠNG THÁI';
+            btn.disabled = false;
+        };
 
         // Product CRUD
         function openProductModal(id = null) {

@@ -24,7 +24,9 @@ CREATE TABLE IF NOT EXISTS orders (
     customer_id UUID REFERENCES customers(id) ON DELETE CASCADE,
     product_id UUID REFERENCES products(id) ON DELETE SET NULL,
     amount NUMERIC(10, 2) NOT NULL,
-    status TEXT CHECK (status IN ('pending', 'success')) DEFAULT 'pending',
+    address TEXT,
+    ghi_chu TEXT,
+    status TEXT CHECK (status IN ('pending', 'success', 'cancelled')) DEFAULT 'pending',
     purchase_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

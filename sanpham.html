@@ -82,9 +82,10 @@
                     <input type="hidden" name="Sản Phẩm" id="hiddenProductName">
                     <input type="hidden" name="Mã Đơn Hàng" id="hiddenOrderId">
                     <input type="hidden" name="Giá tiền" id="hiddenProductPrice">
-                    <input type="text" name="Họ Tên" placeholder="Họ tên của bạn" required>
-                    <input type="tel" name="SĐT" placeholder="Số điện thoại / Zalo" required>
-                    <input type="text" name="Địa Chỉ" placeholder="Địa chỉ giao hàng chi tiết" required>
+                    <input type="text" id="orderName" name="Họ Tên" placeholder="Họ tên của bạn" required>
+                    <input type="tel" id="orderPhone" name="SĐT" placeholder="Số điện thoại / Zalo" required>
+                    <input type="text" id="address" name="Địa Chỉ" placeholder="Địa chỉ giao hàng chi tiết" required>
+                    <textarea id="ghi_chu" name="Ghi Chú" placeholder="Ghi chú thêm (Ví dụ: Giao giờ hành chính...)" rows="2" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
                     
                     <button type="submit" class="cta-button primary-cta form-btn" id="submitFormBtn">
                         TIẾP TỤC THANH TOÁN
@@ -218,11 +219,14 @@
             btn.innerHTML = 'ĐANG XỬ LÝ...';
             btn.disabled = true;
 
-            const formData = new FormData(this);
-            const customerData = {
-                name: formData.get('Họ Tên'),
-                phone: formData.get('SĐT')
-            };
+            const name = document.getElementById('orderName').value;
+            const phone = document.getElementById('orderPhone').value;
+            const address = document.getElementById('address').value;
+            const ghiChu = document.getElementById('ghi_chu').value;
+            const amount = document.getElementById('hiddenProductPrice').value;
+            const productId = document.getElementById('hiddenProductId').value;
+
+            const customerData = { name, phone };
 
             try {
                 // 1. Tìm hoặc tạo khách hàng (Dựa trên số điện thoại)
@@ -230,7 +234,7 @@
                 const { data: existingCustomer, error: findError } = await db
                     .from('customers')
                     .select('id')
-                    .eq('phone', customerData.phone)
+                    .eq('phone', phone)
                     .single();
 
                 if (existingCustomer) {
@@ -248,8 +252,10 @@
                 // 2. Tạo đơn hàng
                 const orderData = {
                     customer_id: customerId,
-                    product_id: document.getElementById('hiddenProductId').value,
-                    amount: formData.get('Giá tiền'),
+                    product_id: productId,
+                    amount: amount,
+                    address: address,
+                    ghi_chu: ghiChu,
                     status: 'pending'
                 };
 
