@@ -1,0 +1,9 @@
+{
+  "name": "phongthuy-ntpt",
+  "version": "1.0.0",
+  "description": "CRM System for NTPT Website",
+  "main": "index.html",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.2"
+  }
+}
