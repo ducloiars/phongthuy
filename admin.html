@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | CRM System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Password Protection Overlay -->
+    <div id="authOverlay" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <div class="mb-6">
+                <i class="fas fa-lock text-4xl text-indigo-600 mb-4"></i>
+                <h2 class="text-2xl font-bold">Admin Login</h2>
+                <p class="text-gray-500">Vui lòng nhập mật khẩu để tiếp tục</p>
+            </div>
+            <input type="password" id="adminPassword" class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Mật khẩu">
+            <button onclick="checkPassword()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">Đăng nhập</button>
+            <p id="errorMsg" class="text-red-500 mt-4 hidden">Mật khẩu không chính xác!</p>
+        </div>
+    </div>
+
+    <!-- Main App Layout -->
+    <div id="adminApp" class="hidden min-h-screen flex">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-900 text-white flex-shrink-0">
+            <div class="p-6 text-2xl font-bold border-b border-indigo-800">CRM ADMIN</div>
+            <nav class="mt-6">
+                <button onclick="switchTab('products')" class="tab-btn w-full flex items-center gap-3 px-6 py-4 hover:bg-indigo-800 transition active bg-indigo-800" data-tab="products">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </button>
+                <button onclick="switchTab('customers')" class="tab-btn w-full flex items-center gap-3 px-6 py-4 hover:bg-indigo-800 transition" data-tab="customers">
+                    <i class="fas fa-users"></i> Khách hàng
+                </button>
+                <button onclick="switchTab('orders')" class="tab-btn w-full flex items-center gap-3 px-6 py-4 hover:bg-indigo-800 transition" data-tab="orders">
+                    <i class="fas fa-shopping-cart"></i> Đơn hàng
+                </button>
+            </nav>
+            <div class="absolute bottom-0 w-64 p-6 border-t border-indigo-800">
+                <button onclick="logout()" class="flex items-center gap-3 text-indigo-300 hover:text-white transition">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-10 overflow-y-auto">
+            <header class="flex justify-between items-center mb-10">
+                <h1 id="tabTitle" class="text-3xl font-bold text-gray-800">Quản lý Sản phẩm</h1>
+                <div id="headerActions">
+                    <button onclick="openProductModal()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-lg flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Thêm mới
+                    </button>
+                </div>
+            </header>
+
+            <!-- Loader -->
+            <div id="loader" class="hidden flex justify-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+
+            <!-- Tab: Products -->
+            <section id="tab-products" class="tab-content active">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Tên sản phẩm</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Giá</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Số lượng</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600 text-right">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsList" class="divide-y divide-gray-100">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab: Customers -->
+            <section id="tab-customers" class="tab-content">
+                <div class="mb-6">
+                    <div class="relative max-w-md">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="customerSearch" oninput="fetchCustomers()" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm" placeholder="Tìm theo tên hoặc SĐT...">
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Khách hàng</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Số điện thoại</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Email</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Ngày đăng ký</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersList" class="divide-y divide-gray-100">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tab: Orders -->
+            <section id="tab-orders" class="tab-content">
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <table class="w-full text-left">
+                        <thead class="bg-gray-50 border-b border-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Mã ĐH</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Khách hàng</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Tổng tiền</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Trạng thái</th>
+                                <th class="px-6 py-4 font-semibold text-gray-600">Ngày mua</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersList" class="divide-y divide-gray-100">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 id="modalTitle" class="text-xl font-bold">Thêm Sản Phẩm</h3>
+                <button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="productForm" class="p-6 space-y-4">
+                <input type="hidden" id="productId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tên sản phẩm</label>
+                    <input type="text" id="pName" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Giá (VNĐ)</label>
+                        <input type="number" id="pPrice" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Số lượng</label>
+                        <input type="number" id="pQuantity" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Mô tả</label>
+                    <textarea id="pDesc" rows="3" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="closeProductModal()" class="flex-1 px-6 py-3 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition">Hủy</button>
+                    <button type="submit" class="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 shadow-md transition">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Supabase Initialization
+        const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeXZtcGh0Y3dwbXhtendxaHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDE2OTgsImV4cCI6MjA5NDQ3NzY5OH0.pB2XLzlTjpIit0IJJeDim3wMvy1bYvIWcl5raC2CQeI';
+        
+        // Use window.supabase to avoid collision with the const we are defining
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Map it back to supabase for convenience if needed, but let's just use supabaseClient
+        const db = supabaseClient; 
+
+        let currentTab = 'products';
+
+        // Auth Logic
+        function checkPassword() {
+            const pass = document.getElementById('adminPassword').value;
+            if (pass === 'admin123') { // Simple password as requested
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.getElementById('adminApp').classList.remove('hidden');
+                init();
+            } else {
+                document.getElementById('errorMsg').classList.remove('hidden');
+            }
+        }
+
+        // Add Enter key listener
+        document.getElementById('adminPassword').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function logout() {
+            location.reload();
+        }
+
+        // Navigation
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-800');
+                if (btn.dataset.tab === tab) btn.classList.add('bg-indigo-800');
+            });
+
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `tab-${tab}`) content.classList.add('active');
+            });
+
+            const titles = { products: 'Quản lý Sản phẩm', customers: 'Danh sách Khách hàng', orders: 'Quản lý Đơn hàng' };
+            document.getElementById('tabTitle').innerText = titles[tab];
+            
+            // Toggle "Add New" button visibility
+            document.getElementById('headerActions').style.display = (tab === 'products') ? 'block' : 'none';
+
+            fetchData();
+        }
+
+        // Data Fetching
+        async function fetchData() {
+            document.getElementById('loader').classList.remove('hidden');
+            if (currentTab === 'products') await fetchProducts();
+            else if (currentTab === 'customers') await fetchCustomers();
+            else if (currentTab === 'orders') await fetchOrders();
+            document.getElementById('loader').classList.add('hidden');
+        }
+
+        async function fetchProducts() {
+            const { data, error } = await db.from('products').select('*').order('created_at', { ascending: false });
+            if (error) return alert(error.message);
+            
+            const list = document.getElementById('productsList');
+            list.innerHTML = data.map(p => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 font-medium">${p.name}</td>
+                    <td class="px-6 py-4 text-gray-600">${Number(p.price).toLocaleString()}đ</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${p.quantity < 5 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}">
+                            ${p.quantity} sản phẩm
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <button onclick="editProduct('${p.id}')" class="text-indigo-600 hover:text-indigo-800 p-2"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteProduct('${p.id}')" class="text-red-500 hover:text-red-700 p-2"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function fetchCustomers() {
+            const search = document.getElementById('customerSearch').value;
+            let query = db.from('customers').select('*').order('registration_date', { ascending: false });
+            
+            if (search) {
+                query = query.or(`name.ilike.%${search}%,phone.ilike.%${search}%`);
+            }
+
+            const { data, error } = await query;
+            if (error) return alert(error.message);
+
+            const list = document.getElementById('customersList');
+            list.innerHTML = data.map(c => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4">
+                        <div class="font-medium">${c.name}</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">${c.phone || '-'}</td>
+                    <td class="px-6 py-4 text-gray-600">${c.email || '-'}</td>
+                    <td class="px-6 py-4 text-gray-500 text-sm">${new Date(c.registration_date).toLocaleDateString('vi-VN')}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function fetchOrders() {
+            const { data, error } = await db
+                .from('orders')
+                .select('*, customers(name), products(name)')
+                .order('purchase_date', { ascending: false });
+            
+            if (error) return alert(error.message);
+
+            const list = document.getElementById('ordersList');
+            list.innerHTML = data.map(o => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 font-mono text-xs text-gray-400">${o.id.substring(0,8)}...</td>
+                    <td class="px-6 py-4">
+                        <div class="font-medium">${o.customers?.name || 'Ẩn danh'}</div>
+                        <div class="text-xs text-gray-500">${o.products?.name || 'Sản phẩm đã xóa'}</div>
+                    </td>
+                    <td class="px-6 py-4 font-bold text-indigo-600">${Number(o.amount).toLocaleString()}đ</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold ${o.status === 'success' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                            ${o.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-gray-500 text-sm">${new Date(o.purchase_date).toLocaleDateString('vi-VN')}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Product CRUD
+        function openProductModal(id = null) {
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('modalTitle').innerText = 'Thêm Sản Phẩm';
+            
+            if (id) {
+                // Fetch product details for edit
+                // For simplicity, we can pass data or fetch again
+            }
+        }
+
+        async function editProduct(id) {
+            const { data, error } = await db.from('products').select('*').eq('id', id).single();
+            if (error) return alert(error.message);
+
+            openProductModal();
+            document.getElementById('productId').value = data.id;
+            document.getElementById('pName').value = data.name;
+            document.getElementById('pPrice').value = data.price;
+            document.getElementById('pQuantity').value = data.quantity;
+            document.getElementById('pDesc').value = data.description;
+            document.getElementById('modalTitle').innerText = 'Sửa Sản Phẩm';
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Bạn có chắc muốn xóa sản phẩm này?')) return;
+            const { error } = await db.from('products').delete().eq('id', id);
+            if (error) alert(error.message);
+            else fetchProducts();
+        }
+
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('productId').value;
+            const product = {
+                name: document.getElementById('pName').value,
+                price: document.getElementById('pPrice').value,
+                quantity: document.getElementById('pQuantity').value,
+                description: document.getElementById('pDesc').value
+            };
+
+            let result;
+            if (id) {
+                result = await db.from('products').update(product).eq('id', id);
+            } else {
+                result = await db.from('products').insert([product]);
+            }
+
+            if (result.error) alert(result.error.message);
+            else {
+                closeProductModal();
+                fetchProducts();
+            }
+        });
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        // Initialization
+        function init() {
+            fetchData();
+        }
+    </script>
+</body>
+</html>

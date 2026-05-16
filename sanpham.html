@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vật Phẩm Phong Thủy - Nghệ Thuật Phong Thủy</title>
+    
+    <meta name="description" content="Danh sách các vật phẩm phong thủy chuẩn Bát Trạch giúp trấn trạch, chiêu tài và hóa giải sát khí cho ngôi nhà của bạn.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <nav style="background: var(--dark-bg); padding: 15px 0; border-bottom: 1px solid var(--gold); position: sticky; top: 0; z-index: 100;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" style="color: var(--gold); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: bold;">
+                NGHỆ THUẬT PHONG THỦY
+            </a>
+            <div class="nav-links" style="display: flex; gap: 25px;">
+                <a href="index.html" style="color: var(--white); text-decoration: none; font-weight: 500;">Trang Chủ</a>
+                <a href="sanpham.html" style="color: var(--gold); text-decoration: none; font-weight: bold;">Vật Phẩm</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PRODUCT HERO -->
+    <header class="product-hero">
+        <div class="container">
+            <h1>Vật Phẩm Phong Thủy</h1>
+            <p>Tuyển chọn những linh vật và pháp khí chuẩn phong thủy Bát Trạch</p>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container section-spacing">
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Tất Cả</button>
+            <button class="filter-btn" data-filter="linh-vat">Linh Vật</button>
+            <button class="filter-btn" data-filter="guong-bat-quai">Gương Bát Quái</button>
+            <button class="filter-btn" data-filter="phap-khi">Pháp Khí</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="loader" style="text-align: center; padding: 50px; display: none;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--gold);"></i>
+            <p style="margin-top: 10px;">Đang tải danh sách vật phẩm...</p>
+        </div>
+        <div class="product-grid" id="productGrid">
+            <!-- Sản phẩm sẽ được tải động từ Google Sheet vào đây -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background: var(--dark-bg); color: #888; text-align: center; padding: 40px 20px;">
+        <div class="container">
+            <p>&copy; 2026 Nghệ Thuật Phong Thủy. Mọi quyền được bảo lưu.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">Website được thiết kế bởi Antigravity AI</p>
+        </div>
+    </footer>
+
+    <!-- ORDER MODAL -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeOrderModal"><i class="fas fa-times"></i></span>
+            <h3 style="color: var(--primary-red); margin-bottom: 20px; text-align: center; font-family: 'Playfair Display', serif;">Thanh Toán Đơn Hàng</h3>
+            
+            <div class="modal-product-info">
+                <img src="" alt="" id="modalProductImg" class="modal-product-img">
+                <div class="modal-product-details">
+                    <h4 id="modalProductName">Tên sản phẩm</h4>
+                    <p id="modalProductPrice">0đ</p>
+                </div>
+            </div>
+
+            <!-- STEP 1: REGISTRATION FORM -->
+            <div id="formStep">
+                <form id="productOrderForm">
+                    <input type="hidden" name="Sản Phẩm" id="hiddenProductName">
+                    <input type="hidden" name="Mã Đơn Hàng" id="hiddenOrderId">
+                    <input type="hidden" name="Giá tiền" id="hiddenProductPrice">
+                    <input type="text" name="Họ Tên" placeholder="Họ tên của bạn" required>
+                    <input type="tel" name="SĐT" placeholder="Số điện thoại / Zalo" required>
+                    <input type="text" name="Địa Chỉ" placeholder="Địa chỉ giao hàng chi tiết" required>
+                    
+                    <button type="submit" class="cta-button primary-cta form-btn" id="submitFormBtn">
+                        TIẾP TỤC THANH TOÁN
+                    </button>
+                    <p style="text-align: center; font-size: 0.85rem; color: #666; margin-top: 15px;">
+                        <i class="fas fa-shield-alt"></i> Thông tin của bạn được bảo mật tuyệt đối.
+                    </p>
+                </form>
+            </div>
+
+            <!-- STEP 2: QR PAYMENT (Hidden by default) -->
+            <div id="qrStep" style="display: none;">
+                <div id="qrSection" style="text-align: center; background: #fff; padding: 15px; border: 2px dashed var(--gold); border-radius: 12px; margin-bottom: 20px;">
+                    <p style="font-weight: bold; margin-bottom: 10px; color: var(--dark-bg);">Quét mã QR để thanh toán đơn hàng:</p>
+                    <img src="" alt="QR Thanh Toán" id="qrImage" style="width: 200px; height: 200px; margin-bottom: 10px; border-radius: 8px;">
+                    <div style="background: #fdf6e3; padding: 10px; border-radius: 8px; font-size: 0.9rem; border: 1px solid #faebcc; text-align: left;">
+                        <p style="margin-bottom: 5px;">Chủ TK: <strong>PHUNG DUC LOI</strong></p>
+                        <p style="margin-bottom: 5px;">Số TK: <strong>688601106886</strong> (MB Bank)</p>
+                        <p>Nội dung: <strong id="qrContent" style="color: var(--primary-red); font-size: 1.1rem;">NTPT...</strong></p>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 8px; font-style: italic;">*Hệ thống sẽ tự động xác nhận sau khi nhận được tiền.</p>
+                    </div>
+                </div>
+                <button type="button" class="cta-button secondary-cta form-btn" onclick="window.location.href='thank-you-mua-hang.html'">
+                    XÁC NHẬN ĐÃ CHUYỂN KHOẢN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase Initialization
+        const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeXZtcGh0Y3dwbXhtendxaHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDE2OTgsImV4cCI6MjA5NDQ3NzY5OH0.pB2XLzlTjpIit0IJJeDim3wMvy1bYvIWcl5raC2CQeI';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allProducts = [];
+
+        // 1. Tải dữ liệu từ Supabase
+        async function fetchProducts() {
+            const loader = document.getElementById('loader');
+            const grid = document.getElementById('productGrid');
+            loader.style.display = 'block';
+            grid.style.opacity = '0.3';
+
+            try {
+                const { data, error } = await db.from('products').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+                allProducts = data;
+                renderProducts(allProducts);
+            } catch (error) {
+                console.error("Lỗi khi tải sản phẩm:", error);
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Không thể tải danh sách sản phẩm. Vui lòng thử lại sau.</p>';
+            } finally {
+                loader.style.display = 'none';
+                grid.style.opacity = '1';
+            }
+        }
+
+        // 2. Hiển thị sản phẩm lên Grid
+        function renderProducts(productsList) {
+            const grid = document.getElementById('productGrid');
+            if (productsList.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Hiện chưa có sản phẩm nào.</p>';
+                return;
+            }
+
+            grid.innerHTML = productsList.map(p => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${p.image_url || 'https://images.unsplash.com/photo-1621274403997-37aae1830810?auto=format&fit=crop&w=600&q=80'}" alt="${p.name}">
+                        ${p.quantity < 5 ? '<span class="product-badge" style="background: #e74c3c;">Sắp hết hàng</span>' : ''}
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Vật Phẩm</span>
+                        <h3 class="product-title">${p.name}</h3>
+                        <p class="product-price">${(parseInt(p.price) || 0).toLocaleString()}đ</p>
+                        <p class="product-desc">${p.description || 'Thông tin sản phẩm đang được cập nhật.'}</p>
+                        <button class="cta-button primary-cta order-btn" 
+                                onclick="openOrderModal('${p.id}', '${p.name}', '${p.price}', '${p.image_url}')">
+                            ĐẶT HÀNG NGAY
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3. Xử lý đặt hàng
+        const orderModal = document.getElementById('orderModal');
+        const modalImg = document.getElementById('modalProductImg');
+        const modalName = document.getElementById('modalProductName');
+        const modalPrice = document.getElementById('modalProductPrice');
+        const hiddenProductId = document.createElement('input'); // Store ID
+        hiddenProductId.type = 'hidden';
+        hiddenProductId.id = 'hiddenProductId';
+        document.getElementById('productOrderForm').appendChild(hiddenProductId);
+
+        const hiddenName = document.getElementById('hiddenProductName');
+        const hiddenOrderId = document.getElementById('hiddenOrderId');
+        const hiddenPrice = document.getElementById('hiddenProductPrice');
+        const qrImage = document.getElementById('qrImage');
+        const qrContent = document.getElementById('qrContent');
+
+        function openOrderModal(id, name, price, img) {
+            const orderId = 'NTPT' + Math.floor(Date.now() / 1000);
+            const amount = price;
+
+            modalName.innerText = name;
+            modalPrice.innerText = parseInt(price).toLocaleString() + 'đ';
+            modalImg.src = img || 'https://via.placeholder.com/150';
+            hiddenProductId.value = id;
+            hiddenName.value = name;
+            hiddenOrderId.value = orderId;
+            hiddenPrice.value = amount;
+
+            const qrUrl = `https://qr.sepay.vn/img?acc=688601106886&bank=MBBank&amount=${amount}&des=${orderId}`;
+            qrImage.src = qrUrl;
+            qrContent.innerText = orderId;
+
+            document.getElementById('formStep').style.display = 'block';
+            document.getElementById('qrStep').style.display = 'none';
+            orderModal.classList.add('active');
+        }
+
+        document.getElementById('closeOrderModal').onclick = () => orderModal.classList.remove('active');
+
+        // Form Submit
+        document.getElementById('productOrderForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitFormBtn');
+            btn.innerHTML = 'ĐANG XỬ LÝ...';
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            const customerData = {
+                name: formData.get('Họ Tên'),
+                phone: formData.get('SĐT')
+            };
+
+            try {
+                // 1. Tìm hoặc tạo khách hàng (Dựa trên số điện thoại)
+                let customerId;
+                const { data: existingCustomer, error: findError } = await db
+                    .from('customers')
+                    .select('id')
+                    .eq('phone', customerData.phone)
+                    .single();
+
+                if (existingCustomer) {
+                    customerId = existingCustomer.id;
+                } else {
+                    const { data: newCustomer, error: createError } = await db
+                        .from('customers')
+                        .insert([customerData])
+                        .select()
+                        .single();
+                    if (createError) throw createError;
+                    customerId = newCustomer.id;
+                }
+
+                // 2. Tạo đơn hàng
+                const orderData = {
+                    customer_id: customerId,
+                    product_id: document.getElementById('hiddenProductId').value,
+                    amount: formData.get('Giá tiền'),
+                    status: 'pending'
+                };
+
+                const { error: orderError } = await db.from('orders').insert([orderData]);
+                if (orderError) throw orderError;
+
+                // Chuyển bước
+                document.getElementById('formStep').style.display = 'none';
+                document.getElementById('qrStep').style.display = 'block';
+
+            } catch (error) {
+                console.error("Lỗi khi xử lý đơn hàng:", error);
+                alert("Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!");
+            } finally {
+                btn.innerHTML = 'TIẾP TỤC THANH TOÁN';
+                btn.disabled = false;
+            }
+        };
+
+        // Khởi tạo
+        fetchProducts();
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                if(filter === 'all') renderProducts(allProducts);
+                else alert('Tính năng lọc theo danh mục đang được cập nhật...');
+            };
+        });
+    </script>
+</body>
+</html>

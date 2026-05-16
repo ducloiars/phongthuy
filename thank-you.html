@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cảm Ơn Bạn Đã Đăng Ký!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .thank-you-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(17, 17, 17, 0.9), rgba(17, 17, 17, 0.9)), url('https://images.unsplash.com/photo-1601058268499-e52658b8ebf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 20px 15px;
+        }
+        .thank-you-card {
+            background: var(--white);
+            color: var(--text-main);
+            max-width: 600px;
+            padding: 25px 25px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border-top: 6px solid var(--gold);
+        }
+        .icon-success {
+            font-size: 3.5rem;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        .fb-group-box {
+            background: #f0f2f5;
+            border: 2px dashed #1877f2;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+        }
+        .fb-group-box h3 {
+            color: #1877f2;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+        .fb-cta-btn {
+            background: #1877f2;
+            color: white;
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+            width: 100%;
+        }
+        .fb-cta-btn:hover {
+            background: #166fe5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.6);
+            color: white;
+        }
+        .fb-features {
+            text-align: left;
+            margin: 15px 0;
+            list-style: none;
+        }
+        .fb-features li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .fb-features i {
+            color: #1877f2;
+            margin-right: 10px;
+            margin-top: 4px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="thank-you-section">
+        <div class="thank-you-card">
+            <i class="fas fa-check-circle icon-success"></i>
+            <h1 style="color: var(--primary-red); margin-bottom: 5px; font-size: 1.8rem;">Xác Nhận Thành Công!</h1>
+            <p style="font-size: 1.05rem; margin-bottom: 0px; font-weight: 500;">Hệ thống đang gửi Tài liệu và Video qua Email.</p>
+            <p style="color: #888; font-style: italic; font-size: 0.85rem;">(Vui lòng chờ 3-5 phút và kiểm tra cả hộp thư Spam)</p>
+
+            <div class="fb-group-box">
+                <i class="fab fa-facebook" style="font-size: 2.5rem; color: #1877f2; margin-bottom: 5px;"></i>
+                <h3>ĐỪNG THOÁT TRANG! BƯỚC CUỐI CÙNG:</h3>
+                <p style="font-weight: 500; font-size: 1rem; color: #333; margin-bottom: 5px;">
+                    Hãy tham gia Nhóm Kín để được hỗ trợ thực hành!
+                </p>
+                
+                <ul class="fb-features">
+                    <li><i class="fas fa-comment-dots"></i> <span><strong>Hỏi - Đáp 1:1</strong> mọi thắc mắc về cách bố trí phong thủy nhà bạn.</span></li>
+                    <li><i class="fas fa-video"></i> <span>Xem <strong>Livestream phân tích sơ đồ nhà</strong> miễn phí hàng tuần.</span></li>
+                    <li><i class="fas fa-layer-group"></i> <span>Nhận thêm bí kíp phong thủy chuyên sâu không public.</span></li>
+                </ul>
+
+                <div style="background: rgba(211, 47, 47, 0.1); border-left: 3px solid var(--primary-red); padding: 8px; text-align: left; margin-bottom: 10px;">
+                    <p style="color: var(--primary-red); font-size: 0.85rem; margin: 0; line-height: 1.4;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>CHÚ Ý:</strong> Chỉ duyệt đúng 50 thành viên mới/ngày để đảm bảo chất lượng.
+                    </p>
+                </div>
+
+                <a href="https://www.facebook.com/groups/2005969936622542" target="_blank" class="fb-cta-btn pulse-animation">
+                    <i class="fab fa-facebook-f" style="margin-right: 8px;"></i> BẤM VÀO ĐÂY ĐỂ YÊU CẦU THAM GIA NHÓM
+                </a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
