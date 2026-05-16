@@ -16,22 +16,9 @@
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-    <!-- Password Protection Overlay -->
-    <div id="authOverlay" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
-        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
-            <div class="mb-6">
-                <i class="fas fa-lock text-4xl text-indigo-600 mb-4"></i>
-                <h2 class="text-2xl font-bold">Admin Login</h2>
-                <p class="text-gray-500">Vui lòng nhập mật khẩu để tiếp tục</p>
-            </div>
-            <input type="password" id="adminPassword" class="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Mật khẩu">
-            <button onclick="checkPassword()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">Đăng nhập</button>
-            <p id="errorMsg" class="text-red-500 mt-4 hidden">Mật khẩu không chính xác!</p>
-        </div>
-    </div>
 
     <!-- Main App Layout -->
-    <div id="adminApp" class="hidden min-h-screen flex">
+    <div id="adminApp" class="min-h-screen flex">
         
         <!-- Sidebar -->
         <aside class="w-64 bg-indigo-900 text-white flex-shrink-0">
@@ -47,11 +34,6 @@
                     <i class="fas fa-shopping-cart"></i> Đơn hàng
                 </button>
             </nav>
-            <div class="absolute bottom-0 w-64 p-6 border-t border-indigo-800">
-                <button onclick="logout()" class="flex items-center gap-3 text-indigo-300 hover:text-white transition">
-                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                </button>
-            </div>
         </aside>
 
         <!-- Main Content -->
@@ -225,28 +207,6 @@
 
         let currentTab = 'products';
 
-        // Auth Logic
-        function checkPassword() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === 'admin123') { // Simple password as requested
-                document.getElementById('authOverlay').classList.add('hidden');
-                document.getElementById('adminApp').classList.remove('hidden');
-                init();
-            } else {
-                document.getElementById('errorMsg').classList.remove('hidden');
-            }
-        }
-
-        // Add Enter key listener
-        document.getElementById('adminPassword').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
-        function logout() {
-            location.reload();
-        }
 
         // Navigation
         function switchTab(tab) {
@@ -471,6 +431,7 @@
         }
 
         // Initialization
+        init();
         function init() {
             fetchData();
         }
