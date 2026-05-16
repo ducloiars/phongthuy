@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS customers (
 -- Create orders table
 CREATE TABLE IF NOT EXISTS orders (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_code TEXT UNIQUE,
     customer_id UUID REFERENCES customers(id) ON DELETE CASCADE,
     product_id UUID REFERENCES products(id) ON DELETE SET NULL,
     amount NUMERIC(10, 2) NOT NULL,

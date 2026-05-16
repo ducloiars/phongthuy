@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Đơn Hàng - Nghệ Thuật Phong Thủy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .checkout-container { max-width: 800px; margin: 50px auto; padding: 20px; }
+        .checkout-card { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; }
+        .checkout-header { background: var(--dark-bg); color: var(--gold); padding: 30px; text-align: center; }
+        .checkout-body { padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .qr-section { text-align: center; border: 2px dashed var(--gold); padding: 20px; border-radius: 15px; background: #fff9e6; }
+        .qr-code { width: 250px; height: 250px; margin: 0 auto 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .info-section h3 { margin-bottom: 20px; color: var(--primary-red); }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .info-label { color: #666; font-size: 0.9rem; }
+        .info-value { font-weight: 600; color: var(--dark-bg); }
+        .status-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; background: #fff3cd; color: #856404; font-size: 0.8rem; font-weight: bold; margin-top: 10px; }
+        
+        @media (max-width: 768px) {
+            .checkout-body { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">THANH TOÁN ĐƠN HÀNG</h1>
+                <p style="color: #ccc; margin-top: 5px;">Vui lòng chuyển khoản đúng số tiền và nội dung bên dưới</p>
+            </div>
+            
+            <div class="checkout-body">
+                <div class="qr-section">
+                    <img id="qrImage" src="" alt="QR Code" class="qr-code">
+                    <p style="font-size: 0.9rem; font-weight: bold; color: var(--dark-bg);">Sử dụng App Ngân hàng quét mã QR</p>
+                    <div class="status-badge">
+                        <i class="fas fa-spinner fa-spin mr-2"></i> Đang chờ thanh toán...
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Chi tiết đơn hàng</h3>
+                    <div class="info-row">
+                        <span class="info-label">Mã đơn hàng</span>
+                        <span class="info-value" id="orderCode">---</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Sản phẩm</span>
+                        <span class="info-value" id="productName">---</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Số tiền</span>
+                        <span class="info-value" id="amount" style="color: var(--primary-red); font-size: 1.2rem;">0đ</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Khách hàng</span>
+                        <span class="info-value" id="customerName">---</span>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 15px; background: #e9ecef; border-radius: 10px; font-size: 0.85rem; color: #495057;">
+                        <p><strong>Lưu ý:</strong> Hệ thống sẽ tự động kích hoạt đơn hàng ngay sau khi nhận được tiền (thường mất 10-30 giây).</p>
+                    </div>
+
+                    <button onclick="window.location.href='index.html'" class="cta-button secondary-cta" style="width: 100%; margin-top: 20px; padding: 12px;">QUAY LẠI TRANG CHỦ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('orderId'); // This is the UUID
+        
+        const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeXZtcGh0Y3dwbXhtendxaHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDE2OTgsImV4cCI6MjA5NDQ3NzY5OH0.pB2XLzlTjpIit0IJJeDim3wMvy1bYvIWcl5raC2CQeI';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function loadOrder() {
+            if (!orderId) return;
+            
+            const { data, error } = await db
+                .from('orders')
+                .select('*, customers(name), products(name)')
+                .eq('id', orderId)
+                .single();
+            
+            if (error || !data) return alert('Không tìm thấy đơn hàng!');
+
+            document.getElementById('orderCode').innerText = data.order_code;
+            document.getElementById('productName').innerText = data.products?.name;
+            document.getElementById('amount').innerText = Number(data.amount).toLocaleString() + 'đ';
+            document.getElementById('customerName').innerText = data.customers?.name;
+
+            // Generate QR (SePay API)
+            const qrUrl = `https://qr.sepay.vn/img?acc=688601106886&bank=MBBank&amount=${data.amount}&des=${data.order_code}`;
+            document.getElementById('qrImage').src = qrUrl;
+
+            // Real-time check for status update
+            checkStatus();
+        }
+
+        async function checkStatus() {
+            const interval = setInterval(async () => {
+                const { data, error } = await db
+                    .from('orders')
+                    .select('status')
+                    .eq('id', orderId)
+                    .single();
+                
+                if (data && data.status === 'success') {
+                    clearInterval(interval);
+                    document.querySelector('.status-badge').innerHTML = '<i class="fas fa-check-circle mr-2 text-green-500"></i> Thanh toán thành công!';
+                    document.querySelector('.status-badge').style.background = '#d4edda';
+                    document.querySelector('.status-badge').style.color = '#155724';
+                    setTimeout(() => {
+                        window.location.href = 'thank-you-mua-hang.html';
+                    }, 2000);
+                }
+            }, 3000); // Check every 3 seconds
+        }
+
+        loadOrder();
+    </script>
+</body>
+</html>

@@ -249,8 +249,11 @@
                     customerId = newCustomer.id;
                 }
 
+                const orderCode = 'NTPT' + Math.floor(Date.now() / 1000);
+
                 // 2. Tạo đơn hàng
                 const orderData = {
+                    order_code: orderCode,
                     customer_id: customerId,
                     product_id: productId,
                     amount: amount,
@@ -259,12 +262,16 @@
                     status: 'pending'
                 };
 
-                const { error: orderError } = await db.from('orders').insert([orderData]);
+                const { data: newOrder, error: orderError } = await db
+                    .from('orders')
+                    .insert([orderData])
+                    .select()
+                    .single();
+
                 if (orderError) throw orderError;
 
-                // Chuyển bước
-                document.getElementById('formStep').style.display = 'none';
-                document.getElementById('qrStep').style.display = 'block';
+                // Chuyển sang trang thanh toán
+                window.location.href = `thanh-toan.html?orderId=${newOrder.id}`;
 
             } catch (error) {
                 console.error("Lỗi khi xử lý đơn hàng:", error);
