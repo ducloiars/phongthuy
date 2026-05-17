@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
       
       const { data: order, error: findError } = await supabase
         .from('orders')
-        .select('*')
+        .select('*, customers(email), products(name)')
         .eq('order_code', orderIdPart)
         .eq('status', 'pending')
         .single();
@@ -44,7 +44,29 @@ module.exports = async (req, res) => {
         if (updateError) {
           return res.status(500).json({ success: false, error: 'Database update failed' });
         }
-        return res.status(200).json({ success: true, message: 'Order updated to success' });
+
+        // Gửi email xác nhận tự động qua Resend
+        if (order.customers?.email) {
+          try {
+            const { sendEmail } = require('./_resend');
+            const { EMAIL_ORDER_CONFIRMATION } = require('./_templates');
+            
+            let htmlContent = EMAIL_ORDER_CONFIRMATION;
+            htmlContent = htmlContent.replace('{{product_name}}', order.products?.name || 'Vật phẩm phong thủy');
+            htmlContent = htmlContent.replace('{{amount}}', Number(order.amount).toLocaleString());
+            htmlContent = htmlContent.replace('{{order_code}}', order.order_code || order.id.substring(0,8).toUpperCase());
+
+            await sendEmail({
+              to: order.customers.email,
+              subject: `[NTPT] Xác nhận thanh toán thành công đơn hàng #${order.order_code}`,
+              html: htmlContent
+            });
+          } catch (mailErr) {
+            console.error('Lỗi khi gửi email xác nhận tự động:', mailErr.message);
+          }
+        }
+
+        return res.status(200).json({ success: true, message: 'Order updated to success and confirmation email sent' });
       }
     }
     return res.status(200).json({ success: false, message: 'No matching order found' });

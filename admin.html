@@ -131,6 +131,7 @@
                         <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Thông tin khách hàng</h4>
                         <p id="detCustomerName" class="text-lg font-semibold text-gray-800"></p>
                         <p id="detCustomerPhone" class="text-gray-600"></p>
+                        <p id="detCustomerEmail" class="text-gray-600"></p>
                         <p id="detCustomerAddress" class="text-gray-600 mt-2 italic"></p>
                     </div>
                     <div>
@@ -195,6 +196,63 @@
         </div>
     </div>
 
+    <!-- Admin Add Order Modal -->
+    <div id="adminOrderModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+            <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                <h3 class="text-xl font-bold text-indigo-900">Tạo Đơn Hàng Mới</h3>
+                <button onclick="closeAdminOrderModal()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <form id="adminOrderForm" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Họ tên khách hàng</label>
+                    <input type="text" id="aoCustName" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
+                        <input type="tel" id="aoCustPhone" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="aoCustEmail" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sản phẩm</label>
+                        <select id="aoProductId" required onchange="updateAoAmount()" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <!-- Injected dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tổng tiền (VNĐ)</label>
+                        <input type="number" id="aoAmount" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ giao hàng</label>
+                    <input type="text" id="aoAddress" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Tạo bởi Admin">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ghi chú</label>
+                    <textarea id="aoGhiChu" rows="2" class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Tạo thủ công từ Admin Panel"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
+                    <select id="aoStatus" required class="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="pending">PENDING</option>
+                        <option value="success">SUCCESS</option>
+                    </select>
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="closeAdminOrderModal()" class="flex-1 px-6 py-3 border border-gray-200 rounded-lg font-semibold hover:bg-gray-50 transition">Hủy</button>
+                    <button type="submit" id="submitAoBtn" class="flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 shadow-md transition">Tạo đơn hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Supabase Initialization
         const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
@@ -224,8 +282,25 @@
             const titles = { products: 'Quản lý Sản phẩm', customers: 'Danh sách Khách hàng', orders: 'Quản lý Đơn hàng' };
             document.getElementById('tabTitle').innerText = titles[tab];
             
-            // Toggle "Add New" button visibility
-            document.getElementById('headerActions').style.display = (tab === 'products') ? 'block' : 'none';
+            // Toggle "Add New" button visibility dynamically
+            const headerActions = document.getElementById('headerActions');
+            headerActions.style.display = 'block';
+            if (tab === 'products') {
+                headerActions.innerHTML = `
+                    <button onclick="openProductModal()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-lg flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Thêm mới
+                    </button>
+                `;
+            } else if (tab === 'orders') {
+                headerActions.innerHTML = `
+                    <button onclick="openOrderModal()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 shadow-lg flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Thêm đơn hàng
+                    </button>
+                `;
+            } else {
+                headerActions.style.display = 'none';
+                headerActions.innerHTML = '';
+            }
 
             fetchData();
         }
@@ -288,7 +363,7 @@
         async function fetchOrders() {
             const { data, error } = await db
                 .from('orders')
-                .select('*, customers(name, phone), products(name)')
+                .select('*, customers(name, phone, email), products(name)')
                 .order('purchase_date', { ascending: false });
             
             if (error) return alert(error.message);
@@ -299,6 +374,7 @@
                     <td class="px-6 py-4 font-mono text-xs text-gray-400">${o.id.substring(0,8)}...</td>
                     <td class="px-6 py-4">
                         <div class="font-medium text-gray-900">${o.customers?.name || 'Ẩn danh'}</div>
+                        <div class="text-xs text-gray-600 font-semibold">${o.customers?.email || 'Không có email'}</div>
                         <div class="text-xs text-gray-500">${o.products?.name || 'Sản phẩm đã xóa'}</div>
                     </td>
                     <td class="px-6 py-4 font-bold text-indigo-600">${Number(o.amount).toLocaleString()}đ</td>
@@ -333,6 +409,7 @@
 
             document.getElementById('detCustomerName').innerText = data.customers?.name || 'Ẩn danh';
             document.getElementById('detCustomerPhone').innerText = data.customers?.phone || 'Không có SĐT';
+            document.getElementById('detCustomerEmail').innerText = data.customers?.email || 'Không có email';
             document.getElementById('detCustomerAddress').innerText = data.address || 'Không có địa chỉ';
             document.getElementById('detOrderId').innerText = 'ID: ' + data.id;
             document.getElementById('detProductName').innerText = data.products?.name || 'Sản phẩm đã xóa';
@@ -361,6 +438,13 @@
             if (error) {
                 alert(error.message);
             } else {
+                // Nếu đổi trạng thái sang SUCCESS, kích hoạt gửi email tự động qua API
+                if (newStatus === 'success') {
+                    fetch(`/api/send-order-confirmation?orderId=${currentOrderId}`)
+                        .then(res => res.json())
+                        .then(d => console.log('Kích hoạt gửi email xác nhận:', d))
+                        .catch(err => console.error('Lỗi gửi email xác nhận:', err));
+                }
                 alert('Cập nhật trạng thái thành công!');
                 closeOrderDetailModal();
                 fetchOrders();
@@ -429,6 +513,80 @@
         function closeProductModal() {
             document.getElementById('productModal').classList.add('hidden');
         }
+
+        // Admin Add Order modal operations
+        let adminProductsList = [];
+
+        async function openOrderModal() {
+            document.getElementById('adminOrderModal').classList.remove('hidden');
+            document.getElementById('adminOrderForm').reset();
+            
+            // Tải danh sách sản phẩm để đưa vào dropdown select
+            const { data, error } = await db.from('products').select('*').order('name');
+            if (!error && data) {
+                adminProductsList = data;
+                const select = document.getElementById('aoProductId');
+                select.innerHTML = '<option value="">-- Chọn sản phẩm --</option>' + data.map(p => `
+                    <option value="${p.id}" data-price="${p.price}">${p.name} (${Number(p.price).toLocaleString()}đ)</option>
+                `).join('');
+            }
+        }
+
+        function closeAdminOrderModal() {
+            document.getElementById('adminOrderModal').classList.add('hidden');
+        }
+
+        function updateAoAmount() {
+            const select = document.getElementById('aoProductId');
+            const selectedOpt = select.options[select.selectedIndex];
+            if (selectedOpt) {
+                const price = selectedOpt.getAttribute('data-price');
+                if (price) {
+                    document.getElementById('aoAmount').value = price;
+                }
+            }
+        }
+
+        document.getElementById('adminOrderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitAoBtn');
+            btn.innerText = 'ĐANG TẠO...';
+            btn.disabled = true;
+
+            const orderPayload = {
+                customerName: document.getElementById('aoCustName').value.trim(),
+                customerPhone: document.getElementById('aoCustPhone').value.trim(),
+                customerEmail: document.getElementById('aoCustEmail').value.trim(),
+                productId: document.getElementById('aoProductId').value,
+                amount: document.getElementById('aoAmount').value,
+                address: document.getElementById('aoAddress').value.trim(),
+                ghiChu: document.getElementById('aoGhiChu').value.trim(),
+                status: document.getElementById('aoStatus').value
+            };
+
+            try {
+                const response = await fetch('/api/admin-create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderPayload)
+                });
+                
+                const resData = await response.json();
+                if (resData.success) {
+                    alert('Đã tạo đơn hàng thành công và gửi email xác nhận tự động!');
+                    closeAdminOrderModal();
+                    fetchOrders();
+                } else {
+                    alert('Lỗi: ' + resData.error);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Có lỗi xảy ra khi tạo đơn hàng!');
+            } finally {
+                btn.innerText = 'Tạo đơn hàng';
+                btn.disabled = false;
+            }
+        });
 
         // Initialization
         init();

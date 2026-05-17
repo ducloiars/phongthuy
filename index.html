@@ -328,10 +328,34 @@
                 submitBtn.innerHTML = 'ĐANG XỬ LÝ...';
                 submitBtn.disabled = true;
 
+                // Gửi đồng thời sang Google Sheets (vẫn giữ như cũ) và API mới của chúng ta
                 fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors', keepalive: true })
-                    .catch(error => console.error('Lỗi khi gửi:', error));
-                
-                window.location.href = "thank-you.html";
+                    .catch(error => console.error('Lỗi khi gửi Google Sheets:', error));
+
+                fetch('/api/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        phone: cleanPhone,
+                        yob: yob,
+                        khoKhan: khoKhan,
+                        mongMuon: mongMuon
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('API Waitlist thành công:', data);
+                    window.location.href = "thank-you.html";
+                })
+                .catch(error => {
+                    console.error('Lỗi gửi API Waitlist:', error);
+                    // Vẫn chuyển trang kể cả khi API gặp sự cố để đảm bảo trải nghiệm khách hàng
+                    window.location.href = "thank-you.html";
+                });
             });
         }
 
