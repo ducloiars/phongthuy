@@ -242,7 +242,10 @@
                 if (existingCustomer) {
                     customerId = existingCustomer.id;
                     // Cập nhật email nếu chưa có hoặc thay đổi
-                    await db.from('customers').update({ email }).eq('id', customerId);
+                    const { error: updateError } = await db.from('customers').update({ email }).eq('id', customerId);
+                    if (updateError) {
+                        console.warn("Không thể cập nhật email (có thể do ràng buộc UNIQUE):", updateError.message);
+                    }
                 } else {
                     const { data: newCustomer, error: createError } = await db
                         .from('customers')
