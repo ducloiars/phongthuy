@@ -100,7 +100,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    const isTestMode = email.includes('+test');
+    const isTestMode = email.includes('+test') || email.toLowerCase() === 'ducloiarsenal@gmail.com';
 
     // 2. Gửi Email 1 ngay lập tức qua Resend
     let email1Result = null;
