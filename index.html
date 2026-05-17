@@ -361,6 +361,32 @@
 
         setupFormSubmit('leadForm');
         setupFormSubmit('modalForm');
+
+        // Xử lý mở/đóng Modal đăng ký tải tài liệu
+        const modal = document.getElementById('formModal');
+        const openModalBtns = document.querySelectorAll('.open-modal-btn');
+        const closeModalBtn = document.querySelector('#formModal .modal-close');
+
+        if (modal) {
+            openModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modal.classList.add('active');
+                });
+            });
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+            }
+
+            // Đóng khi click ngoài modal content
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
     </script>
 
     <!-- CHATBOT -->

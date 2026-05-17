@@ -59,7 +59,7 @@ const EMAIL_3 = `
   <p>Tôi đã chuẩn bị sẵn danh sách vật phẩm chuẩn phong thủy Bát Trạch, được trì chú an vị cẩn thận. Bạn vào xem và đặt ngay đi:</p>
   
   <div style="text-align: center; margin: 30px 0;">
-    <a href="https://phongthuynhacua.aikiemtien.online/sanpham.html" style="background-color: #b22222; color: #ffffff; padding: 15px 30px; font-weight: bold; text-decoration: none; border-radius: 5px; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(178, 34, 34, 0.4); display: inline-block;">ĐẶT VẬT PHẨM PHONG THỦY NGAY</a>
+    <a href="https://phongthuy-seven.vercel.app/sanpham.html" style="background-color: #b22222; color: #ffffff; padding: 15px 30px; font-weight: bold; text-decoration: none; border-radius: 5px; font-size: 1.1rem; box-shadow: 0 4px 10px rgba(178, 34, 34, 0.4); display: inline-block;">ĐẶT VẬT PHẨM PHONG THỦY NGAY</a>
   </div>
   
   <p>Đừng để đến lúc tán gia bại sản mới cuống cuồng đi tìm thầy cúng. Tự cứu mình trước đi!</p>
