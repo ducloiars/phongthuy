@@ -1,20 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-// Hàm đọc API Key từ file hoặc env
+// Hàm đọc API Key từ env
 function getApiKey() {
-  if (process.env.RESEND_API_KEY) {
-    return process.env.RESEND_API_KEY;
-  }
-  try {
-    const configPath = path.join(process.cwd(), 'resend_config.txt');
-    if (fs.existsSync(configPath)) {
-      return fs.readFileSync(configPath, 'utf8').trim();
-    }
-  } catch (err) {
-    console.error('Lỗi khi đọc file resend_config.txt:', err);
-  }
-  return null;
+  return process.env.RESEND_API_KEY;
 }
 
 /**

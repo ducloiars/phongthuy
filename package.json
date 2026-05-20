@@ -4,6 +4,9 @@
   "description": "CRM System for NTPT Website",
   "main": "index.html",
   "dependencies": {
-    "@supabase/supabase-js": "^2.43.2"
+    "@supabase/supabase-js": "^2.43.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
   }
 }
