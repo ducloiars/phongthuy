@@ -486,6 +486,48 @@ const createServer = () => {
 const app = express();
 app.use(express.json());
 
+// Middleware to restrict access to local network interfaces only (security precaution for 0.0.0.0 binding)
+const ipRangeCheck = (req, res, next) => {
+  const clientIp = req.ip || req.connection.remoteAddress || (req.socket && req.socket.remoteAddress);
+  
+  // Check if IP is local/private (IPv4/IPv6 loopbacks and standard private subnets used by Docker / internal VPNs)
+  const isLocal = 
+    !clientIp ||
+    clientIp === '127.0.0.1' || 
+    clientIp === '::1' || 
+    clientIp === 'localhost' ||
+    clientIp.startsWith('172.16.') || 
+    clientIp.startsWith('172.17.') || 
+    clientIp.startsWith('172.18.') || 
+    clientIp.startsWith('172.19.') || 
+    clientIp.startsWith('172.20.') || 
+    clientIp.startsWith('172.21.') || 
+    clientIp.startsWith('172.22.') || 
+    clientIp.startsWith('172.23.') || 
+    clientIp.startsWith('172.24.') || 
+    clientIp.startsWith('172.25.') || 
+    clientIp.startsWith('172.26.') || 
+    clientIp.startsWith('172.27.') || 
+    clientIp.startsWith('172.28.') || 
+    clientIp.startsWith('172.29.') || 
+    clientIp.startsWith('172.30.') || 
+    clientIp.startsWith('172.31.') || 
+    clientIp.startsWith('10.') || 
+    clientIp.startsWith('192.168.') ||
+    clientIp.startsWith('::ffff:127.') ||
+    clientIp.startsWith('::ffff:172.') ||
+    clientIp.startsWith('::ffff:192.168.') ||
+    clientIp.startsWith('::ffff:10.');
+    
+  if (!isLocal) {
+    console.warn(`[${new Date().toISOString()}] Từ chối truy cập từ IP ngoài: ${clientIp}`);
+    return res.status(403).send('Forbidden: External access is not allowed');
+  }
+  next();
+};
+
+app.use(ipRangeCheck);
+
 // Handle POST requests
 app.post('/mcp', async (req, res) => {
   const sessionId = req.headers['mcp-session-id'];
@@ -589,8 +631,8 @@ app.delete('/mcp', async (req, res) => {
 });
 
 const PORT = 3001;
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`[${new Date().toISOString()}] MCP streamable-http server đang chạy tại 127.0.0.1:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[${new Date().toISOString()}] MCP streamable-http server đang chạy tại 0.0.0.0:${PORT}`);
 });
 
 process.on('SIGINT', async () => {
