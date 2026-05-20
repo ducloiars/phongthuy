@@ -488,7 +488,17 @@ app.use(express.json());
 
 // Middleware to restrict access to local network interfaces only (security precaution for 0.0.0.0 binding)
 const ipRangeCheck = (req, res, next) => {
-  const clientIp = req.ip || req.connection.remoteAddress || (req.socket && req.socket.remoteAddress);
+  // 1. Check if the request has a valid security token (essential for proxy access via public domain)
+  const token = req.headers['x-mcp-token'];
+  const expectedToken = process.env.MCP_SECURITY_TOKEN || 'pt_mcp_9a3f2d8c1b7e';
+  
+  if (token && token === expectedToken) {
+    return next();
+  }
+
+  // 2. Otherwise, check if the client IP is local/private
+  // account for proxies like Caddy by checking x-forwarded-for first
+  const clientIp = req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress || (req.socket && req.socket.remoteAddress);
   
   // Check if IP is local/private (IPv4/IPv6 loopbacks and standard private subnets used by Docker / internal VPNs)
   const isLocal = 
