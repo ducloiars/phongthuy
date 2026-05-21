@@ -493,6 +493,7 @@ const createServer = () => {
     console.log(`[${timestamp}] Gọi tool 'get_new_orders' với params:`, { mark_as_notified });
     
     try {
+      console.log(`[${timestamp}] [get_new_orders] Bước 1: Đang truy vấn các đơn hàng chưa thông báo từ Supabase...`);
       // 1. Truy vấn các đơn hàng thành công chưa thông báo
       const { data: newOrders, error: fetchErr } = await supabase
         .from('orders')
@@ -510,7 +511,9 @@ const createServer = () => {
       }
 
       const count = newOrders ? newOrders.length : 0;
+      console.log(`[${timestamp}] [get_new_orders] Tìm thấy ${count} đơn hàng chưa thông báo.`);
 
+      console.log(`[${timestamp}] [get_new_orders] Bước 2: Đang tính tổng số đơn hàng hôm nay...`);
       // 2. Tính tổng số đơn hàng thành công ngày hôm nay (theo giờ VN GMT+7)
       // Múi giờ Việt Nam là +7. Ta tính khoảng thời gian ngày hôm nay theo giờ VN.
       const nowVN = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
@@ -529,6 +532,7 @@ const createServer = () => {
         .lte('purchase_date', endUTC);
 
       if (countErr) throw countErr;
+      console.log(`[${timestamp}] [get_new_orders] Tổng số đơn hôm nay: ${totalToday}`);
 
       // 3. Xây dựng nội dung tin nhắn Telegram
       let reportMessage = '';
@@ -553,6 +557,7 @@ const createServer = () => {
 
       // 4. Nếu cần đánh dấu đã thông báo, tiến hành update orders
       if (mark_as_notified && count > 0) {
+        console.log(`[${timestamp}] [get_new_orders] Bước 4: Đang đánh dấu ${count} đơn hàng đã thông báo...`);
         const orderIds = newOrders.map(o => o.id);
         const { error: updateErr } = await supabase
           .from('orders')
@@ -560,31 +565,38 @@ const createServer = () => {
           .in('id', orderIds);
 
         if (updateErr) {
-          console.error(`[${timestamp}] Lỗi khi cập nhật is_notified cho đơn hàng:`, updateErr.message);
+          console.error(`[${timestamp}] [get_new_orders] Lỗi khi cập nhật is_notified cho đơn hàng:`, updateErr.message);
+        } else {
+          console.log(`[${timestamp}] [get_new_orders] Đã cập nhật is_notified thành công.`);
         }
       }
 
       // Đọc thêm text từ SQLite brain.db để chứng tỏ có kết nối
+      console.log(`[${timestamp}] [get_new_orders] Bước 5: Đang lấy ngữ cảnh từ SQLite...`);
       const businessContext = await getBusinessContext();
+      console.log(`[${timestamp}] [get_new_orders] Đã lấy xong ngữ cảnh: ${businessContext ? businessContext.substring(0, 50) + '...' : ''}`);
 
+      const result = {
+        success: true,
+        new_orders_count: count,
+        total_orders_today: totalToday || 0,
+        orders: (newOrders || []).map(o => ({
+          order_code: o.order_code,
+          customer_name: o.customers?.name,
+          amount: o.amount,
+          product_name: o.products?.name,
+          quantity: o.quantity || 1,
+          purchase_date: o.purchase_date
+        })),
+        message: reportMessage,
+        source: businessContext
+      };
+
+      console.log(`[${timestamp}] [get_new_orders] Hoàn thành. Trả kết quả.`);
       return {
         content: [{
           type: 'text',
-          text: JSON.stringify({
-            success: true,
-            new_orders_count: count,
-            total_orders_today: totalToday || 0,
-            orders: newOrders.map(o => ({
-              order_code: o.order_code,
-              customer_name: o.customers?.name,
-              amount: o.amount,
-              product_name: o.products?.name,
-              quantity: o.quantity || 1,
-              purchase_date: o.purchase_date
-            })),
-            message: reportMessage,
-            source: businessContext
-          }, null, 2)
+          text: JSON.stringify(result, null, 2)
         }]
       };
 
