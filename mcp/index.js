@@ -479,6 +479,130 @@ const createServer = () => {
     }
   });
 
+  // 4. Tool get_new_orders
+  server.registerTool('get_new_orders', {
+    description: 'Lấy danh sách các đơn hàng mới thanh toán thành công chưa được thông báo, và tự động đánh dấu đã thông báo để tránh trùng lặp.',
+    inputSchema: {
+      mark_as_notified: z.boolean()
+        .optional()
+        .default(true)
+        .describe('Có đánh dấu các đơn hàng này là đã thông báo hay không (mặc định là true để tránh lặp lại).')
+    }
+  }, async ({ mark_as_notified }) => {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] Gọi tool 'get_new_orders' với params:`, { mark_as_notified });
+    
+    try {
+      // 1. Truy vấn các đơn hàng thành công chưa thông báo
+      const { data: newOrders, error: fetchErr } = await supabase
+        .from('orders')
+        .select('*, customers(name), products(name)')
+        .eq('status', 'success')
+        .eq('is_notified', false)
+        .order('purchase_date', { ascending: true });
+
+      if (fetchErr) {
+        // Kiểm tra xem lỗi có phải do thiếu cột is_notified/quantity không
+        if (fetchErr.message.includes('column') && (fetchErr.message.includes('is_notified') || fetchErr.message.includes('quantity'))) {
+          throw new Error('Thiếu cột is_notified hoặc quantity trong bảng orders. Vui lòng chạy file SQL nâng cấp cơ sở dữ liệu (add_notified_columns.sql) trên Supabase SQL Editor.');
+        }
+        throw fetchErr;
+      }
+
+      const count = newOrders ? newOrders.length : 0;
+
+      // 2. Tính tổng số đơn hàng thành công ngày hôm nay (theo giờ VN GMT+7)
+      // Múi giờ Việt Nam là +7. Ta tính khoảng thời gian ngày hôm nay theo giờ VN.
+      const nowVN = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+      const startVN = new Date(nowVN.getFullYear(), nowVN.getMonth(), nowVN.getDate());
+      const endVN = new Date(nowVN.getFullYear(), nowVN.getMonth(), nowVN.getDate(), 23, 59, 59, 999);
+      
+      // Chuyển lại UTC để query Supabase
+      const startUTC = new Date(startVN.getTime() - 7 * 60 * 60 * 1000).toISOString();
+      const endUTC = new Date(endVN.getTime() - 7 * 60 * 60 * 1000).toISOString();
+
+      const { count: totalToday, error: countErr } = await supabase
+        .from('orders')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'success')
+        .gte('purchase_date', startUTC)
+        .lte('purchase_date', endUTC);
+
+      if (countErr) throw countErr;
+
+      // 3. Xây dựng nội dung tin nhắn Telegram
+      let reportMessage = '';
+      if (count === 0) {
+        reportMessage = `Không có đơn hàng mới nào chưa thông báo. (Tổng hôm nay: ${totalToday || 0} đơn)`;
+      } else {
+        const orderDetails = newOrders.map((o, idx) => {
+          // Format số tiền, ví dụ: 450000 -> 450k hoặc 450.000đ
+          const formattedAmount = Number(o.amount) >= 1000 && Number(o.amount) % 1000 === 0 
+            ? `${Number(o.amount) / 1000}k` 
+            : `${Number(o.amount).toLocaleString('vi-VN')}đ`;
+          
+          const customerName = o.customers?.name || 'Khách hàng';
+          const productName = o.products?.name || 'sản phẩm';
+          const qty = o.quantity || 1;
+
+          return `Đơn mới: ${customerName}, ${formattedAmount}, ${qty} sản phẩm (${productName}).`;
+        }).join('\n');
+
+        reportMessage = `🔔 CÓ ĐƠN HÀNG MỚI!\n${orderDetails}\nTổng hôm nay: ${totalToday || 0} đơn.`;
+      }
+
+      // 4. Nếu cần đánh dấu đã thông báo, tiến hành update orders
+      if (mark_as_notified && count > 0) {
+        const orderIds = newOrders.map(o => o.id);
+        const { error: updateErr } = await supabase
+          .from('orders')
+          .update({ is_notified: true })
+          .in('id', orderIds);
+
+        if (updateErr) {
+          console.error(`[${timestamp}] Lỗi khi cập nhật is_notified cho đơn hàng:`, updateErr.message);
+        }
+      }
+
+      // Đọc thêm text từ SQLite brain.db để chứng tỏ có kết nối
+      const businessContext = await getBusinessContext();
+
+      return {
+        content: [{
+          type: 'text',
+          text: JSON.stringify({
+            success: true,
+            new_orders_count: count,
+            total_orders_today: totalToday || 0,
+            orders: newOrders.map(o => ({
+              order_code: o.order_code,
+              customer_name: o.customers?.name,
+              amount: o.amount,
+              product_name: o.products?.name,
+              quantity: o.quantity || 1,
+              purchase_date: o.purchase_date
+            })),
+            message: reportMessage,
+            source: businessContext
+          }, null, 2)
+        }]
+      };
+
+    } catch (error) {
+      console.error(`[${timestamp}] Lỗi tool 'get_new_orders':`, error.message);
+      return {
+        content: [{
+          type: 'text',
+          text: JSON.stringify({
+            success: false,
+            error: error.message,
+            message: `❌ Lỗi khi lấy thông tin đơn hàng mới: ${error.message}`
+          }, null, 2)
+        }]
+      };
+    }
+  });
+
   return server;
 };
 
