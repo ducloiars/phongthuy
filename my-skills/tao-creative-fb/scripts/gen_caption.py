@@ -88,19 +88,22 @@ Bạn phải tuân thủ nghiêm ngặt các quy tắc về Brand Voice dưới 
 4. Đối tượng độc giả hướng tới: {brand_voice.get('Đối tượng độc giả', 'trung niên, người có gia đình, thích suy ngẫm về cuộc đời')}
 5. Tuyệt đối KHÔNG được viết câu kêu gọi tải tài liệu, file Excel, PDF hay đăng ký mua khóa học nào. Bài viết chỉ là những chia sẻ, chiêm nghiệm sâu sắc thuần túy về cuộc sống.
 
-Phong cách viết: Điềm đạm, mộc mạc, gần gũi như một người bạn tri âm chia sẻ chân tình bên chén trà, hướng độc giả tới sự tĩnh lặng, an yên và thấu hiểu cuộc đời. Tránh viết kiểu quảng cáo giật gân, công nghiệp, xa lạ.
+QUY TẮC TRÌNH BÀY VÀ ĐỊNH DẠNG VĂN BẢN (CỰC KỲ QUAN TRỌNG):
+- Viết câu cực kỳ ngắn, chia nhỏ ý và xuống dòng liên tục (mỗi dòng chỉ từ 5 đến 10 từ).
+- Thường xuyên sử dụng dấu ba chấm "…" ở cuối các cụm từ hoặc câu lấp lửng để tạo nhịp điệu chậm rãi, suy tư.
+- Sử dụng các emoji "🙂" và "🌿" ở đầu một số dòng một cách tinh tế để dẫn dắt suy nghĩ (không lạm dụng các emoji khác).
+- Văn phong mang tính tâm sự nhỏ nhẹ, mộc mạc như đang trò chuyện tâm tình.
 
-Quy định cấu trúc và độ dài:
-- Độ dài bài viết: Khoảng 80 đến 150 từ.
-- Mỗi câu ngắn gọn, có thể xuống dòng nhiều để dễ đọc trên điện thoại.
+Độ dài bài viết: Khoảng 80 đến 150 từ.
 """
 
     if mode == "organic":
         user_prompt = f"""Hãy viết một bài viết chia sẻ hoàn chỉnh cho Facebook Page với chủ đề/ý tưởng: "{topic}".
 Cấu trúc bài viết gồm:
-- Hook nhẹ nhàng, tự nhiên mở đầu bài viết.
-- Thân bài chia sẻ sâu sắc, chiêm nghiệm về cuộc đời, lồng ghép các bài học giản dị.
-- Kết bài bằng một suy ngẫm nhỏ hướng lòng người tới sự bình yên, tĩnh lặng (TUYỆT ĐỐI KHÔNG kêu gọi hành động tải tài liệu hay bấm link).
+- Mở đầu bằng "Ở đời…" hoặc "Càng lớn…" sau đó ngắt dòng.
+- Các dòng tiếp theo chia sẻ sâu sắc về chủ đề.
+- Sử dụng đúng cấu trúc ngắt dòng ngắn, dấu "…" và emoji "🙂", "🌿".
+- Kết bài bằng một suy ngẫm nhẹ nhàng hướng lòng người tới sự bình yên, tĩnh lặng (TUYỆT ĐỐI KHÔNG kêu gọi hành động tải tài liệu hay bấm link).
 """
     else:  # ads mode
         user_prompt = f"""Hãy viết một bài viết chia sẻ sâu sắc (dạng bài viết đồng cảm/ads gián tiếp) cho Facebook với chủ đề: "{topic}".
@@ -111,7 +114,8 @@ Các góc tiếp cận yêu cầu:
 - social_proof: Kể về sự thay đổi bình yên của những người biết buông bỏ và sống tích cực.
 
 Yêu cầu cấu trúc:
-- Hook tự nhiên, sâu lắng thu hút sự chú ý ngay từ câu đầu tiên.
+- Mở đầu tự nhiên bằng "Ở đời…" hoặc "Càng lớn…" sau đó ngắt dòng.
+- Sử dụng đúng cấu trúc ngắt dòng ngắn (5-10 từ/dòng), dấu "…" và emoji "🙂", "🌿".
 - Làm nổi bật giá trị của sự bình yên và trân trọng số mệnh.
 - Kết luận bằng một lời chúc bình an hoặc câu nói đúc kết ý nghĩa (KHÔNG có nút kêu gọi mua hàng hay tải tài liệu).
 """
@@ -156,24 +160,43 @@ Yêu cầu cấu trúc:
                 print("⚠️ OpenAI API Billing limit reached. Generating high-quality local mock caption based on Brand Voice and templates...", file=sys.stderr)
                 
                 # High-quality local mock captions containing required keywords: biết ơn, đơn giản, cuộc đời, số mệnh (No download CTAs)
+                # Formatted exactly in short lines, ellipses, and emojis matching the new Brand Voice
                 if mode == "organic":
                     return f"""Ở đời…
 người thật sự tốt không cần nói quá nhiều về sự tử tế của mình.
-🙂 Vì cái tâm… không nằm ở lời nói hay đến đâu, mà nằm ở cách đối xử khi không ai nhìn thấy.
+🙂 Vì cái tâm…
+không nằm ở lời nói hay đến đâu.
+Mà nằm ở cách đối xử khi không ai nhìn thấy.
 
-Cuộc đời này nghe lời nói thì dễ, nhìn vào hành động mới biết lòng người.
-Mọi sự xảy ra đều là số mệnh, hãy giữ lòng biết ơn và sống đơn giản mỗi ngày.
+Có người nói chuyện rất hay.
+Miệng lúc nào cũng đạo lý, nghĩa tình.
+Nhưng khi đụng chuyện…
+lại sống ích kỷ và lạnh lùng.
 
-Hãy quay về trân trọng những gì mình đang có, bởi sự bình yên thực sự luôn nằm ở trong tâm.
+🌿 Cuộc đời này nghe lời nói thì dễ…
+nhìn vào hành động mới biết lòng người.
+Mọi sự xảy ra đều là số mệnh.
+Chỉ cần giữ lòng biết ơn và sống đơn giản mỗi ngày.
+An yên tự khắc sẽ đến.
 #suyngam #songtichcuc #baihoccuocsong"""
                 else: # ads mode
                     if angle == "pain_point":
-                        return f"""Bạn làm việc hùng hục mười mấy tiếng mỗi ngày, nhưng lòng vẫn hoang mang, mỏi mệt đủ đường?
+                        return f"""Ở đời…
+bận rộn kiếm tìm danh lợi ngoài kia.
+Cả ngày làm việc hùng hục mười mấy tiếng.
+Nhưng lòng vẫn hoang mang, mỏi mệt đủ đường.
 
-Rất có thể chúng ta đang quá hướng ra bên ngoài mà quên mất việc quay về chăm sóc nội tâm.
-Cuộc đời và số mệnh của mỗi người nằm trong lòng họ, bắt đầu từ việc đơn giản hóa suy nghĩ. Hãy biết ơn mọi trải nghiệm, dù là giông bão hay an lành, vì tất cả đều là bài học.
+🙂 Bạn có từng hỏi…
+mình đang mưu cầu điều gì giữa cuộc đời này?
+Có người cho rằng bận rộn mới có nhiều tiền.
+Nhưng khi số mệnh chưa hanh thông…
+làm nhiều lại hao hụt nhiều.
 
-Chỉ khi lòng tĩnh lại, ta mới thấy hướng đi đúng đắn cho bản thân.
+🌿 Cuộc đời này…
+đôi khi đơn giản chỉ cần dừng lại một nhịp.
+Biết ơn những giông bão đã qua để nhận ra bài học.
+Quay về tĩnh lặng và sửa mình.
+Tự khắc mọi sự an yên sẽ đến.
 #vibecoding #suyngam #songtichcuc"""
                     elif angle == "solution":
                         return f"""Thay đổi vận số và số mệnh đôi khi chỉ bắt đầu từ việc đơn giản hóa góc nhìn của chính mình trước cuộc đời.
