@@ -199,20 +199,37 @@ Quay về tĩnh lặng và sửa mình.
 Tự khắc mọi sự an yên sẽ đến.
 #vibecoding #suyngam #songtichcuc"""
                     elif angle == "solution":
-                        return f"""Thay đổi vận số và số mệnh đôi khi chỉ bắt đầu từ việc đơn giản hóa góc nhìn của chính mình trước cuộc đời.
+                        return f"""Càng lớn…
+người ta càng nhận ra rằng:
+Bình yên không ở đâu xa xôi.
+Nó nằm ở cách ta đón nhận cuộc đời.
 
-Mọi chuyện xảy ra không hề phức tạp nếu chúng ta biết đón nhận bằng lòng biết ơn. Khi lòng đã yên, cách nhìn nhận mọi sự xung quanh cũng tự khắc đổi khác.
-Hãy bắt đầu ngày mới bằng việc làm sạch tâm trí, sống thật giản đơn và chân thành.
+🌿 Khi gặp khó khăn…
+đừng vội oán trách số mệnh.
+Hãy biết ơn mọi trải nghiệm đã đi qua.
+🌿 Mọi chuyện ở đời vốn rất đơn giản…
+chỉ là tâm ta đang tự làm phức tạp lên.
 
-Bình yên tự khắc sẽ gõ cửa.
+Thay đổi góc nhìn, cuộc đời tự khắc đổi khác.
+🙂 Ở đời…
+biết cách buông bỏ những muộn phiền.
+Quay về chăm sóc nội tâm mới là điều quý giá nhất.
 #songtichcuc #suyngam #dongian"""
                     else: # social_proof
-                        return f"""Nhiều người từng chia sẻ rằng, họ đã tìm thấy sự an yên cho cuộc đời sau những ngày tháng quay về sửa mình và sống giản đơn.
+                        return f"""Ở đời…
+nhiều người đã đi qua nửa cuộc đời bôn ba.
+Để rồi nhận ra rằng:
+Sự giản đơn mới là đỉnh cao của cuộc sống.
 
-Không cần những triết lý xa vời, cuộc sống hạnh phúc được dệt nên từ sự thấu hiểu và lòng biết ơn đối với những người xung quanh.
-Khi chúng ta thay đổi, thế giới xung quanh cũng tự khắc hanh thông.
+🙂 Khi biết ơn từng nhành cây, ngọn cỏ…
+Tâm ta tự khắc tĩnh lặng.
+Khi biết chấp nhận mọi sự xoay vần của số mệnh…
+Lòng ta tự khắc an yên.
 
-Sống chậm lại một chút để cảm nhận vẻ đẹp của cuộc đời mỗi ngày.
+🌿 Cuộc đời này ngắn ngủi lắm…
+Không cần tranh giành hơn thua đúng sai.
+Quay về sửa mình, sống trọn vẹn mỗi ngày bên gia đình.
+Đó mới là sự hanh thông đích thực.
 #phongthuy #suyngam #baihoccuocsong"""
 
             if attempts < max_attempts:
