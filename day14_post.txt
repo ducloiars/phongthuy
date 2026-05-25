@@ -1,0 +1,21 @@
+🍀 Sáng nay website còn chạy tạm bên Vercel.
+Chiều tối nay, toàn bộ đã nằm gọn gàng trên VPS riêng, chạy database thật.
+
+Mọi thứ diễn ra nhanh, nhẹ nhàng và tự nhiên.
+
+Nhưng cái cảm giác làm tôi sướng nhất hôm nay không phải là chuyện cài đặt kỹ thuật.
+Mà là lúc ngồi cà phê, tay cầm điện thoại, nhắn đúng một câu trên Telegram.
+Con AI agent tự động hiểu, tự tạo đơn hàng thành công cho khách, tự kiểm tra trạng thái email ngay trong cửa sổ chat.
+Không cần mở laptop.
+Không cần đăng nhập vào admin panel phức tạp.
+Cũng không cần chạm tay vào cơ sở dữ liệu.
+
+Lần đầu tiên tôi thấy AI không chỉ đứng đó để nói đạo lý hay vẽ vời.
+Mà nó thực sự LÀM.
+Làm việc thật, ra kết quả thật, như một người cộng sự thầm lặng và chính xác.
+
+Cái cảm giác này... thực sự là cảm giác tự do và kiểm soát.
+Khi bạn có thể vận hành và nắm giữ gốc rễ công việc kinh doanh của mình chỉ bằng những câu nói tự nhiên, không bị trói buộc vào màn hình máy tính, đó mới là sự an yên thực chất.
+
+Cảm ơn anh [Dương Trọng Nghĩa](https://www.facebook.com/duongtrongnghia.theKP3/) vì chuỗi thử thách rất thực chiến này.
+Nhờ những đề bài cụ thể, ta mới thấy AI đi vào đời sống và giải quyết công việc gọn gàng đến thế nào.

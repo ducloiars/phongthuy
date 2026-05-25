@@ -1,0 +1,38 @@
+[
+  {
+    "scene": 1,
+    "image": "product_blue.png",
+    "concept": "Một buổi sáng nhẹ nhàng với ánh sáng hoàng hôn, nhân vật đang chuẩn bị cho ngày mới.",
+    "prompt": "A slow, smooth dolly-in shot, camera gradually gliding closer to a luxurious silk bed with elegant textures, revealing the serene atmosphere of the morning light, warm ambient glow, soft studio backlight, high fashion mood.",
+    "negative_prompt": "ugly, deformed, mutated, low quality, low resolution, blurry, distorted text, incorrect brand logo, deformed logo, weird shapes, color bleeding, color shifting, neon colors, flashing lights, grainy, noise, bad anatomy, bad lighting, watermark, copyright symbol, username, signature, low frame rate, choppy animation, worst quality, pixelated, 3D render look, CGI look, plastic texture, fake leather look, cheap look, static image, no motion.",
+    "camera_motion": "dolly-in",
+    "duration": 5
+  },
+  {
+    "scene": 2,
+    "image": "product_blue.png",
+    "concept": "Chi tiết gần về chất liệu cao cấp của sản phẩm, tạo cảm giác sang trọng.",
+    "prompt": "A slow key zoom with rack focus effect, focus shifting from a blurry luxury ambient background to the sharp, highly detailed front surface of the silk fabric, showcasing its exquisite texture and sheen, subtle light leak, cinematic lighting.",
+    "negative_prompt": "ugly, deformed, mutated, low quality, low resolution, blurry, distorted text, incorrect brand logo, deformed logo, weird shapes, color bleeding, color shifting, neon colors, flashing lights, grainy, noise, bad anatomy, bad lighting, watermark, copyright symbol, username, signature, low frame rate, choppy animation, worst quality, pixelated, 3D render look, CGI look, plastic texture, fake leather look, cheap look, static image, no motion.",
+    "camera_motion": "key-zoom",
+    "duration": 5
+  },
+  {
+    "scene": 3,
+    "image": "product_blue.png",
+    "concept": "Nhân vật đang đứng bên cạnh giường với tư thế thoải mái, ánh sáng chiếu từ phía sau.",
+    "prompt": "Slow panning shot, camera sweeps horizontally across the luxurious silk bed, capturing the character's relaxed posture and the warm glow of the sunset light, elegant lines of the fabric highlighted, high fashion mood.",
+    "negative_prompt": "ugly, deformed, mutated, low quality, low resolution, blurry, distorted text, incorrect brand logo, deformed logo, weird shapes, color bleeding, color shifting, neon colors, flashing lights, grainy, noise, bad anatomy, bad lighting, watermark, copyright symbol, username, signature, low frame rate, choppy animation, worst quality, pixelated, 3D render look, CGI look, plastic texture, fake leather look, cheap look, static image, no motion.",
+    "camera_motion": "pan-slow",
+    "duration": 5
+  },
+  {
+    "scene": 4,
+    "image": "product_blue.png",
+    "concept": "Kết thúc với một cảnh nhìn tổng thể, thể hiện sự sang trọng của sản phẩm.",
+    "prompt": "Seamless cinematic multishot, starting with an extreme close-up detail shot of the silk texture, transitioning smoothly to a medium shot showcasing the elegant layout of the bed, luxurious atmosphere, warm off-white and champagne gold tones, high fashion styling.",
+    "negative_prompt": "ugly, deformed, mutated, low quality, low resolution, blurry, distorted text, incorrect brand logo, deformed logo, weird shapes, color bleeding, color shifting, neon colors, flashing lights, grainy, noise, bad anatomy, bad lighting, watermark, copyright symbol, username, signature, low frame rate, choppy animation, worst quality, pixelated, 3D render look, CGI look, plastic texture, fake leather look, cheap look, static image, no motion.",
+    "camera_motion": "multishot",
+    "duration": 5
+  }
+]
