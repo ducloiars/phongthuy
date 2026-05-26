@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duc Loi AI - Bản Đồ Phễu Bán Hàng Trực Quan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            /* Color codes by step */
+            --color-ads: #f59e0b; /* Orange-Yellow */
+            --color-capture: #3b82f6; /* Blue */
+            --color-upsell: #eab308; /* Gold */
+            --color-downsell: #ec4899; /* Pink-purple */
+            --color-deliver: #10b981; /* Green-Teal */
+            
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 800px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Flow container */
+        .funnel-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        /* Connector arrows */
+        .connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 8px 0;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        .connector::after {
+            content: "↓";
+            font-size: 1.8rem;
+            margin-top: 4px;
+            color: var(--text-muted);
+        }
+
+        .connector.side {
+            align-self: flex-end;
+            margin-right: 15%;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            width: 100%;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+            border-color: #475569;
+        }
+
+        /* Specific card variants */
+        .card-ads::before { background-color: var(--color-ads); }
+        .card-ads:hover { border-color: var(--color-ads); }
+        
+        .card-capture::before { background-color: var(--color-capture); }
+        .card-capture:hover { border-color: var(--color-capture); }
+        
+        .card-upsell::before { background-color: var(--color-upsell); }
+        .card-upsell:hover { border-color: var(--color-upsell); }
+
+        .card-downsell::before { background-color: var(--color-downsell); }
+        .card-downsell:hover { border-color: var(--color-downsell); }
+
+        .card-deliver::before { background-color: var(--color-deliver); }
+        .card-deliver:hover { border-color: var(--color-deliver); }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .tag-ads { background-color: rgba(245, 158, 11, 0.15); color: var(--color-ads); }
+        .tag-capture { background-color: rgba(59, 130, 246, 0.15); color: var(--color-capture); }
+        .tag-upsell { background-color: rgba(234, 179, 8, 0.15); color: var(--color-upsell); }
+        .tag-downsell { background-color: rgba(236, 72, 153, 0.15); color: var(--color-downsell); }
+        .tag-deliver { background-color: rgba(16, 185, 129, 0.15); color: var(--color-deliver); }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .card-purpose {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        /* Detail grids */
+        .card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #334155;
+        }
+
+        .detail-item h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            letter-spacing: 0.05em;
+        }
+
+        .detail-item p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Split paths for upsell / downsell branching */
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .branch-line {
+            height: 30px;
+            width: 2px;
+            background-color: var(--text-muted);
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .branch-line::after {
+            content: "↓";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .branch-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+            .card-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Bản Đồ Phễu Bán Hàng Trực Quan</h1>
+        <p>Hệ thống Tripwire Funnel tối ưu cho Ebook 199k & Gói Đồng Hành 2M</p>
+    </header>
+
+    <main class="funnel-flow">
+        
+        <!-- STEP 1: ADS -->
+        <div class="card card-ads">
+            <div class="card-header">
+                <span class="card-tag tag-ads">Bước 1: Facebook Ads</span>
+                <span style="font-weight: bold; color: var(--color-ads);">Ngân sách: 1M/tháng</span>
+            </div>
+            <h2 class="card-title">Mẫu Quảng Cáo Đánh Thẳng Nỗi Đau</h2>
+            <p class="card-purpose">Mục đích: Lọc chủ shop tự bơi đang chật vật với chi phí tin nhắn đắt đỏ và kéo click về trang Tripwire.</p>
+            <div class="card-details">
+                <div class="detail-item">
+                    <h4>Nội dung chính</h4>
+                    <p>Chia sẻ thật về lỗi target sâu, giới thiệu quy trình 15 phút set camp tối giản, chứng minh bằng ảnh kết quả mess dưới 15k.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Kêu gọi hành động (CTA)</h4>
+                    <p><strong>"Xem quy trình set camp tối giản ngay!"</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">Click-through Rate: 1% - 3% | CPC: ~2.500đ</div>
+
+        <!-- STEP 2: TRIPWIRE -->
+        <div class="card card-capture">
+            <div class="card-header">
+                <span class="card-tag tag-capture">Bước 2: Capture / Tripwire Page</span>
+                <span style="font-weight: bold; color: var(--color-capture);">Tỷ lệ mua: ~3%</span>
+            </div>
+            <h2 class="card-title">Trang Bán Ebook Quy Trình 3S (199.000đ)</h2>
+            <p class="card-purpose">Mục đích: Lọc "người trả tiền thật", thu hồi ngay chi phí quảng cáo ban đầu.</p>
+            <div class="card-details">
+                <div class="detail-item">
+                    <h4>Nội dung trang</h4>
+                    <p>Mô tả chi tiết 3 phần cốt lõi của Ebook, Value Stack bộ quà tặng (10 mẫu content, Checklist gỡ tài khoản), Cam kết hoàn tiền 100% không rủi ro.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Kêu gọi hành động (CTA)</h4>
+                    <p><strong>"Nhận ngay Ebook & Bộ Quà Tặng (199k)"</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">Thanh toán thành công Ebook 199k</div>
+
+        <!-- BRANCHING STEP: UPSELL & DOWNSELL -->
+        <div class="split-container">
+            
+            <!-- BRANCH A: UPSELL (RECOMMENDED) -->
+            <div class="branch">
+                <div class="branch-label">Ưu đãi Upsell xuất hiện ngay sau thanh toán</div>
+                <div class="branch-line"></div>
+                <div class="card card-upsell" style="text-align: left; width: 100%;">
+                    <div class="card-header">
+                        <span class="card-tag tag-upsell">Bước 3A: Upsell Page</span>
+                        <span style="font-weight: bold; color: var(--color-upsell);">Tỷ lệ chuyển đổi: ~20%</span>
+                    </div>
+                    <h2 class="card-title">Gói Đồng Hành Sửa Bài 60 Ngày (+1.800.000đ)</h2>
+                    <p class="card-purpose">Mục đích: Tăng giá trị đơn hàng (LTV) lên mức tối đa ngay lập tức.</p>
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <h4>Nội dung ưu đãi</h4>
+                            <p>Đánh trúng nỗi sợ "tự học nhưng không biết làm đúng hay sai". Đề xuất đồng hành gỡ stuck 1:1 qua Zalo, duyệt camp và bài viết trước khi bấm chạy ads.</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>CTA</h4>
+                            <p><strong>"Tôi muốn nâng cấp lên Gói Đồng Hành 60 ngày"</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BRANCH B: DOWNSELL (FALLBACK) -->
+            <div class="branch">
+                <div class="branch-label">Xuất hiện nếu khách hàng từ chối Upsell 2M</div>
+                <div class="branch-line"></div>
+                <div class="card card-downsell" style="text-align: left; width: 100%;">
+                    <div class="card-header">
+                        <span class="card-tag tag-downsell">Bước 3B: Downsell Page</span>
+                        <span style="font-weight: bold; color: var(--color-downsell);">Tỷ lệ chuyển đổi: ~10%</span>
+                    </div>
+                    <h2 class="card-title">Gói Thiết Kế Bộ Content Sạch (990.000đ)</h2>
+                    <p class="card-purpose">Mục đích: Vớt khách hàng từ chối gói 2M bằng cách cắt bỏ quyền lợi đồng hành setup.</p>
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <h4>Nội dung ưu đãi</h4>
+                            <p>Cung cấp giải pháp thiết kế sẵn 10 mẫu bài viết thương hiệu chuẩn AIDA + 5 ảnh tối ưu để khách tự chạy theo ebook, bỏ hoàn toàn việc setup/kèm 1:1.</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>CTA</h4>
+                            <p><strong>"Nhận gói thiết kế content 990k ngay"</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="connector">Hoàn tất quy trình mua hàng</div>
+
+        <!-- STEP 4: THANK YOU & DELIVER -->
+        <div class="card card-deliver">
+            <div class="card-header">
+                <span class="card-tag tag-deliver">Bước 4: Thank You & Deliver Page</span>
+                <span style="font-weight: bold; color: var(--color-deliver);">Tự động hóa</span>
+            </div>
+            <h2 class="card-title">Trang Cảm Ơn & Kết Nối Chăm Sóc</h2>
+            <p class="card-purpose">Mục đích: Giao sản phẩm tự động và chuyển đổi khách mua hàng vào kênh chăm sóc Zalo/Telegram.</p>
+            <div class="card-details">
+                <div class="detail-item">
+                    <h4>Cơ chế giao hàng</h4>
+                    <p>Sepay tự động quét giao dịch và gửi link tải Ebook qua Email. Link trang cảm ơn hiển thị nút kết nối trực tiếp Zalo để nhận bàn giao hỗ trợ.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>CTA chính trên trang</h4>
+                    <p><strong>"Kết nối Zalo cá nhân nhận hỗ trợ ngay"</strong></p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

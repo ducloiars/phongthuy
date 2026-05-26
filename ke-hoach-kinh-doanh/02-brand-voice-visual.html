@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Profile - Đức Lợi AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background-primary: #0f172a;
+            --color-background-secondary: #1e293b;
+            --color-text-primary: #f8fafc;
+            --color-text-secondary: #94a3b8;
+            --color-accent-green: #1d9e75;
+            --color-accent-orange: #ef9f27;
+            --color-accent-red: #e24b4a;
+            --color-primary: #6366f1;
+            --color-primary-hover: #4f46e5;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--color-background-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--color-text-primary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1.2fr;
+            }
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            height: 100%;
+        }
+
+        .insight-green { border-left: 5px solid var(--color-accent-green); }
+        .insight-orange { border-left: 5px solid var(--color-accent-orange); }
+        .insight-red { border-left: 5px solid var(--color-accent-red); }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Sliding style scale styling */
+        .scale-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .scale-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        .scale-bar-container {
+            position: relative;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 0.25rem 0;
+        }
+
+        .scale-dot {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: #a5b4fc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .tag-avoid {
+            background-color: rgba(226, 75, 74, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(226, 75, 74, 0.2);
+        }
+
+        .tag-use {
+            background-color: rgba(29, 158, 117, 0.1);
+            color: #86efac;
+            border: 1px solid rgba(29, 158, 117, 0.2);
+        }
+
+        .example-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-left: 3px solid var(--color-accent-green);
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--color-accent-green);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .example-content {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            white-space: pre-wrap;
+            font-style: italic;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--color-accent-green);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>ASSP Framework · Agent 02/12</p>
+            <h1>Voice Profile — Đức Lợi AI</h1>
+            <p>Định dạng phong cách viết & nói chuẩn thực chiến cho AI</p>
+        </header>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="copyMarkdown()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                Sao chép Markdown
+            </button>
+            <button class="btn btn-secondary" onclick="downloadMarkdown()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Tải xuống .md
+            </button>
+        </div>
+
+        <div class="grid-2">
+            <!-- Left Card: Description & Scales -->
+            <div class="card insight-green">
+                <h3 class="section-title">Tổng quan phong cách</h3>
+                <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 2rem; color: #a5b4fc; border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                    "Thẳng thắn, ngắn gọn, súc tích, sử dụng ví dụ thực tế liên tưởng sinh động và pha chút hài hước tự nhiên; chia sẻ từ kinh nghiệm và thất bại của chính mình chứ không giáo điều hay hoa mỹ."
+                </p>
+
+                <h3 class="section-title">Tính cách giọng văn</h3>
+                <div class="scale-group">
+                    <div class="scale-item">
+                        <div class="scale-labels">
+                            <span>Nghiêm túc (Formal)</span>
+                            <span>Thân mật (Informal)</span>
+                        </div>
+                        <div class="scale-bar-container">
+                            <div class="scale-dot" style="left: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="scale-item">
+                        <div class="scale-labels">
+                            <span>Ngắn gọn (Concise)</span>
+                            <span>Dài & Chi tiết (Verbose)</span>
+                        </div>
+                        <div class="scale-bar-container">
+                            <div class="scale-dot" style="left: 15%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="scale-item">
+                        <div class="scale-labels">
+                            <span>Thẳng thắn (Direct)</span>
+                            <span>Vòng vo dẫn dắt</span>
+                        </div>
+                        <div class="scale-bar-container">
+                            <div class="scale-dot" style="left: 10%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="scale-item">
+                        <div class="scale-labels">
+                            <span>Lý thuyết (Conceptual)</span>
+                            <span>Thực tế & Ví dụ (Practical)</span>
+                        </div>
+                        <div class="scale-bar-container">
+                            <div class="scale-dot" style="left: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="scale-item">
+                        <div class="scale-labels">
+                            <span>Nghiêm túc</span>
+                            <span>Hài hước</span>
+                        </div>
+                        <div class="scale-bar-container">
+                            <div class="scale-dot" style="left: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Card: Word Bank & Structure -->
+            <div class="card insight-orange">
+                <h3 class="section-title">Cấu trúc bài viết chuẩn</h3>
+                <ul style="list-style: none; margin-bottom: 2rem;">
+                    <li style="margin-bottom: 1rem; position: relative; padding-left: 1.5rem;">
+                        <strong style="color: var(--color-primary);">Mở đầu:</strong> Đập thẳng vào nỗi đau hoặc đưa ra câu hỏi/tuyên bố thực tế phũ phàng gây tò mò.
+                    </li>
+                    <li style="margin-bottom: 1rem; position: relative; padding-left: 1.5rem;">
+                        <strong style="color: var(--color-primary);">Thân bài:</strong> Viết câu ngắn, ngắt đoạn nhiều dòng liên tục. Sử dụng ví dụ liên tưởng đời thường để giải thích các thuật ngữ Ads khô khan.
+                    </li>
+                    <li style="margin-bottom: 1rem; position: relative; padding-left: 1.5rem;">
+                        <strong style="color: var(--color-primary);">Kết bài:</strong> Tóm gọn bài học xương máu, CTA nhẹ nhàng hoặc câu hỏi mở bàn luận.
+                    </li>
+                </ul>
+
+                <h3 class="section-title">Thuật ngữ & Từ khoá hay dùng</h3>
+                <div class="tag-container" style="margin-bottom: 1.5rem;">
+                    <span class="tag tag-use">đốt tiền</span>
+                    <span class="tag tag-use">mất tiền ngu</span>
+                    <span class="tag tag-use">chẳng có gì cao siêu</span>
+                    <span class="tag tag-use">thực tế thì</span>
+                    <span class="tag tag-use">tự bơi</span>
+                    <span class="tag tag-use">lên camp</span>
+                    <span class="tag tag-use">die tài khoản</span>
+                    <span class="tag tag-use">kháng page</span>
+                    <span class="tag tag-use">hold tiền</span>
+                    <span class="tag tag-use">cắn tiền</span>
+                    <span class="tag tag-use">cắn thốc</span>
+                </div>
+
+                <h3 class="section-title">Điều tuyệt đối tránh</h3>
+                <div class="tag-container">
+                    <span class="tag tag-avoid">Viết hoa mỹ / bóng bẩy</span>
+                    <span class="tag tag-avoid">Nói đạo lý giáo điều</span>
+                    <span class="tag tag-avoid">Teencode / Quá nhiều icon</span>
+                    <span class="tag tag-avoid">Câu dài lê thê phức tạp</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Examples section -->
+        <div class="card" style="margin-top: 2rem;">
+            <h3 class="section-title">3 Ví dụ minh hoạ thực tế</h3>
+            
+            <div class="example-box">
+                <div class="example-title">Ví dụ 1: Bài đăng Facebook chia sẻ kinh nghiệm</div>
+                <div class="example-content">Nửa đêm qua tôi ngồi lên camp cho tệp đầm thiết kế mới. Sáng mở mắt ra, việc đầu tiên là với cái điện thoại check ads. Kết quả: cắn tiền thốc nhưng mess báo về 45k/tin.
+
+Nói thẳng ra là xót ruột. Thực tế thì ai chạy ads cũng phải trải qua những lúc mất tiền ngu như thế này. Chẳng có gì cao siêu cả.
+
+Thay vì ngồi đó than thân trách phận hay đi đổ lỗi cho Facebook, tôi tắt ngay nhóm ads đắt, thay bằng một bộ ảnh chụp cận cảnh chất vải và viết lại dòng tiêu đề tập trung vào khuyết điểm bắp tay to của khách. Chiều check lại, mess đã kéo về mức 12k/tin.
+
+Sự thật là: Target sâu hay nông không quan trọng bằng việc hình ảnh và nội dung của bạn có chạm trúng cái khách hàng đang lo lắng hay không. Các chủ shop tự bơi ngoài kia có hay bị tình trạng cắn thốc ngân sách mà không ra đơn thế này không?</div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Ví dụ 2: Bài chia sẻ kiến thức trên Fanpage</div>
+                <div class="example-content">MÙ CÔNG NGHỆ THÌ CÓ CHẠY ADS THỜI TRANG ĐƯỢC KHÔNG?
+
+Câu trả lời là: Được, nếu bạn bỏ tư duy 'phải target sâu mới ra đơn'. 
+
+Thực tế thì việc set camp không có gì cao siêu cả. Bạn chỉ mất tiền ngu khi cố gắng nhồi nhét hàng tá sở thích phức tạp vào nhóm quảng cáo khiến Facebook phân phối sai lệch. 
+
+Đối với thời trang, hình ảnh sản phẩm và nội dung bài viết mới chính là bộ lọc khách hàng tốt nhất. Bạn bán đầm giấu bụng mỡ, chụp cái ảnh thật rõ dáng, viết tiêu đề đánh thẳng vào nỗi sợ đó. Tự khắc người có nhu cầu sẽ dừng lại bấm nút nhắn tin.
+
+Tôi đã đính kèm toàn bộ quy trình click chuột chuẩn chỉ cùng video 15 phút tại tài liệu dưới đây để các chủ shop tự làm theo được ngay.</div>
+            </div>
+
+            <div class="example-box" style="margin-bottom: 0;">
+                <div class="example-title">Ví dụ 3: Chat tư vấn / Hỗ trợ kỹ thuật qua Zalo</div>
+                <div class="example-content">Chào bạn, page của bạn bị báo đỏ là do dính lỗi chính sách hình ảnh rồi. Thực tế thì lỗi này rất phổ biến khi chạy hàng thời trang. Đừng lo lắng quá, bạn làm sạch profile trình duyệt rồi gửi kháng page theo link kháng 302 tôi gửi dưới này nhé. Có gì stuck cứ nhắn tôi hỗ trợ trực tiếp.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Đã sao chép vào bộ nhớ tạm!</div>
+
+    <script>
+        // Placeholder for copying the actual MD content
+        const markdownContent = ``; // In real file, we put markdown here.
+
+        function copyMarkdown() {
+            fetch('02-brand-voice.md')
+            .then(res => res.text())
+            .then(text => {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast();
+                });
+            })
+            .catch(() => {
+                // fallback
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+
+        function downloadMarkdown() {
+            window.open('02-brand-voice.md', '_blank');
+        }
+    </script>
+</body>
+</html>

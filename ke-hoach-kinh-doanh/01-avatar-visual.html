@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chân dung Khách hàng Mơ ước - ASSP Avatar Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background-primary: #0f172a;
+            --color-background-secondary: #1e293b;
+            --color-text-primary: #f8fafc;
+            --color-text-secondary: #94a3b8;
+            --color-accent-green: #1d9e75;
+            --color-accent-orange: #ef9f27;
+            --color-accent-red: #e24b4a;
+            --color-primary: #6366f1;
+            --color-primary-hover: #4f46e5;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--color-background-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--color-text-primary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1.5fr;
+            }
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            height: 100%;
+        }
+
+        .insight-green { border-left: 5px solid var(--color-accent-green); }
+        .insight-orange { border-left: 5px solid var(--color-accent-orange); }
+        .insight-red { border-left: 5px solid var(--color-accent-red); }
+
+        .avatar-profile {
+            text-align: center;
+        }
+
+        .avatar-img-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        }
+
+        .avatar-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .avatar-title {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-details {
+            text-align: left;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1.5rem;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .profile-label {
+            color: var(--color-text-secondary);
+        }
+
+        .profile-val {
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: #a5b4fc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .tag-danger {
+            background-color: rgba(226, 75, 74, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(226, 75, 74, 0.2);
+        }
+
+        .tag-success {
+            background-color: rgba(29, 158, 117, 0.1);
+            color: #86efac;
+            border: 1px solid rgba(29, 158, 117, 0.2);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        li::before {
+            content: "•";
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .source-badge {
+            font-size: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            color: var(--color-text-secondary);
+            margin-left: 0.5rem;
+        }
+
+        .objection-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .objection-q {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .objection-root {
+            font-size: 0.85rem;
+            color: var(--color-accent-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .objection-a {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .quote-bubble {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1rem;
+            font-style: italic;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .quote-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.02) transparent;
+            display: block;
+            width: 0;
+        }
+
+        .quote-source {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.8rem;
+            text-align: right;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .timeline-time {
+            font-weight: 600;
+            color: var(--color-primary);
+            min-width: 80px;
+        }
+
+        .timeline-desc {
+            color: var(--color-text-secondary);
+        }
+
+        .b-a-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .b-a-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .b-a-box {
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .b-a-before {
+            background-color: rgba(226, 75, 74, 0.05);
+            border: 1px solid rgba(226, 75, 74, 0.1);
+        }
+
+        .b-a-after {
+            background-color: rgba(29, 158, 117, 0.05);
+            border: 1px solid rgba(29, 158, 117, 0.1);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--color-accent-green);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>ASSP Framework · Agent 01/12</p>
+            <h1>Dream Buyer Avatar</h1>
+            <p>Sản phẩm: Ebook Quy trình quảng cáo thời trang dưới 15k/mess</p>
+        </header>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="copyMarkdown()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                Sao chép Markdown
+            </button>
+            <button class="btn btn-secondary" onclick="downloadMarkdown()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Tải xuống .md
+            </button>
+        </div>
+
+        <div class="grid-2">
+            <!-- Left Column: Avatar Profile -->
+            <div class="card insight-green">
+                <div class="avatar-profile">
+                    <div class="avatar-img-placeholder">NL</div>
+                    <h2 class="avatar-name">Nguyễn Thị Lan</h2>
+                    <p class="avatar-title">Chủ shop quần áo thời trang nữ tự doanh</p>
+                    
+                    <div class="profile-details">
+                        <div class="profile-row">
+                            <span class="profile-label">Tuổi:</span>
+                            <span class="profile-val">28 tuổi</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label">Gia đình:</span>
+                            <span class="profile-val">Đã kết hôn, 1 con nhỏ (3 tuổi)</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label">Địa lý:</span>
+                            <span class="profile-val">Hà Nội / TP. Hồ Chí Minh</span>
+                        </div>
+                        <div class="profile-row">
+                            <span class="profile-label">Thu nhập:</span>
+                            <span class="profile-val">15 - 20 triệu/tháng (bấp bênh)</span>
+                        </div>
+                        <div class="profile-row" style="margin-top: 1rem; border-top: 1px dashed var(--glass-border); padding-top: 1rem; flex-direction: column; text-align: left;">
+                            <span class="profile-label" style="margin-bottom: 0.5rem;">Mô tả một câu:</span>
+                            <span class="profile-val" style="line-height: 1.4; font-style: italic;">"Một bà mẹ bỉm sữa tự khởi nghiệp kinh doanh thời trang online, phải tự lo mọi việc từ nhập hàng, đóng gói đến tự mày mò chạy quảng cáo trong nỗi lo sợ tiền ngân sách bị cắn thốc mà đơn hàng lại nhỏ giọt."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Problems and Dream Outcome -->
+            <div class="card insight-orange">
+                <h3 class="section-title">Vấn đề họ đang gặp & đã thử gì</h3>
+                <ul>
+                    <li>Chi phí tin nhắn quá đắt đỏ (&gt;25k/mess), ngân sách cắn thốc nhưng không ra đơn.</li>
+                    <li>Tài khoản quảng cáo bị khóa (die tài khoản), die Fanpage liên tục mà không rõ lý do.</li>
+                    <li>Bí ý tưởng content, chỉ biết viết xả kho/khuyến mãi làm khách hàng lướt qua luôn.</li>
+                    <li>Bảng chỉ số ads phức tạp như ma trận, không biết tối ưu chỉ số nào.</li>
+                </ul>
+                <div class="tag-container" style="margin-bottom: 1.5rem;">
+                    <span class="tag tag-danger">Lo lắng</span>
+                    <span class="tag tag-danger">Mơ hồ</span>
+                    <span class="tag tag-danger">Tiếc tiền</span>
+                    <span class="tag tag-danger">Tự bơi</span>
+                </div>
+
+                <h3 class="section-title" style="border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">Mơ ước & Sự thay đổi danh tính</h3>
+                <ul>
+                    <li><strong>Dream Outcome:</strong> Chi phí mess dưới 15k, tự setup chiến dịch chạy trơn tru trong 60 phút, biết rõ tiền ads tiêu có hiệu quả không.</li>
+                    <li><strong>Thay đổi cảm xúc:</strong> Từ lo lắng, mơ hồ sang tự tin làm chủ công cụ và dòng tiền.</li>
+                    <li><strong>Danh tính mới:</strong> Trở thành người phụ nữ tự chủ tài chính, vận hành shop có lãi mang về chăm sóc gia đình.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-2" style="grid-template-columns: 1.5fr 1fr;">
+            <!-- Left Column: Objections & Slang -->
+            <div class="card">
+                <h3 class="section-title">Lý do họ chưa chịu mua — Objections List</h3>
+                
+                <div class="objection-box">
+                    <p class="objection-q">"Liệu tôi mù công nghệ có tự làm theo được không?"</p>
+                    <p class="objection-root">Gốc rễ thật: Sợ mình kém cỏi, mua về đọc không hiểu rồi bỏ xó phí tiền.</p>
+                    <p class="objection-a">👉 Giải quyết bằng: Video hướng dẫn thao tác thực tế dài 15 phút (cầm tay chỉ việc click chuột làm theo) và cam kết hỗ trợ qua Zalo.</p>
+                </div>
+
+                <div class="objection-box">
+                    <p class="objection-q">"Ebook này có thực chiến thật không hay lại lý thuyết suông?"</p>
+                    <p class="objection-root">Gốc rễ thật: Sợ bị lừa mua tài liệu cóp nhặt trên mạng không áp dụng được.</p>
+                    <p class="objection-a">👉 Giải quyết bằng: 15 mẫu content "điền vào chỗ trống" thực tế cho thời trang và bảng ngưỡng tối ưu chỉ số rõ ràng.</p>
+                </div>
+
+                <div class="objection-box">
+                    <p class="objection-q">"Quảng cáo bị die/khóa tài khoản thì cuốn sách này có cứu được không?"</p>
+                    <p class="objection-root">Gốc rễ thật: Sợ bị bỏ rơi khi gặp lỗi kỹ thuật nghiêm trọng nhất của Facebook Ads.</p>
+                    <p class="objection-a">👉 Giải quyết bằng: Checklist phao cứu sinh gỡ lỗi tài khoản đính kèm ở cuối và hỗ trợ tư vấn gỡ lỗi trực tiếp 1:1 qua Zalo.</p>
+                </div>
+
+                <p style="font-weight: 600; margin-top: 1rem;">
+                    ⚠️ Objection nặng nhất: <span style="color: var(--color-accent-orange);">Sợ mù công nghệ mua về không tự làm được.</span>
+                </p>
+            </div>
+
+            <!-- Right Column: Quotes & Slang -->
+            <div class="card">
+                <h3 class="section-title">Thuật ngữ & Ngôn từ thực tế</h3>
+                <div class="tag-container" style="margin-bottom: 2rem;">
+                    <span class="tag">lên camp</span>
+                    <span class="tag">die tài khoản</span>
+                    <span class="tag">kháng page</span>
+                    <span class="tag">hold tiền</span>
+                    <span class="tag">cắn tiền</span>
+                    <span class="tag">cắn thốc</span>
+                    <span class="tag">bùng mess</span>
+                    <span class="tag">tiền mess đắt đỏ</span>
+                </div>
+
+                <h3 class="section-title">Câu nói điển hình</h3>
+                <div class="quote-bubble">
+                    "Chạy quảng cáo ra tin nhắn thì nhiều mà chốt đơn không được bao nhiêu, tiền mess thì đắt đỏ mà toàn khách hỏi xong im lặng."
+                    <div class="quote-source">— Comment trên Group cộng đồng Facebook Ads</div>
+                </div>
+                <div class="quote-bubble">
+                    "Tài khoản vừa lên camp đã báo đỏ, die page liên tục không hiểu lý do vì sao."
+                    <div class="quote-source">— Post hỏi đáp trong Nghiện Tự Chạy Ads</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Before & After and Timeline -->
+        <div class="grid-2">
+            <!-- Left Card: Before & After -->
+            <div class="card">
+                <h3 class="section-title">Cuộc sống Trước & Sau khi dùng giải pháp</h3>
+                <div class="b-a-grid">
+                    <div class="b-a-box b-a-before">
+                        <h4 style="color: var(--color-accent-red); margin-bottom: 0.5rem;">TRƯỚC (BEFORE)</h4>
+                        <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+                            <strong>Sở hữu:</strong> Tài khoản bị khóa, camp đắt đỏ, đơn hàng thưa thớt.<br>
+                            <strong>Cảm thấy:</strong> Lo lắng, mệt mỏi, bất lực và xót xa nhìn ngân sách trôi.<br>
+                            <strong>Một ngày:</strong> Đêm cày cuốc set camp, ngày canh chỉ số, đóng vài ba đơn.<br>
+                            <strong>Vị thế:</strong> Người thân ái ngại, nghĩ kinh doanh online không có tương lai.
+                        </p>
+                    </div>
+                    <div class="b-a-box b-a-after">
+                        <h4 style="color: var(--color-accent-green); margin-bottom: 0.5rem;">SAU (AFTER)</h4>
+                        <p style="font-size: 0.9rem; color: var(--color-text-secondary);">
+                            <strong>Sở hữu:</strong> Quy trình lên camp sạch chuẩn chỉ, mess dưới 15k, hỗ trợ 1:1.<br>
+                            <strong>Cảm thấy:</strong> Tự tin, an tâm, làm chủ được dòng tiền quảng cáo.<br>
+                            <strong>Một ngày:</strong> Dành 60 phút sáng check ads, ngày lo đóng hàng/chốt đơn, tối thảnh thơi.<br>
+                            <strong>Vị thế:</strong> Gia đình nể phục vì tự tay vận hành shop có lãi mang về nuôi con.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Card: Timeline & Golden Hours -->
+            <div class="card">
+                <h3 class="section-title">Một ngày bình thường & Khung giờ tiếp cận</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">Sáng 7:00</div>
+                        <div class="timeline-desc">Thức dậy check ads ngay trên điện thoại xem mess đắt hay rẻ, có bị khóa nick không. Check tin nhắn.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Trưa 12:00</div>
+                        <div class="timeline-desc">Vừa ăn trưa vừa lướt MXH, check nhanh tài khoản.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Chiều 14:00</div>
+                        <div class="timeline-desc">Đóng đơn hàng, trả lời tin nhắn của khách, làm việc với shipper.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Tối 21:00</div>
+                        <div class="timeline-desc">Cho con ngủ xong, có thời gian riêng tư bắt đầu lướt group Facebook chia sẻ kinh nghiệm kinh doanh, thuế.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Đêm 23:00</div>
+                        <div class="timeline-desc">Cùi cụi ngồi lên camp mới, viết content mới trong yên tĩnh.</div>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; font-weight: 500; font-size: 0.95rem;">
+                    ⏰ Thời điểm vàng tiếp cận: <span style="color: var(--color-primary);">21h00 - 1h00 sáng</span> (khung giờ họ rảnh rỗi và tìm giải pháp sau khi con ngủ).
+                </p>
+            </div>
+        </div>
+
+        <!-- Messaging & Hook -->
+        <div class="card insight-green" style="margin-top: 2rem;">
+            <h3 class="section-title">Chiến lược thông điệp tiếp cận</h3>
+            <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; color: #a5b4fc; font-style: italic;">
+                "CẢNH BÁO: Đừng tiếp tục 'cúng tiền' cho Facebook Ads trong mơ hồ nữa! Khám phá ngay quy trình đột phá giúp chủ shop thời trang tự bơi lên camp sạch, tối ưu mess dưới 15K và có lãi ngay lập tức!"
+            </p>
+            <div style="font-size: 0.95rem; color: var(--color-text-secondary);">
+                <p><strong>Góc tiếp cận tốt nhất:</strong> Pain-driven (Đánh thẳng vào nỗi đau tự bơi chạy ads đắt đỏ, die tài khoản liên tục và mơ hồ về hiệu quả chi phí).</p>
+                <p style="margin-top: 0.5rem;"><strong>Bằng chứng tin cậy nhất:</strong> Ảnh chụp màn hình chiến dịch thực tế có chi phí mess rẻ dưới 15k và các đánh giá thực tế từ chủ shop thời trang khác.</p>
+                <p style="margin-top: 0.5rem;"><strong>Kênh tiếp cận đầu tiên:</strong> Facebook Ads dẫn link về Zalo hỗ trợ.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Đã sao chép vào bộ nhớ tạm!</div>
+
+    <script>
+        const markdownContent = `# ASSP DREAM BUYER AVATAR — DUC LOI AI
+ Được thiết kế bởi ASSP Framework
+ ═══════════════════════════════════════════════════
+
+📊 NGUỒN DATA ĐƯỢC DÙNG:
+✅ Data thật: Trạng thái chưa bán, chủ shop thời trang nhỏ lẻ tự chạy quảng cáo (nhỏ lẻ, tự làm hết mọi việc), chưa chạy hoặc đã chạy một ít nhưng chưa hiệu quả, mong muốn tối ưu chi phí ads dưới 15k/mess, giảm chi phí/đơn hàng và có lãi thực tế mang về cho gia đình.
+🔍 AI Research: Phân tích hành vi, pain points và slang của dân chạy quảng cáo thời trang tại Việt Nam từ tài liệu quy-trinh-ads-thoi-trang.md và các cộng đồng Ads Facebook lớn.
+⚠️ Giả định: Chân dung khách hàng được xây dựng trên giả định ban đầu và cần được validate thực tế khi bắt đầu bán và tiếp cận.
+
+▸ NHÂN VẬT AVATAR
+Tên: Nguyễn Thị Lan (Lan)  Tuổi: 28
+Nghề: Chủ shop quần áo thời trang nữ online tự doanh  Thu nhập: 15 - 20 triệu/tháng (bấp bênh)
+Gia đình: Đã kết hôn, có 1 con nhỏ 3 tuổi  Địa lý: Hà Nội / TP. Hồ Chí Minh
+Mô tả một câu: Một bà mẹ bỉm sữa tự khởi nghiệp kinh doanh thời trang online, phải tự lo mọi việc từ nhập hàng, đóng gói đến tự mày mò chạy quảng cáo trong nỗi lo sợ tiền ngân sách bị cắn thốc mà đơn hàng lại nhỏ giọt.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ HỌ TỤ TẬP Ở ĐÂU — KÊNH TIẾP CẬN
+
+Nơi tụ tập online:
+→ Các group Facebook lớn về quảng cáo và kinh doanh: Hội tự chạy quảng cáo Facebook, Cộng đồng Facebook Ads Việt Nam, Nghiện Tự Chạy Ads, Cộng đồng kinh doanh thời trang.
+→ Các group Zalo hỗ trợ kỹ thuật, chia sẻ nguồn hàng, thuế và thủ tục kinh doanh cho doanh nghiệp nhỏ.
+→ Các kênh YouTube hướng dẫn chạy quảng cáo Facebook thực chiến, tối ưu ngân sách.
+
+Follow và tin tưởng:
+→ Các chuyên gia hướng dẫn ads thực chiến có tiếng nói giản dị, không khoe mẽ (phù hợp với người thích sự thực tế, bình dân).
+→ Nguồn thông tin tự tìm kiếm trên Google/YouTube khi gặp sự cố kỹ thuật.
+
+Kênh giao tiếp ưa thích: Zalo (kênh hỗ trợ 1:1 trực tiếp để gỡ stuck nhanh).
+
+→ ỨNG DỤNG: Chạy quảng cáo bài viết (nhắm tệp rộng/vừa) trên Facebook, sử dụng ngôn từ bình dân, thực tế, đưa ra giải pháp giải quyết trực tiếp sự cố kỹ thuật và tối ưu chi phí. Hỗ trợ, tư vấn trực tiếp qua Zalo để xây dựng lòng tin tuyệt đối.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ VẤN ĐỀ HỌ ĐANG GẶP VÀ ĐÃ THỬ GÌ
+
+Đang stuck:
+• Chi phí mỗi tin nhắn quá đắt đỏ (vượt quá 25.000đ - 30.000đ/mess), ngân sách cắn thốc nhưng không thấy đơn đâu.
+• Tài khoản quảng cáo bị khóa (die tài khoản), die Fanpage liên tục mà không biết lý do và không biết cách kháng nghị.
+• Bí ý tưởng viết bài quảng cáo, các bài đăng xả kho/khuyến mãi lặp đi lặp lại khiến khách hàng lướt qua luôn mà không tương tác.
+• Bảng chỉ số quảng cáo của Facebook quá phức tạp như một "ma trận", không biết chỉ số nào đắt, chỉ số nào rẻ để tối ưu.
+
+Đã thử nhưng thất vọng:
+• Tự học qua YouTube/khóa học miễn phí — thất vọng vì kiến thức quá rộng, lý thuyết cũ, áp dụng vào thực tế năm 2026 thì tài khoản bị khóa liên tục.
+• Thuê dịch vụ chạy ads ngoài — thất vọng vì phí dịch vụ đắt đỏ, không cam kết doanh thu, và không hiểu sâu về sản phẩm của shop bằng chính họ.
+
+Cảm xúc dominant: Lo lắng (Fear) & Mơ hồ (Confusion)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ HỌ ĐANG MƠ ƯỚC ĐIỀU GÌ
+
+Dream outcome cụ thể: Đạt chi phí dưới 15.000đ/mess, tự lên chiến dịch ads trơn tru trong 60 phút mà không bị lỗi kỹ thuật, biết rõ tiền quảng cáo của mình tiêu có hiệu quả hay không để tối ưu được lợi nhuận.
+Cảm xúc muốn cảm nhận: Tự tin làm chủ công cụ, yên tâm không còn sợ hãi mỗi khi mở bảng quản lý quảng cáo ra xem.
+Danh tính mới muốn có: Từ một chủ shop luôn lo lắng, mơ hồ trở thành một người tự tin làm chủ công việc kinh doanh và tài chính của mình.
+Muốn người khác thấy/nói: Là một người phụ nữ tự chủ, giỏi giang, tự kinh doanh nuôi sống bản thân và mang thêm tiền về chăm lo tốt cho gia đình.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ NỖI SỢ THẬT SỰ BÊN TRONG
+
+Bề mặt họ nói ra: "Tài liệu này liệu có hiệu quả không?", "Tôi sợ mình không rành máy tính thì đọc xong cũng không tự làm được."
+Thật sự bên dưới:
+• Sợ mua phải tài liệu lý thuyết suông, tốn 199.000đ vô ích và tự xác nhận mình kém cỏi.
+• Sợ tốn thêm tiền chạy thử thực tế nhưng ads vẫn đắt và phát sinh lỗ nặng hơn.
+• Sợ không ai hỗ trợ khi gặp lỗi kỹ thuật thực tế (bị die tài khoản, lỗi thanh toán...).
+Sâu nhất không nói với ai: Lo sợ công việc kinh doanh online thất bại hoàn toàn, phải từ bỏ ước mơ tự chủ tài chính để quay lại đi làm thuê hoặc phụ thuộc kinh tế vào chồng.
+
+→ DÙNG TRONG COPY: "Tôi biết bạn sợ cảm giác thức dậy mở điện thoại ra là thấy tài khoản bị hạn chế quảng cáo đỏ lòm..." hoặc "Tôi biết bạn lo lắng mình mù công nghệ thì có tự lên camp nổi không..." để đồng cảm trước khi đưa ra giải pháp video thao tác 15 phút cầm tay chỉ việc và hỗ trợ Zalo 1:1.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ NHỮNG CÂU HỌ HAY NÓI
+
+Họ mô tả vấn đề bằng:
+→ "Chạy ads ra tin nhắn thì nhiều mà chốt đơn không được bao nhiêu."
+→ "Tiền mess thì đắt đỏ, cắn thốc ngân sách mà không ra đơn."
+→ "Vừa lên camp đã bị khóa tài khoản quảng cáo, die page liên tục."
+→ "Nhìn cái bảng chỉ số quảng cáo như ma trận, không biết tối ưu ở đâu."
+→ "Cứ một lúc lại phải vào canh ads xem đắt hay rẻ mà xót hết cả ruột."
+
+Từ khoá cảm xúc: xót tiền, mơ hồ, cúng tiền cho Facebook, tự bơi, die camp.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ CUỘC SỐNG TRƯỚC VÀ SAU KHI MUA
+
+BEFORE:
+• Have: Một đống tài khoản bị khóa, những chiến dịch ads đắt đỏ, và một cuốn sổ ghi chép đơn hàng thưa thớt.
+• Feel: Lo lắng, mệt mỏi, bất lực và tiếc tiền khi nhìn ngân sách trôi đi vô ích.
+• Average day: Nửa đêm cùi cụi ngồi lên camp mới, sáng thức dậy việc đầu tiên là check ads xem mess có rẻ không, cả ngày lướt mạng canh chỉ số, chiều đóng vài ba đơn hàng nhỏ giọt trong sự uể oải.
+• Status: Người thân ái ngại, nghĩ rằng cô ấy đang tốn thời gian và tiền bạc vào việc kinh doanh online không có tương lai.
+
+AFTER:
+• Have: Một quy trình lên camp sạch chuẩn chỉ trong 60 phút, kiểm soát tốt chỉ số mess dưới 15k, và một group/trợ lý Zalo hỗ trợ gỡ rối ngay khi gặp sự cố.
+• Feel: Tự tin, an tâm, làm chủ được dòng tiền và hào hứng khi thấy số lượng tin nhắn đổ về đều đặn.
+• Average day: Dành 60 phút buổi sáng check và tối ưu ads theo checklist nhanh, thời gian còn lại tập trung đóng hàng và tư vấn khách chốt đơn, tối muộn thảnh thơi dành thời gian cho gia đình mà không cần canh ads.
+• Status: Được gia đình công nhận, chồng nể phục vì tự tay vận hành shop có lãi mang về chăm lo cho con cái.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ MỘT NGÀY BÌNH THƯỜNG CỦA HỌ
+
+Sáng [7 giờ]: Thức dậy, việc đầu tiên là với lấy điện thoại check chỉ số ads đêm qua xem mess rẻ hay đắt, có bị die tài khoản không, check inbox khách nhắn muộn.
+Trưa: Vừa ăn cơm vừa lướt mạng, thỉnh thoảng vào check trình quản lý quảng cáo xem ads cắn tiền thế nào.
+Chiều [14 giờ]: Đóng gói các đơn hàng phát sinh, check tin nhắn khách trên fanpage, gửi đơn cho shipper.
+Tối [21 giờ]: Cho con ngủ xong, dành thời gian rảnh riêng tư để lướt các group Facebook chia sẻ kinh nghiệm kinh doanh, quảng cáo, thuế để tìm giải pháp.
+Nửa đêm [23 giờ - 1 giờ sáng]: Ngồi cùi cụi lên camp mới, viết bài content mới, chuẩn bị ảnh sản phẩm để chạy ads cho ngày hôm sau.
+
+→ THỜI ĐIỂM VÀNG ĐỂ TIẾP CẬN: Khung giờ tối muộn từ 21h00 - 1h00 sáng (khi họ đã xong việc nhà, có thời gian riêng tư tập trung tìm hiểu giải pháp) và khung giờ trưa từ 11h30 - 13h30.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ ĐIỀU GÌ KHIẾN HỌ VUI VÀ KỂ CHO NGƯỜI KHÁC
+
+Điều khiến họ vui và kể người khác:
+• Khoảnh khắc tự tay lên camp đầu tiên hoạt động ổn định, cắn tiền mượt mà và ra tin nhắn rẻ dưới 15k.
+• Khoảnh khắc được hỗ trợ trực tiếp 1:1 gỡ đúng lỗi kỹ thuật.
+• Nhận được đơn hàng đầu tiên từ chiến dịch tự chạy ads.
+→ ỨNG DỤNG VÀO CUSTOMER JOURNEY: Thiết lập luồng hỗ trợ Zalo/Telegram Bot cực nhanh cho khách hàng ngay khi mua ebook. Đưa ra các mốc checklist nhỏ như "Lên camp thành công trong 60 phút" -> khuyến khích họ chụp màn hình kết quả rẻ/nhiều đơn chia sẻ lại để nhận thêm tài liệu quà tặng (Gamification/Affiliate referral).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ LÝ DO HỌ CHƯA CHỊU MUA — OBJECTIONS LIST
+
+Khi sắp mua, họ hay do dự vì:
+
+❓ "Liệu tôi mù công nghệ có tự làm theo được không?"
+   Gốc rễ thật: Sợ mình kém cỏi, mua về đọc không hiểu rồi bỏ xó phí tiền.
+   → Cần address bằng: Video hướng dẫn thao tác thực tế dài 15 phút (cầm tay chỉ việc click chuột làm theo) và cam kết hỗ trợ qua Zalo.
+
+❓ "Ebook này có thực chiến thật không hay lại lý thuyết suông?"
+   Gốc rễ thật: Sợ bị lừa mua tài liệu cóp nhặt trên mạng không có giá trị áp dụng.
+   → Cần address bằng: Các mẫu content "điền vào chỗ trống" thực tế cho ngành thời trang và các bảng chỉ số ngưỡng an toàn để tối ưu ngay.
+
+❓ "Quảng cáo bị die/khóa tài khoản thì cuốn sách này có giúp được gì không?"
+   Gốc rễ thật: Sợ bị bỏ rơi khi gặp lỗi kỹ thuật nghiêm trọng nhất của Facebook Ads.
+   → Cần address bằng: Checklist phao cứu sinh gỡ lỗi tài khoản đính kèm ở cuối và hỗ trợ tư vấn gỡ lỗi trực tiếp 1:1.
+
+Objection nặng nhất cần address đầu tiên:
+→ Sợ "mù công nghệ" mua về không làm được -> Nhấn mạnh vào video thao tác 15 phút chỉ việc bắt chước làm theo và cam kết hỗ trợ qua Zalo nếu bị stuck.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ CÁCH NÓI CHUYỆN VỚI HỌ ĐỂ BÁN HÀNG
+
+Hook:
+"CẢNH BÁO: Đừng tiếp tục 'cúng tiền' cho Facebook Ads trong mơ hồ nữa! Khám phá ngay quy trình đột phá giúp chủ shop thời trang tự bơi lên camp sạch, tối ưu mess dưới 15K và có lãi ngay lập tức!"
+
+Angle tốt nhất: Pain-driven (Đánh vào nỗi đau tự bơi chạy ads đắt đỏ, die tài khoản liên tục và mơ hồ về hiệu quả chi phí).
+→ Vì: Tệp chủ shop nhỏ lẻ tự bơi cực kỳ xót tiền quảng cáo và dễ bị nản lòng bởi các lỗi kỹ thuật phức tạp của Facebook. Nhấn mạnh vào nỗi đau này và đưa ra giải pháp tinh gọn sẽ chạm đúng tâm lý của họ nhất.
+
+Proof point họ tin nhất: Kết quả chiến dịch thực tế (ảnh chụp màn hình mess dưới 15k/đơn hàng rẻ) và đánh giá thực tế của các chủ shop thời trang khác đã tự chạy thành công.
+Kênh nên chạy đầu tiên: Facebook Ads (qua bài viết trên fanpage và dẫn link hoặc kêu gọi nhắn tin Zalo) vì đây chính là nơi họ đang hoạt động mỗi ngày.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ TÓM TẮT CHÂN DUNG KHÁCH HÀNG
+
+Nguyễn Thị Lan là một chủ shop thời trang nhỏ lẻ 28 tuổi tại Hà Nội, đang phải tự gồng gánh mọi công việc của shop để tiết kiệm chi phí. Hằng ngày, Lan lướt mạng xã hội liên tục để canh quảng cáo, đóng gói đơn hàng và tự mày mò lên camp vào lúc nửa đêm khi con đã ngủ. Nỗi ám ảnh lớn nhất của Lan là cảnh tượng tài khoản bị hạn chế quảng cáo báo đỏ lòm và chi phí tin nhắn tăng vọt cắn thốc tiền mà không có đơn. Cô mơ ước có thể kiểm soát tốt dòng tiền quảng cáo dưới 15k/mess để mang lại nguồn lợi nhuận ổn định chăm lo cho gia đình. Lan rất ngại các thuật ngữ công nghệ phức tạp và mong muốn có một quy trình cầm tay chỉ việc cực kỳ dễ làm, có video trực quan để bắt chước và có người hỗ trợ giải đáp trực tiếp qua Zalo mỗi khi gặp sự cố.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+        function copyMarkdown() {
+            navigator.clipboard.writeText(markdownContent).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 2000);
+            });
+        }
+
+        function downloadMarkdown() {
+            const blob = new Blob([markdownContent], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '01-avatar.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

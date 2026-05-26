@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Thức 3S Ads Thời Trang - Quy Trình Setup Camp Sạch & Tối Ưu Mess Dưới 15K</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-card: #161F30;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --accent-blue: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --accent-purple: #8B5CF6;
+            --accent-orange: #F97316;
+            --accent-red: #EF4444;
+            --accent-green: #10B981;
+            --border-color: #232D42;
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Top Alert Bar */
+        .alert-bar {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            color: #FFF;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            background: linear-gradient(135deg, #FFF 30%, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-header {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-header:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .audience-tag {
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            color: var(--accent-orange);
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .headline {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(to right, #FFFFFF, #E2E8F0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .headline span {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subheadline {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        /* Hero Layout Split */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* CSS Ebook Mockup */
+        .mockup-container {
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .book-mockup {
+            width: 260px;
+            height: 380px;
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.5), -2px 0 5px rgba(255,255,255,0.1) inset;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transform: rotateY(-15deg) rotateX(10deg);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .book-mockup:hover {
+            transform: rotateY(-5deg) rotateX(5deg);
+        }
+
+        .book-mockup::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            width: 4px;
+            height: 100%;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        }
+
+        .book-spine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 100%;
+            background: linear-gradient(90deg, #1E1B4B, #312E81);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .book-content {
+            padding: 40px 24px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .book-tag {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent-orange);
+            letter-spacing: 0.1em;
+        }
+
+        .book-title {
+            font-size: 26px;
+            line-height: 1.2;
+            color: #FFF;
+            margin-top: 20px;
+            font-weight: 800;
+        }
+
+        .book-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .book-author {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            letter-spacing: 0.05em;
+            margin-top: auto;
+        }
+
+        /* Fascination Bullets */
+        .bullets-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .bullet-item {
+            position: relative;
+            padding-left: 36px;
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .bullet-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Pain Agitation Section */
+        .pain-section {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #FFF;
+        }
+
+        .section-title span {
+            color: var(--accent-red);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .pain-icon {
+            color: var(--accent-red);
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .pain-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #FFF;
+        }
+
+        .pain-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Mechanism (3S Formula) Section */
+        .mechanism-section {
+            padding: 80px 0;
+        }
+
+        .mech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .mech-card {
+            background: linear-gradient(180deg, var(--bg-card) 0%, rgba(22, 31, 48, 0.5) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mech-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-blue);
+        }
+
+        .mech-card:nth-child(2)::before {
+            background: var(--accent-purple);
+        }
+
+        .mech-card:nth-child(3)::before {
+            background: var(--accent-orange);
+        }
+
+        .mech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .mech-num {
+            font-size: 48px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.05);
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-family: var(--font-display);
+        }
+
+        .mech-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 24px;
+        }
+
+        .mech-card:nth-child(2) .mech-badge {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .mech-card:nth-child(3) .mech-badge {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .mech-card h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+            color: #FFF;
+        }
+
+        .mech-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: justify;
+        }
+
+        /* Value Stack & Offer Section */
+        .offer-section {
+            background: rgba(15, 23, 42, 0.5);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 80px 0;
+        }
+
+        .stack-list {
+            margin-top: 40px;
+        }
+
+        .stack-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .stack-item:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .stack-icon {
+            font-size: 24px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stack-item.bonus .stack-icon {
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent-orange);
+        }
+
+        .stack-details h4 {
+            font-size: 18px;
+            color: #FFF;
+            margin-bottom: 4px;
+        }
+
+        .stack-details p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .stack-value {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stack-item.bonus .stack-value {
+            color: var(--accent-orange);
+        }
+
+        /* Pricing Area */
+        .pricing-box {
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            border: 2px solid var(--accent-blue);
+            border-radius: 20px;
+            padding: 48px;
+            max-width: 650px;
+            margin: 60px auto 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(59, 130, 246, 0.2);
+            position: relative;
+        }
+
+        .pricing-box::after {
+            content: 'BÁN CHẠY NHẤT';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: #FFF;
+            padding: 6px 20px;
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: 99px;
+            letter-spacing: 0.1em;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .new-price {
+            font-size: 54px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            color: #FFF;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .new-price span {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .pricing-bullets {
+            text-align: left;
+            margin: 30px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 0;
+        }
+
+        .pricing-bullet {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .pricing-bullet::before {
+            content: '✓';
+            color: var(--accent-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Order Form */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #FFF;
+            font-family: inherit;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: #FFF;
+            border: none;
+            padding: 16px;
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            text-align: center;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .payment-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        /* Guarantee Box */
+        .guarantee-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            text-align: left;
+        }
+
+        .guarantee-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .guarantee-content h4 {
+            color: #FFF;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .guarantee-content p {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .faq-item h3 {
+            font-size: 16px;
+            color: #FFF;
+            margin-bottom: 10px;
+        }
+
+        .faq-item p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: #060911;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFF;
+            margin-bottom: 12px;
+            font-family: var(--font-display);
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 11px;
+            color: #475569;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+
+            .headline {
+                font-size: 32px;
+            }
+
+            .bullets-list {
+                display: inline-block;
+                text-align: left;
+            }
+
+            .mech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stack-item {
+                grid-template-columns: auto 1fr;
+            }
+
+            .stack-value {
+                grid-column: 2;
+                text-align: left;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Alert Bar -->
+    <div class="alert-bar">
+        ⚡ ƯU ĐÃI ĐĂNG KÝ TRƯỚC 23:59 CHỦ NHẬT TUẦN NÀY - TIẾT KIỆM 95%
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-wrap">
+                <div class="logo">ĐỨC LỢI AI</div>
+                <a href="#register" class="btn-header">Nhận Ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <span class="audience-tag">Dành cho chủ shop thời trang tự bơi</span>
+                    <h1 class="headline">Quy trình 15 phút setup camp tối giản <span>kéo mess dưới 15k</span> chuẩn chỉ</h1>
+                    <p class="subheadline">Bỏ qua tư duy target sâu chằng chịt sở thích làm giàu cho Facebook. Sử dụng Công Thức 3S Ads Thời Trang để tự lên camp sạch, tối ưu chi phí rẻ và ra đơn có lãi thực tế.</p>
+                    
+                    <ul class="bullets-list">
+                        <li class="bullet-item"><strong>Lên camp sạch trong 15 phút:</strong> Quy trình click chuột trực quan, người mù công nghệ cũng làm được.</li>
+                        <li class="bullet-item"><strong>Tối ưu mess dưới 15K:</strong> Tiết kiệm hàng chục triệu tiền ngu đốt vào các tệp sở thích đắt đỏ.</li>
+                        <li class="bullet-item"><strong>Phao cứu sinh tài khoản:</strong> Checklist gỡ lỗi page đỏ, die camp chuẩn y khoa không cần thuê ngoài.</li>
+                    </ul>
+
+                    <a href="#register" class="btn-submit" style="display: inline-block; width: auto; padding: 16px 40px;">Mua Ebook & Nhận Quà Ngay (Chỉ 199k)</a>
+                </div>
+                
+                <div class="mockup-container">
+                    <div class="book-mockup">
+                        <div class="book-spine"></div>
+                        <div class="book-content">
+                            <span class="book-tag">Ebook thực chiến</span>
+                            <div class="book-title">CÔNG THỨC 3S<br><span style="color: var(--accent-blue);">ADS THỜI TRANG</span></div>
+                            <p class="book-subtitle">Quy trình setup camp sạch và tối ưu mess dưới 15k cho chủ shop tự bơi.</p>
+                            <span class="book-author">ĐỨC LỢI AI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Section -->
+    <section class="pain-section">
+        <div class="container">
+            <h2 class="section-title">Bạn Có Đang Mắc Kẹt Trong <span>"Ma Trận"</span> Facebook Ads?</h2>
+            <p class="section-subtitle">Chạy quảng cáo quần áo ngày càng khó, càng đốt tiền càng thấy đơn hàng nhỏ giọt.</p>
+            
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">🛑</div>
+                    <h3>Ngân sách cắn thốc, mess đắt đỏ</h3>
+                    <p>Chi phí mỗi tin nhắn vọt lên 25.000đ - 30.000đ/mess. Ads tiêu sạch tiền nhưng đơn hàng không thấy đâu, xót hết cả ruột.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">⚠️</div>
+                    <h3>Die tài khoản, khóa Page liên tục</h3>
+                    <p>Mở điện thoại ra thấy thông báo đỏ lòm hạn chế quảng cáo. Bị khóa bất ngờ không rõ nguyên nhân và không biết cách kháng nghị.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">✍️</div>
+                    <h3>Bí ý tưởng content, xả kho lặp đi lặp lại</h3>
+                    <p>Không biết viết bài thế nào thu hút, dùng các mẫu bài cũ rích khách hàng lướt qua luôn mà không mảy may tương tác.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mechanism (3S Formula) Section -->
+    <section class="mechanism-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">Giải Pháp: Công Thức 3S Ads Thời Trang</h2>
+            <p class="section-subtitle" style="text-align: center;">3 trụ cột cốt lõi giúp bạn làm chủ chiến dịch quảng cáo sạch và hiệu quả.</p>
+            
+            <div class="mech-grid">
+                <div class="mech-card">
+                    <span class="mech-num">S1</span>
+                    <div class="mech-badge">S1</div>
+                    <h3>Setup Tối Giản</h3>
+                    <p>Bỏ target sở thích phức tạp. Nhắm tệp rộng và dùng ảnh chụp thật cận cảnh chất vải kết hợp tiêu đề đánh thẳng nỗi sợ của khách để tự động lọc tệp chất lượng, giảm chi phí mess.</p>
+                </div>
+                <div class="mech-card">
+                    <span class="mech-num">S2</span>
+                    <div class="mech-badge">S2</div>
+                    <h3>Sạch Tài Nguyên</h3>
+                    <p>Quy trình 3 bước dọn dẹp thiết bị, IP mạng và chuẩn bị nguyên liệu (via sạch, page kháng). Giúp bạn tự sơ cứu tài khoản bị khóa nhanh gọn, không làm gián đoạn kinh doanh.</p>
+                </div>
+                <div class="mech-card">
+                    <span class="mech-num">S3</span>
+                    <div class="mech-badge">S3</div>
+                    <h3>Sửa Bài 1:1</h3>
+                    <p>Quyền lợi tối cao: Đồng hành 60 ngày cùng Đức Lợi AI qua Zalo. Bạn gửi bài viết content hoặc chụp màn hình chỉ số ads đang đắt, chúng tôi sửa trực tiếp câu chữ và gỡ stuck lỗi kỹ thuật.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer & Value Stack Section -->
+    <section class="offer-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">Tổng Giá Trị Bạn Nhận Được Hôm Nay</h2>
+            <p class="section-subtitle" style="text-align: center;">Đè bẹp mọi sự do dự bằng bộ quà tặng cực khủng đi kèm cuốn Ebook thực chiến.</p>
+            
+            <div class="stack-list">
+                <div class="stack-item">
+                    <div class="stack-icon">📖</div>
+                    <div class="stack-details">
+                        <h4>Ebook Quy trình Ads Thời Trang 3S</h4>
+                        <p>Hướng dẫn từ cơ bản đến nâng cao + video quay màn hình setup camp CBO 15 phút thực tế.</p>
+                    </div>
+                    <div class="stack-value">990.000đ</div>
+                </div>
+                
+                <div class="stack-item bonus">
+                    <div class="stack-icon">🎁</div>
+                    <div class="stack-details">
+                        <h4>Quà tặng 1: 10 Khuôn mẫu Content AIDA Thời Trang</h4>
+                        <p>Các mẫu điền vào chỗ trống, giải quyết nỗi lo bí ý tưởng, chỉ cần thay tên sản phẩm vào chạy ngay.</p>
+                    </div>
+                    <div class="stack-value">990.000đ</div>
+                </div>
+
+                <div class="stack-item bonus">
+                    <div class="stack-icon">🎁</div>
+                    <div class="stack-details">
+                        <h4>Quà tặng 2: Checklist 3 Bước Làm Sạch Thiết Bị & Kháng Nick</h4>
+                        <p>Phao cứu sinh khi dính quét tài khoản, hold tiền thanh toán và hướng dẫn tự kháng chuẩn y khoa.</p>
+                    </div>
+                    <div class="stack-value">1.200.000đ</div>
+                </div>
+
+                <div class="stack-item bonus">
+                    <div class="stack-icon">🎁</div>
+                    <div class="stack-details">
+                        <h4>Quà tặng 3: Danh sách 5 Nguồn Hàng Nữ Sỉ Tận Gốc Hot Trend</h4>
+                        <p>Các xưởng sỉ uy tín, biên lợi nhuận cao dành riêng cho chủ shop online.</p>
+                    </div>
+                    <div class="stack-value">1.500.000đ</div>
+                </div>
+            </div>
+
+            <!-- Pricing & Checkout -->
+            <div class="pricing-box" id="register">
+                <div class="old-price">Tổng giá trị thực tế: 4.680.000đ</div>
+                <div class="new-price">199.000đ <span>Thanh toán 1 lần</span></div>
+                
+                <div class="pricing-bullets">
+                    <div class="pricing-bullet">Nhận link tải Ebook và 3 Quà Tặng tự động trong 3 giây.</div>
+                    <div class="pricing-bullet">Video hướng dẫn click chuột 15 phút cầm tay chỉ việc.</div>
+                    <div class="pricing-bullet">Hỗ trợ kỹ thuật qua Zalo khi gặp stuck.</div>
+                </div>
+
+                <form class="order-form" action="https://aikiemtien.online/san-pham/quy-trinh-ads-thoi-trang" method="GET">
+                    <div class="form-group">
+                        <label for="name">Họ và tên của bạn</label>
+                        <input type="text" id="name" name="billing_first_name" class="form-control" placeholder="Nguyễn Thị Lan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại (để kết nối Zalo hỗ trợ)</label>
+                        <input type="tel" id="phone" name="billing_phone" class="form-control" placeholder="0987654321" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Địa chỉ Email (nhận tài liệu)</label>
+                        <input type="email" id="email" name="billing_email" class="form-control" placeholder="lan.nguyen@gmail.com" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Bấm Đăng Ký & Nhận Tài Liệu Ngay</button>
+                </form>
+                
+                <p class="payment-note">🔒 Thanh toán bảo mật qua QR Code chuyển khoản tự động quét khớp lệnh trong 3 giây.</p>
+
+                <!-- Guarantee Inside Box -->
+                <div class="guarantee-box">
+                    <div class="guarantee-badge">🛡️</div>
+                    <div class="guarantee-content">
+                        <h4>Cam Kết Rủi Ro Bằng Không</h4>
+                        <p>Áp dụng đúng quy trình hướng dẫn S1-S2, gửi bài cho chúng tôi duyệt trước khi chạy mà camp vẫn không đạt chi phí rẻ dưới 15k/mess hoặc bị khóa tài khoản không thể gỡ nổi trong 30 ngày -> Chúng tôi hoàn tiền 100% không hỏi thêm gì.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Những Câu Hỏi Thường Gặp</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Tôi mù công nghệ, không rành máy tính thì có làm theo được không?</h3>
+                    <p>Có. Cuốn ebook này không viết bằng thuật ngữ rườm rà. Ngoài ra, bạn được gửi kèm video quay màn hình thao tác dài 15 phút, chỉ cần click chuột bắt chước theo từng bước.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Nếu tài khoản của tôi đang bị khóa, tài liệu này có giúp ích gì không?</h3>
+                    <p>Có. Phần S2 (Sạch Tài Nguyên) và Quà tặng 2 là checklist phao cứu sinh hướng dẫn dọn rác trình duyệt, IP mạng và đường link kháng page/via chuẩn chỉnh giúp bạn tự xử lý được.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Tôi thanh toán xong thì bao lâu nhận được tài liệu?</h3>
+                    <p>Hệ thống Sepay tích hợp quét QR tự động. Ngay sau khi bạn quét mã chuyển khoản thành công, link tải ebook và quà tặng sẽ được gửi tự động vào email của bạn chỉ sau 3 giây.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">ĐỨC LỢI AI</div>
+            <p>Học cách làm chủ quảng cáo sạch, tối ưu chi phí, tự chủ công việc kinh doanh.</p>
+            <p style="margin-top: 10px;">Hotline / Zalo hỗ trợ: 0987.xxx.xxx | Email: hotro@aikiemtien.online</p>
+            <p class="footer-note">Tuyên bố miễn trừ trách nhiệm: Kết quả quảng cáo thực tế phụ thuộc nhiều vào chất lượng hình ảnh sản phẩm, biên lợi nhuận và cách bạn tư vấn chốt đơn. Chúng tôi cam kết gỡ stuck về mặt kỹ thuật setup và tối ưu chỉ số quảng cáo dưới 15k/mess dựa trên các chiến dịch thực tế đã vận hành.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

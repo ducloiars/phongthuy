@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Kế Hoạch Kinh Doanh — Đức Lợi AI</title>
+    <!-- Google Fonts: Playfair Display (Serif) & Outfit (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg-dark: #090d16;
+            --color-bg-card: #121824;
+            --color-text-primary: #f8fafc;
+            --color-text-secondary: #94a3b8;
+            --color-primary: #6366f1;
+            --color-primary-hover: #4f46e5;
+            --color-accent-green: #10b981;
+            --color-accent-orange: #f59e0b;
+            --color-accent-red: #ef4444;
+            --glass-bg: rgba(18, 24, 36, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Outfit', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Fixed Navigation Bar */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .topbar .logo {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            overflow-x: auto;
+            max-width: 80%;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome/Safari */
+        }
+
+        .nav-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--color-text-primary);
+            background-color: rgba(99, 102, 241, 0.15);
+        }
+
+        /* Content Sections */
+        section {
+            padding: 100px 2rem 80px 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        h2.section-heading {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2.section-heading::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--color-primary);
+            margin-top: 0.5rem;
+            border-radius: 2px;
+        }
+
+        p.section-sub {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+        }
+
+        /* Buttons Styling */
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Card Container (Grid) */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; }
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Cards Styles */
+        .card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Hero Section Special Style */
+        #hero {
+            align-items: center;
+            text-align: center;
+            padding-top: 150px;
+        }
+
+        #hero h1 {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #hero p.tagline {
+            font-size: 1.3rem;
+            color: var(--color-text-secondary);
+            max-width: 850px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.6;
+        }
+
+        #hero .meta-info {
+            font-size: 0.95rem;
+            color: rgba(148, 163, 184, 0.7);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Avatar Highlights */
+        .avatar-highlight-box {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar-tag {
+            background: rgba(239, 159, 39, 0.1);
+            color: var(--color-accent-orange);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .avatar-quote {
+            font-style: italic;
+            border-left: 3px solid var(--color-accent-orange);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--color-text-secondary);
+        }
+
+        /* Voice Profile Visuals */
+        .voice-traits {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .trait-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .trait-label-left { color: var(--color-text-secondary); }
+        .trait-label-right { color: var(--color-accent-green); font-weight: 500; }
+
+        .trait-bar-bg {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 1rem;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .trait-bar-fill {
+            position: absolute;
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: 3px;
+        }
+
+        .example-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid var(--color-primary);
+            padding: 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Mechanism Columns */
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .mechanism-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .mechanism-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .mechanism-card h4 {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-primary);
+        }
+
+        /* Money Model Styles */
+        .offer-stack-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(192, 132, 252, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .offer-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            font-weight: 700;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* Funnel Section */
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: #0f172a;
+        }
+
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 650px;
+            border: none;
+            display: block;
+        }
+
+        /* Assets Grid */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 576px) {
+            .assets-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 992px) {
+            .assets-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .asset-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .asset-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-primary);
+        }
+
+        .asset-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .asset-btn {
+            align-self: flex-start;
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s;
+        }
+
+        .asset-btn:hover {
+            color: var(--color-primary-hover);
+        }
+
+        /* Roadmap Timeline */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--glass-border);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--color-bg-dark);
+            border: 4px solid var(--color-primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: var(--color-bg-card);
+            position: relative;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .timeline-month {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .timeline-milestones {
+            list-style: none;
+            padding: 0;
+        }
+
+        .timeline-milestones li {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            border-left: 2px solid var(--color-accent-green);
+            padding-left: 0.75rem;
+        }
+
+        .timeline-milestones li strong {
+            display: block;
+            color: var(--color-text-primary);
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-item::after {
+                left: 21px;
+                right: auto;
+            }
+            .right {
+                left: 0%;
+            }
+        }
+
+        /* Asks Section Boxes */
+        .ask-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            height: 100%;
+        }
+
+        .ask-box h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ask-box-weak h3 { color: var(--color-accent-red); }
+        .ask-box-support h3 { color: var(--color-accent-green); }
+        .ask-box-fear h3 { color: var(--color-accent-orange); }
+
+        .ask-list {
+            list-style: none;
+        }
+
+        .ask-list li {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--color-text-secondary);
+        }
+
+        .ask-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+        }
+
+        /* Final Pitch CTA */
+        .final-cta {
+            background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.15), transparent 70%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        .final-cta h3 {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .final-cta p {
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: rgba(148, 163, 184, 0.5);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fixed Header Nav -->
+    <header class="topbar">
+        <a href="#hero" class="logo">Đức Lợi AI</a>
+        <nav class="nav-links" id="nav-links">
+            <a href="#hero" class="active">Hero</a>
+            <a href="#avatar">Avatar</a>
+            <a href="#brand-voice">Brand Voice</a>
+            <a href="#mechanism">Mechanism</a>
+            <a href="#money-model">Money Model</a>
+            <a href="#funnel">Funnel Blueprint</a>
+            <a href="#assets">Assets</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#asks">Asks</a>
+        </nav>
+    </header>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero">
+        <div class="meta-info">
+            <span>Bản Kế Hoạch Kinh Doanh Tổng Hợp</span>
+            <span>•</span>
+            <span>Tác giả: Phùng Đức Lợi</span>
+            <span>•</span>
+            <span>Ngày: 2026-05-26</span>
+        </div>
+        <h1>Bản Kế Hoạch Kinh Doanh<br>— Đức Lợi AI —</h1>
+        <p class="tagline">Công Thức 3S Ads Thời Trang là giải pháp thực chiến toàn diện giúp các chủ shop tự bơi thiết lập và tối ưu quảng cáo Facebook ra đơn có lãi dưới 15K/mess mà không lo rào cản công nghệ hay nỗi sợ die tài khoản.</p>
+        <div class="btn-container">
+            <a href="#avatar" class="btn btn-primary">Bắt đầu khám phá</a>
+        </div>
+    </section>
+
+    <!-- 2. AVATAR SECTION -->
+    <section id="avatar">
+        <h2 class="section-heading">01. Dream Buyer Avatar</h2>
+        <p class="section-sub">Chân dung khách hàng lý tưởng được phân tích sâu sắc để định vị mọi thông điệp truyền thông.</p>
+        
+        <div class="grid-2">
+            <div class="card">
+                <span class="avatar-tag">Nhân Vật Đại Diện: Nguyễn Thị Lan (28 Tuổi)</span>
+                <p class="avatar-quote">"Mẹ bỉm sữa tự khởi nghiệp, loay hoay tự làm mọi việc từ đóng gói đến lên camp trong nỗi lo sợ tiền ngân sách bị cắn thốc mà đơn hàng lại nhỏ giọt."</p>
+                <p style="margin-top: 1rem; color: var(--color-text-secondary);">
+                    Nguyễn Thị Lan là một chủ shop thời trang nhỏ lẻ 28 tuổi tại Hà Nội, đang phải tự gồng gánh mọi công việc của shop để tiết kiệm chi phí. Nỗi ám ảnh lớn nhất của Lan là cảnh tượng tài khoản bị hạn chế quảng cáo báo đỏ lòm và chi phí tin nhắn tăng vọt cắn thốc tiền mà không có đơn. Cô mơ ước có thể kiểm soát tốt dòng tiền quảng cáo dưới 15k/mess để mang lại nguồn lợi nhuận ổn định chăm lo cho gia đình. Lan rất ngại các thuật ngữ công nghệ phức tạp và mong muốn có một quy trình cầm tay chỉ việc cực kỳ dễ làm, có video trực quan để bắt chước và có người hỗ trợ giải đáp trực tiếp qua Zalo mỗi khi gặp sự cố.
+                </p>
+            </div>
+            
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-family: var(--font-serif);">Vấn Đề & Trạng Thái Của Khách Hàng</h3>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 0.5rem; border-left: 2px solid var(--color-accent-red); padding-left: 0.75rem; font-size: 0.95rem;">
+                            <strong>Pain Point:</strong> Chi phí tin nhắn quá đắt đỏ (>25k/mess), tài khoản bị hạn chế liên tục, mù mờ về các chỉ số.
+                        </li>
+                        <li style="margin-bottom: 0.5rem; border-left: 2px solid var(--color-accent-green); padding-left: 0.75rem; font-size: 0.95rem;">
+                            <strong>Dream Outcome:</strong> Setup camp sạch trong 60 phút, tối ưu mess <15k, tự tin làm chủ công cụ và dòng tiền.
+                        </li>
+                        <li style="margin-bottom: 0.5rem; border-left: 2px solid var(--color-accent-orange); padding-left: 0.75rem; font-size: 0.95rem;">
+                            <strong>Objection Lớn Nhất:</strong> Sợ mù công nghệ mua về không tự làm được (Giải quyết bằng video 15p + Zalo support 1:1).
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-container" style="margin-top: 1.5rem;">
+                    <a href="01-avatar.md" target="_blank" class="btn btn-secondary">View full avatar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BRAND VOICE SECTION -->
+    <section id="brand-voice">
+        <h2 class="section-heading">02. Brand Voice Profile</h2>
+        <p class="section-sub">Nguyên tắc giao tiếp và cá tính ngôn từ đặc trưng tạo sự tin tưởng tuyệt đối với dân chạy quảng cáo.</p>
+        
+        <div class="grid-2">
+            <div class="card">
+                <h3 style="margin-bottom: 1.5rem; font-family: var(--font-serif);">Cá Tính Giọng Văn</h3>
+                <p style="font-style: italic; color: #a5b4fc; margin-bottom: 2rem; border-left: 3px solid var(--color-primary); padding-left: 1rem;">
+                    "Thẳng thắn, ngắn gọn, súc tích, sử dụng ví dụ thực tế liên tưởng sinh động và pha chút hài hước tự nhiên; chia sẻ từ kinh nghiệm và thất bại của chính mình chứ không giáo điều hay hoa mỹ."
+                </p>
+                <div class="voice-traits">
+                    <div class="trait-row">
+                        <span class="trait-label-left">Nghiêm túc (Formal)</span>
+                        <div class="trait-bar-bg">
+                            <div class="trait-bar-fill" style="width: 20%; left: 0;"></div>
+                        </div>
+                        <span class="trait-label-right">Thân mật (Informal)</span>
+                    </div>
+                    <div class="trait-row">
+                        <span class="trait-label-left">Lý thuyết</span>
+                        <div class="trait-bar-bg">
+                            <div class="trait-bar-fill" style="width: 90%; right: 0;"></div>
+                        </div>
+                        <span class="trait-label-right">Thực tế/Ví dụ</span>
+                    </div>
+                    <div class="trait-row">
+                        <span class="trait-label-left">Vòng vo</span>
+                        <div class="trait-bar-bg">
+                            <div class="trait-bar-fill" style="width: 90%; right: 0;"></div>
+                        </div>
+                        <span class="trait-label-right">Thẳng thắn</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-family: var(--font-serif);">Ví Dụ Giọng Văn Thực Tế</h3>
+                    <div class="example-card">
+                        <strong>Ví dụ 1 (Facebook cá nhân):</strong><br>
+                        "Nửa đêm qua tôi ngồi lên camp cho tệp đầm thiết kế mới. Sáng mở mắt ra, check ads. Kết quả: cắn tiền thốc nhưng mess 45k/tin. Nói thẳng ra là xót ruột..."
+                    </div>
+                    <div class="example-card">
+                        <strong>Ví dụ 2 (Kỹ thuật Fanpage):</strong><br>
+                        "MÙ CÔNG NGHỆ THÌ CÓ CHẠY ADS THỜI TRANG ĐƯỢC KHÔNG? Câu trả lời là: Được, nếu bạn bỏ tư duy 'phải target sâu mới ra đơn'. Thực tế set camp không có gì cao siêu cả..."
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <a href="02-brand-voice.md" target="_blank" class="btn btn-secondary">View brand voice</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. HERO MECHANISM SECTION -->
+    <section id="mechanism">
+        <h2 class="section-heading">03. Hero Mechanism</h2>
+        <p class="section-sub">Triết lý Công Thức 3S Ads Thời Trang — Cơ chế khác biệt độc quyền giúp khách hàng đạt kết quả nhanh chóng.</p>
+        
+        <div class="mechanism-grid">
+            <div class="mechanism-card">
+                <h4>S1 — Setup Tối Giản</h4>
+                <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-top: 0.5rem;">
+                    Bỏ qua việc nhồi nhét sở thích phức tạp. Thiết lập camp CBO tối giản trong 60 phút nhắm tệp rộng/vừa, dùng hình ảnh thực tế của shop và content AIDA nâng cấp để tự động lọc khách hàng chất lượng có nhu cầu thật.
+                </p>
+            </div>
+            
+            <div class="mechanism-card">
+                <h4>S2 — Sạch Tài Nguyên</h4>
+                <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-top: 0.5rem;">
+                    Quy trình sơ cứu và kháng nghị khi bị Facebook khóa. Cung cấp bộ tài khoản sạch dự phòng, hướng dẫn làm sạch thiết bị, IP mạng để camp luôn hoạt động ổn định không bị gián đoạn kinh doanh.
+                </p>
+            </div>
+            
+            <div class="mechanism-card">
+                <h4>S3 — Sửa Bài 1:1</h4>
+                <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-top: 0.5rem;">
+                    Quyền lợi kèm cặp trực tiếp qua Zalo trong 60 ngày. Gửi trực tiếp bài viết content, ảnh sản phẩm hoặc chỉ số ads để chuyên gia sửa trực tiếp, đảm bảo đè bẹp rào cản lý thuyết suông.
+                </p>
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-style: italic; color: var(--color-text-secondary); text-align: center;">
+            "Sử dụng Công Thức 3S Ads Thời Trang, cuốn Ebook này giúp các chủ shop tự lên camp sạch, tối ưu mess dưới 15k và ra đơn có lãi chỉ trong 60 phút setup."
+        </p>
+
+        <div class="btn-container" style="justify-content: center;">
+            <a href="03-hero-mechanism.md" target="_blank" class="btn btn-secondary">View hero mechanism</a>
+        </div>
+    </section>
+
+    <!-- 5. MONEY MODEL + OFFER STACK SECTION -->
+    <section id="money-model">
+        <h2 class="section-heading">04. Money Model & Offer Stack</h2>
+        <p class="section-sub">Chiến lược tối ưu hóa doanh thu (LTV) từ phễu sản phẩm 199k đến các gói dịch vụ giá trị cao.</p>
+        
+        <div class="grid-2">
+            <!-- Money Model Columns -->
+            <div class="card" style="padding: 1.5rem;">
+                <h3 style="margin-bottom: 1.25rem; font-family: var(--font-serif);">Bản Đồ Doanh Thu (Money Model)</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <div style="border-left: 3px solid var(--color-primary); padding-left: 0.75rem;">
+                        <strong style="font-size: 0.95rem; color: var(--color-primary);">1. Attraction (Thu Hút)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Free Checklist/Video sơ cứu + Ebook 3S Ads (199.000đ).</p>
+                    </div>
+                    <div style="border-left: 3px solid var(--color-accent-orange); padding-left: 0.75rem;">
+                        <strong style="font-size: 0.95rem; color: var(--color-accent-orange);">2. Upsell (Bán Thêm)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Gói đồng hành 60 ngày Zalo (2.000.000đ) & Setup trọn gói (5.000.000đ).</p>
+                    </div>
+                    <div style="border-left: 3px solid var(--color-accent-red); padding-left: 0.75rem;">
+                        <strong style="font-size: 0.95rem; color: var(--color-accent-red);">3. Downsell (Giữ Chân)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Gói thiết kế Content (990.000đ) hoặc Trả góp gói VIP (2.5M x 2).</p>
+                    </div>
+                    <div style="border-left: 3px solid var(--color-accent-green); padding-left: 0.75rem;">
+                        <strong style="font-size: 0.95rem; color: var(--color-accent-green);">4. Continuity (Định Kỳ)</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-secondary);">Thuê tài nguyên sạch + Update Group (490.000đ/tháng).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Financial Scenarios -->
+            <div class="card" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 1.25rem; font-family: var(--font-serif);">Kịch Bản Đạt 72M/Năm (6M/Tháng)</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: 0.75rem;">
+                        Thay vì bán 30 cuốn ebook/tháng (phụ thuộc traffic mới liên tục), mô hình phễu chuyển đổi mang lại dòng tiền thông minh vượt 240% mục tiêu:
+                    </p>
+                    <ul style="font-size: 0.85rem; color: var(--color-text-secondary); padding-left: 1.25rem; margin-bottom: 1rem;">
+                        <li>15 Ebook 199k = 2.985.000đ</li>
+                        <li>2 khách lên gói Đồng Hành 2M = 4.000.000đ</li>
+                        <li>1 khách lên gói VIP Setup 5M = 5.000.000đ</li>
+                        <li>5 khách duy trì Continuity 490k = 2.450.000đ</li>
+                        <li><strong>Tổng doanh thu thực tế/tháng: 14.435.000đ</strong></li>
+                    </ul>
+                </div>
+                <div class="btn-container" style="margin-top: 0.5rem;">
+                    <a href="04-money-model.md" target="_blank" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.85rem;">View money model</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Offer Stack Highlight -->
+        <div class="offer-stack-box">
+            <span class="offer-badge">Gói Đồng Hành Chủ Đạo</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 1rem;">Hệ Thống 3S Setup Camp Sạch & Tối Ưu Mess Dưới 15K</h3>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1.5rem; max-width: 900px; font-size: 0.95rem;">
+                Chương trình kèm cặp thực chiến 60 ngày giúp chủ shop tự bơi gỡ stuck. Giá ưu đãi <strong>2.000.000đ</strong> (Giá gốc 4.000.000đ) đi kèm Cam Kết Hoàn Tiền 100% nếu sau 30 ngày áp dụng đúng mà camp không dưới 15k hoặc tài khoản không thể gỡ.
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.9rem; color: var(--color-text-primary);">
+                    🎁 <strong>Quà tặng đi kèm:</strong> Bộ 10 mẫu content AIDA điền vào chỗ trống + Checklist 3 bước sạch thiết bị & kháng tài khoản + Danh sách 5 nguồn hàng hot trend giá gốc.
+                </div>
+            </div>
+            <div class="btn-container">
+                <a href="05-offer.md" target="_blank" class="btn btn-primary">View offer detail</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FUNNEL BLUEPRINT SECTION -->
+    <section id="funnel">
+        <h2 class="section-heading">05. Funnel Blueprint</h2>
+        <p class="section-sub">Bản đồ cấu trúc phễu bán hàng (Tripwire Funnel) tự động hóa dòng tiền và gia tăng giá trị trọn đời khách hàng.</p>
+        
+        <div class="iframe-wrapper">
+            <iframe src="07-funnel-visual.html" title="Visual Funnel Map"></iframe>
+        </div>
+
+        <div class="btn-container" style="justify-content: center;">
+            <a href="07-funnel-blueprint.md" target="_blank" class="btn btn-primary">View blueprint chi tiết</a>
+            <a href="06-hvco-leadmagnet.md" target="_blank" class="btn btn-secondary">View lead magnet</a>
+        </div>
+    </section>
+
+    <!-- 7. FULL FUNNEL ASSETS SECTION -->
+    <section id="assets">
+        <h2 class="section-heading">06. Full Funnel Assets</h2>
+        <p class="section-sub">Hệ thống tài sản và kịch bản thực tế đã được xây dựng sẵn để vận hành phễu tự động hóa.</p>
+        
+        <div class="assets-grid">
+            <!-- Card 1 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">Ad Copy</div>
+                    <div class="asset-desc">Mẫu bài viết quảng cáo Facebook đánh thẳng vào nỗi đau của chủ shop quần áo tự bơi chật vật vì chi phí mess đắt đỏ.</div>
+                </div>
+                <a href="08-ads-copy.md" target="_blank" class="asset-btn">View ads →</a>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">Landing Page</div>
+                    <div class="asset-desc">Trang bán hàng tối ưu chuyển đổi, tích hợp sẵn phễu Value Stack quà tặng và cổng quét mã thanh toán QR tự động.</div>
+                </div>
+                <a href="08-landing.html" target="_blank" class="asset-btn">View live →</a>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">VSL Script</div>
+                    <div class="asset-desc">Kịch bản video bán hàng (Video Sales Letter) thuyết phục khách hàng nâng cấp lên Gói Đồng Hành 60 ngày ngay sau khi mua ebook.</div>
+                </div>
+                <a href="09-vsl-script.md" target="_blank" class="asset-btn">View script →</a>
+            </div>
+            
+            <!-- Card 4 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">Email Sequence</div>
+                    <div class="asset-desc">Chuỗi email nuôi dưỡng tự động 3 ngày giúp chuyển đổi lead lạnh thành người mua Ebook bằng cách cung cấp giá trị.</div>
+                </div>
+                <a href="10-email-sequence.md" target="_blank" class="asset-btn">View emails →</a>
+            </div>
+            
+            <!-- Card 5 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">Follow-up</div>
+                    <div class="asset-desc">Kịch bản bám đuổi & xử lý các lời từ chối phổ biến khi khách hàng do dự thanh toán đơn hàng Tripwire hoặc gói dịch vụ.</div>
+                </div>
+                <a href="11-follow-up.md" target="_blank" class="asset-btn">View follow-up →</a>
+            </div>
+            
+            <!-- Card 6 -->
+            <div class="asset-card">
+                <div>
+                    <div class="asset-title">Sales Script</div>
+                    <div class="asset-desc">Quy trình chẩn đoán lỗi quảng cáo 5 bước chốt deal gói kèm cặp 2M hoặc gói VIP 5M trực tiếp qua Zalo chat mượt mà.</div>
+                </div>
+                <a href="12-sales-script.md" target="_blank" class="asset-btn">View sales script →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. ROADMAP 90 NGÀY SECTION -->
+    <section id="roadmap">
+        <h2 class="section-heading">07. Roadmap 90 Ngày</h2>
+        <p class="section-sub">Lộ trình hành động chi tiết 3 tháng để xác thực mô hình phễu, tối ưu chuyển đổi và mở rộng quy mô doanh thu.</p>
+        
+        <div class="timeline">
+            <!-- Month 1 -->
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-month">Tháng 1: Xác Thực Phễu (Validation)</div>
+                    <ul class="timeline-milestones">
+                        <li>
+                            <strong>Milestone 1.1: Triển khai hạ tầng kỹ thuật</strong>
+                            Đưa Landing page lên VPS, tích hợp cổng Sepay tự động chuyển giao Ebook trong 3 giây.
+                        </li>
+                        <li>
+                            <strong>Milestone 1.2: Chạy Ads kéo traffic</strong>
+                            Đạt 400 click chất lượng, thu về 10 - 12 đơn hàng Ebook 199k đầu tiên để kiểm chứng thị trường.
+                        </li>
+                        <li>
+                            <strong>Milestone 1.3: Chốt gói Đồng Hành 2M</strong>
+                            Chuyển đổi tối thiểu 2 khách mua Ebook lên gói Zalo Support 1:1 qua quy trình chẩn đoán.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Month 2 -->
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-month">Tháng 2: Tối Ưu Chuyển Đổi & Retain</div>
+                    <ul class="timeline-milestones">
+                        <li>
+                            <strong>Milestone 2.1: Tích hợp Email bám đuổi</strong>
+                            Cấu hình chuỗi email tự động nuôi dưỡng và hồi sinh 15% lượng lead lạnh chưa mua.
+                        </li>
+                        <li>
+                            <strong>Milestone 2.2: Ra mắt gói Continuity 490k/tháng</strong>
+                            Chào hàng gói thuê tài nguyên sạch định kỳ và cập nhật thuật toán cho 5 học viên cũ đầu tiên.
+                        </li>
+                        <li>
+                            <strong>Milestone 2.3: Nâng cấp Landing Page dựa trên data</strong>
+                            Cải tiến tiêu đề và tối ưu hóa chuyển đổi dựa trên phản hồi thực tế của khách hàng.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Month 3 -->
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-month">Tháng 3: VIP & Mở Rộng Quy Mô</div>
+                    <ul class="timeline-milestones">
+                        <li>
+                            <strong>Milestone 3.1: Đạt khách hàng VIP trọn gói đầu tiên</strong>
+                            Ký hợp đồng dịch vụ setup hệ thống ads và content trọn gói giá 5.000.000đ/tháng đầu.
+                        </li>
+                        <li>
+                            <strong>Milestone 3.2: Tối ưu tỷ lệ chuyển đổi CRO >5%</strong>
+                            Đưa case study kết quả học viên xuất sắc lên vị trí nổi bật trên Landing Page để tăng tin tưởng.
+                        </li>
+                        <li>
+                            <strong>Milestone 3.3: Xây dựng thương hiệu cá nhân</strong>
+                            Chia sẻ case study thực chiến lên cộng đồng để hút lead tự nhiên không tốn tiền ads.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. ASKS SECTION -->
+    <section id="asks">
+        <h2 class="section-heading">08. Đề Xuất Hỗ Trợ (Asks)</h2>
+        <p class="section-sub">Bản tự đánh giá trung thực về những điểm kẹt hiện tại để tối ưu và đi nhanh hơn.</p>
+        
+        <div class="grid-3">
+            <div class="ask-box ask-box-weak">
+                <h3>Điểm Yếu Hiện Tại</h3>
+                <ul class="ask-list">
+                    <li>Chưa có tệp khách hàng/người theo dõi sẵn có (Audience).</li>
+                    <li>Chưa có kinh nghiệm đo lường và tối ưu tỷ lệ chuyển đổi phễu (Funnel CRO).</li>
+                    <li>Chưa có kinh nghiệm chốt sale các gói dịch vụ giá trị cao qua chat/call.</li>
+                </ul>
+            </div>
+            
+            <div class="ask-box ask-box-support">
+                <h3>Hỗ Trợ Mong Muốn</h3>
+                <ul class="ask-list" style="padding-left: 0;">
+                    <li style="text-decoration: line-through; opacity: 0.5;">Coaching 1-1 về chiến lược.</li>
+                    <li style="text-decoration: line-through; opacity: 0.5;">Done-for-you setup ads/funnel.</li>
+                    <li style="color: var(--color-text-primary); font-weight: 600;">Cộng đồng cùng level để học hỏi, chia sẻ tài nguyên & case study.</li>
+                    <li style="text-decoration: line-through; opacity: 0.5;">Khoá Pro nâng cao.</li>
+                </ul>
+            </div>
+            
+            <div class="ask-box ask-box-fear">
+                <h3>Nỗi Sợ Kẹt Trong 90 Ngày</h3>
+                <ul class="ask-list">
+                    <li>Đóng gói dịch vụ nâng cấp phễu (Ebook lên gói 2M/5M) chưa có hệ thống trơn tru.</li>
+                    <li>Viết email bám đuổi sai nhịp tâm lý làm phiền và gây rụng tệp lead.</li>
+                    <li>Tắc nghẽn khâu khép deal gói 2M/5M qua Zalo chat khi khách hỏi xong rồi im lặng.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="final-cta">
+            <h3>Sẵn Sàng Hành Động</h3>
+            <p>Mọi hạ tầng, quy trình và tài sản phễu đã sẵn sàng để triển khai và tối ưu đo lường thực tế.</p>
+            <div style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #a5b4fc; margin-bottom: 2rem;">
+                "Tôi sẵn sàng pitch ở Demo Day Ngày 21"
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Đức Lợi AI · Designed by Antigravity under ASSP Framework · All rights reserved.</p>
+    </footer>
+
+    <!-- Interactive Navigation Active State Script -->
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLi.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').slice(1) === current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
