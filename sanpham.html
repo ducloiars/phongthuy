@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vật Phẩm Phong Thủy - Nghệ Thuật Phong Thủy</title>
+    <title>Tài Liệu & Bộ Skills - Ads Thời Trang Thực Chiến</title>
     
-    <meta name="description" content="Danh sách các vật phẩm phong thủy chuẩn Bát Trạch giúp trấn trạch, chiêu tài và hóa giải sát khí cho ngôi nhà của bạn.">
+    <meta name="description" content="Danh sách các cẩm nang, bộ mẫu content và chatbot mẫu giúp tối ưu quảng cáo Facebook Ads ngành thời trang hiệu quả nhất.">
     
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,11 +17,11 @@
     <nav style="background: var(--dark-bg); padding: 15px 0; border-bottom: 1px solid var(--gold); position: sticky; top: 0; z-index: 100;">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
             <a href="index.html" style="color: var(--gold); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: bold;">
-                NGHỆ THUẬT PHONG THỦY
+                ADS THỜI TRANG THỰC CHIẾN
             </a>
             <div class="nav-links" style="display: flex; gap: 25px;">
                 <a href="index.html" style="color: var(--white); text-decoration: none; font-weight: 500;">Trang Chủ</a>
-                <a href="sanpham.html" style="color: var(--gold); text-decoration: none; font-weight: bold;">Vật Phẩm</a>
+                <a href="sanpham.html" style="color: var(--gold); text-decoration: none; font-weight: bold;">Tài Liệu & Skills</a>
             </div>
         </div>
     </nav>
@@ -29,8 +29,8 @@
     <!-- PRODUCT HERO -->
     <header class="product-hero">
         <div class="container">
-            <h1>Vật Phẩm Phong Thủy</h1>
-            <p>Tuyển chọn những linh vật và pháp khí chuẩn phong thủy Bát Trạch</p>
+            <h1>Tài Liệu & Bộ Skills</h1>
+            <p>Tuyển chọn những cẩm nang, bộ template viết bài và công cụ hỗ trợ tối ưu quảng cáo ra đơn</p>
         </div>
     </header>
 
@@ -39,25 +39,25 @@
         <!-- Category Filter -->
         <div class="category-filter">
             <button class="filter-btn active" data-filter="all">Tất Cả</button>
-            <button class="filter-btn" data-filter="linh-vat">Linh Vật</button>
-            <button class="filter-btn" data-filter="guong-bat-quai">Gương Bát Quái</button>
-            <button class="filter-btn" data-filter="phap-khi">Pháp Khí</button>
+            <button class="filter-btn" data-filter="quy-trinh">Quy Trình</button>
+            <button class="filter-btn" data-filter="content">Mẫu Content</button>
+            <button class="filter-btn" data-filter="cong-cu">Chatbot / Công Cụ</button>
         </div>
 
         <!-- Product Grid -->
         <div id="loader" style="text-align: center; padding: 50px; display: none;">
             <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--gold);"></i>
-            <p style="margin-top: 10px;">Đang tải danh sách vật phẩm...</p>
+            <p style="margin-top: 10px;">Đang tải danh sách sản phẩm...</p>
         </div>
         <div class="product-grid" id="productGrid">
-            <!-- Sản phẩm sẽ được tải động từ Google Sheet vào đây -->
+            <!-- Sản phẩm sẽ được tải động từ Supabase vào đây -->
         </div>
     </main>
 
     <!-- FOOTER -->
     <footer style="background: var(--dark-bg); color: #888; text-align: center; padding: 40px 20px;">
         <div class="container">
-            <p>&copy; 2026 Nghệ Thuật Phong Thủy. Mọi quyền được bảo lưu.</p>
+            <p>&copy; 2026 Ads Thời Trang Thực Chiến. Mọi quyền được bảo lưu.</p>
             <p style="margin-top: 10px; font-size: 0.8rem;">Website được thiết kế bởi Antigravity AI</p>
         </div>
     </footer>
@@ -84,9 +84,9 @@
                     <input type="hidden" name="Giá tiền" id="hiddenProductPrice">
                     <input type="text" id="orderName" name="Họ Tên" placeholder="Họ tên của bạn" required>
                     <input type="tel" id="orderPhone" name="SĐT" placeholder="Số điện thoại / Zalo" required>
-                    <input type="email" id="orderEmail" name="Email" placeholder="Địa chỉ Email" required>
-                    <input type="text" id="address" name="Địa Chỉ" placeholder="Địa chỉ giao hàng chi tiết" required>
-                    <textarea id="ghi_chu" name="Ghi Chú" placeholder="Ghi chú thêm (Ví dụ: Giao giờ hành chính...)" rows="2" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
+                    <input type="email" id="orderEmail" name="Email" placeholder="Địa chỉ Email chính thức nhận tài liệu" required>
+                    <input type="text" id="address" name="Địa Chỉ" placeholder="Link Facebook cá nhân hoặc Zalo nhận hỗ trợ" required>
+                    <textarea id="ghi_chu" name="Ghi Chú" placeholder="Ghi chú về các khó khăn trong quảng cáo bạn đang gặp phải..." rows="2" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;"></textarea>
                     
                     <button type="submit" class="cta-button primary-cta form-btn" id="submitFormBtn">
                         TIẾP TỤC THANH TOÁN
@@ -106,7 +106,7 @@
                         <p style="margin-bottom: 5px;">Chủ TK: <strong>PHUNG DUC LOI</strong></p>
                         <p style="margin-bottom: 5px;">Số TK: <strong>688601106886</strong> (MB Bank)</p>
                         <p>Nội dung: <strong id="qrContent" style="color: var(--primary-red); font-size: 1.1rem;">NTPT...</strong></p>
-                        <p style="font-size: 0.8rem; color: #666; margin-top: 8px; font-style: italic;">*Hệ thống sẽ tự động xác nhận sau khi nhận được tiền.</p>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 8px; font-style: italic;">*Hệ thống sẽ gửi link tải qua Email/Zalo tự động sau khi nhận được tiền.</p>
                     </div>
                 </div>
                 <button type="button" class="cta-button secondary-cta form-btn" onclick="window.location.href='thank-you-mua-hang.html'">
@@ -150,7 +150,7 @@
         function renderProducts(productsList) {
             const grid = document.getElementById('productGrid');
             if (productsList.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Hiện chưa có sản phẩm nào.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">Hiện chưa có tài liệu/skills nào được đăng bán.</p>';
                 return;
             }
 
@@ -158,16 +158,15 @@
                 <div class="product-card">
                     <div class="product-image">
                         <img src="${p.image_url || 'https://images.unsplash.com/photo-1621274403997-37aae1830810?auto=format&fit=crop&w=600&q=80'}" alt="${p.name}">
-                        ${p.quantity < 5 ? '<span class="product-badge" style="background: #e74c3c;">Sắp hết hàng</span>' : ''}
                     </div>
                     <div class="product-info">
-                        <span class="product-category">Vật Phẩm</span>
+                        <span class="product-category">Tài Liệu Số</span>
                         <h3 class="product-title">${p.name}</h3>
                         <p class="product-price">${(parseInt(p.price) || 0).toLocaleString()}đ</p>
                         <p class="product-desc">${p.description || 'Thông tin sản phẩm đang được cập nhật.'}</p>
                         <button class="cta-button primary-cta order-btn" 
                                 onclick="openOrderModal('${p.id}', '${p.name}', '${p.price}', '${p.image_url}')">
-                            ĐẶT HÀNG NGAY
+                            MUA TÀI LIỆU NGAY
                         </button>
                     </div>
                 </div>
@@ -179,7 +178,7 @@
         const modalImg = document.getElementById('modalProductImg');
         const modalName = document.getElementById('modalProductName');
         const modalPrice = document.getElementById('modalProductPrice');
-        const hiddenProductId = document.createElement('input'); // Store ID
+        const hiddenProductId = document.createElement('input');
         hiddenProductId.type = 'hidden';
         hiddenProductId.id = 'hiddenProductId';
         document.getElementById('productOrderForm').appendChild(hiddenProductId);
@@ -231,34 +230,48 @@
             const customerData = { name, phone, email };
 
             try {
-                // 1. Tìm hoặc tạo khách hàng (Dựa trên số điện thoại)
                 let customerId;
-                const { data: existingCustomer, error: findError } = await db
+
+                // 1. Tìm theo Email trước vì Email là UNIQUE
+                const { data: customerByEmail, error: emailError } = await db
                     .from('customers')
                     .select('id')
-                    .eq('phone', phone)
-                    .single();
+                    .eq('email', email);
 
-                if (existingCustomer) {
-                    customerId = existingCustomer.id;
-                    // Cập nhật email nếu chưa có hoặc thay đổi
-                    const { error: updateError } = await db.from('customers').update({ email }).eq('id', customerId);
-                    if (updateError) {
-                        console.warn("Không thể cập nhật email (có thể do ràng buộc UNIQUE):", updateError.message);
-                    }
+                if (emailError) throw emailError;
+
+                if (customerByEmail && customerByEmail.length > 0) {
+                    customerId = customerByEmail[0].id;
+                    // Cập nhật SĐT mới nếu cần
+                    await db.from('customers').update({ phone }).eq('id', customerId);
                 } else {
-                    const { data: newCustomer, error: createError } = await db
+                    // 2. Nếu không thấy theo Email, tìm theo SĐT
+                    const { data: customerByPhone, error: phoneError } = await db
                         .from('customers')
-                        .insert([customerData])
-                        .select()
-                        .single();
-                    if (createError) throw createError;
-                    customerId = newCustomer.id;
+                        .select('id')
+                        .eq('phone', phone);
+
+                    if (phoneError) throw phoneError;
+
+                    if (customerByPhone && customerByPhone.length > 0) {
+                        customerId = customerByPhone[0].id;
+                        // Cập nhật Email mới nếu cần
+                        await db.from('customers').update({ email }).eq('id', customerId);
+                    } else {
+                        // 3. Nếu hoàn toàn mới, insert khách hàng mới
+                        const { data: newCustomer, error: createError } = await db
+                            .from('customers')
+                            .insert([customerData])
+                            .select();
+
+                        if (createError) throw createError;
+                        if (!newCustomer || newCustomer.length === 0) throw new Error("Không thể tạo khách hàng mới");
+                        customerId = newCustomer[0].id;
+                    }
                 }
 
                 const orderCode = 'NTPT' + Math.floor(Date.now() / 1000);
 
-                // 2. Tạo đơn hàng
                 const orderData = {
                     order_code: orderCode,
                     customer_id: customerId,
@@ -277,7 +290,6 @@
 
                 if (orderError) throw orderError;
 
-                // Chuyển sang trang thanh toán
                 window.location.href = `thanh-toan.html?orderId=${newOrder.id}`;
 
             } catch (error) {
@@ -289,7 +301,6 @@
             }
         };
 
-        // Khởi tạo
         fetchProducts();
 
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -298,7 +309,7 @@
                 btn.classList.add('active');
                 const filter = btn.getAttribute('data-filter');
                 if(filter === 'all') renderProducts(allProducts);
-                else alert('Tính năng lọc theo danh mục đang được cập nhật...');
+                else alert('Bộ lọc phân loại đang được cập nhật...');
             };
         });
     </script>

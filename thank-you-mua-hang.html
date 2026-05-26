@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đặt Hàng Thành Công | Nghệ Thuật Phong Thủy</title>
+    <title>Đặt Hàng Thành Công | Ads Thời Trang Thực Chiến</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -74,21 +74,44 @@
         <div class="success-icon">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h1>Đặt Hàng Thành Công!</h1>
-        <p>Cảm ơn bạn đã tin tưởng lựa chọn vật phẩm từ <strong>Nghệ Thuật Phong Thủy</strong>. Chúng tôi đã nhận được thông tin thanh toán của bạn.</p>
+        <h1>Thanh Toán Thành Công!</h1>
+        <p>Cảm ơn bạn đã tin tưởng lựa chọn tài liệu từ <strong>Ads Thời Trang Thực Chiến</strong>. Giao dịch của bạn đã được ghi nhận thành công.</p>
         
         <div class="order-info">
-            <p><strong>Trạng thái:</strong> Đang chờ xác nhận</p>
-            <p><strong>Thời gian xử lý:</strong> 1 - 3 phút</p>
-            <p><strong>Giao hàng:</strong> Dự kiến 2-4 ngày làm việc</p>
+            <p><strong>Trạng thái:</strong> Đã xác nhận giao dịch</p>
+            <p><strong>Thời gian gửi file:</strong> 1 - 3 phút (Tự động)</p>
+            <p><strong>Hình thức nhận:</strong> Link tải qua Email và Zalo của bạn</p>
         </div>
 
-        <p style="font-size: 0.9rem;">Chúng tôi sẽ liên hệ với bạn qua số điện thoại/Zalo để xác nhận lại địa chỉ trước khi gửi hàng.</p>
+        <p style="font-size: 0.9rem;">Nếu quá 5 phút chưa nhận được link tải, vui lòng nhắn tin trực tiếp qua Zalo/Hotline hỗ trợ ghi trên đơn hàng để được hỗ trợ thủ công lập tức.</p>
 
         <div class="cta-group">
-            <a href="sanpham.html" class="cta-button primary-cta" style="text-decoration: none;">TIẾP TỤC MUA SẮM</a>
+            <a href="sanpham.html" class="cta-button secondary-cta" style="text-decoration: none; padding: 12px 20px; font-size: 0.95rem;">XEM THÊM TÀI LIỆU KHÁC</a>
             <a href="index.html" style="color: var(--gold); text-decoration: none; font-size: 0.9rem;">Quay lại trang chủ</a>
         </div>
     </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('orderId');
+        if (orderId) {
+            const ctaGroup = document.querySelector('.cta-group');
+            if (ctaGroup) {
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = `/download?orderId=${orderId}`;
+                downloadBtn.className = 'cta-button primary-cta pulse-animation';
+                downloadBtn.style.textDecoration = 'none';
+                downloadBtn.style.marginBottom = '15px';
+                downloadBtn.style.display = 'block';
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> TẢI XUỐNG TÀI LIỆU NGAY';
+                ctaGroup.insertBefore(downloadBtn, ctaGroup.firstChild);
+            }
+
+            const orderInfo = document.querySelector('.order-info');
+            if (orderInfo) {
+                orderInfo.innerHTML += `<p style="color: var(--gold); font-weight: bold; margin-top: 10px;"><i class="fas fa-check-circle"></i> Sẵn sàng: Click nút bên dưới để tải trực tiếp.</p>`;
+            }
+        }
+    </script>
 </body>
 </html>

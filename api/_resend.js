@@ -14,7 +14,7 @@ function getApiKey() {
  * @param {string} options.html - Nội dung HTML của email
  * @param {string} [options.from] - Người gửi (mặc định là 'onboarding@resend.dev')
  */
-async function sendEmail({ to, subject, html, from = 'Nghệ Thuật Phong Thủy <onboarding@resend.dev>' }) {
+async function sendEmail({ to, subject, html, from = 'Nghệ Thuật Phong Thủy <onboarding@resend.dev>', attachments }) {
   const apiKey = getApiKey();
   if (!apiKey) {
     throw new Error('Không tìm thấy Resend API Key trong file resend_config.txt hoặc biến môi trường.');
@@ -33,7 +33,8 @@ async function sendEmail({ to, subject, html, from = 'Nghệ Thuật Phong Thủ
       from,
       to: [to],
       subject,
-      html
+      html,
+      attachments
     })
   });
 

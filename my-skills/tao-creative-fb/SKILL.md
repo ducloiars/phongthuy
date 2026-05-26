@@ -15,6 +15,9 @@ trigger_phrases:
   - "tạo creative ads"
   - "gen ads"
   - "cần creative cho chiến dịch"
+  - "video"
+  - "tạo video Reels"
+  - "chạy video mode"
 ---
 
 # Hướng dẫn Vận hành Trợ lý: tao-creative-fb
@@ -87,6 +90,43 @@ Khi Sếp trigger (ví dụ: *"tạo creative ads"*), trợ lý sản xuất nga
 *   Các ảnh được lưu tại thư mục `output/` trong workspace.
 *   Trợ lý hiển thị danh sách 3 bộ kèm theo đường dẫn ảnh đã lưu và nội dung ad copy để Sếp sao chép trực tiếp vào Ads Manager.
 *   Tuyệt đối KHÔNG tự động đăng bài lên Facebook trong chế độ này.
+
+---
+
+## 🎬 Mode 3 — Video Mode (Tự động đăng Reels/TikTok/Shorts)
+
+Khi Sếp trigger bằng từ khóa (ví dụ: *"video"*, *"tạo video Reels"*) hoặc khi đến lịch hẹn tự động (Thứ 3 và Thứ 6 lúc 9h sáng), trợ lý thực hiện quy trình sau:
+
+### Quy trình 5 bước tương tác:
+
+1.  **Bước A: Chọn chủ đề phù hợp**
+    *   Trợ lý đọc file kế hoạch nội dung `My_Brain/plan.md` hoặc cơ sở dữ liệu `brain.db` để tự chọn 1 chủ đề (topic) thích hợp cho video (ví dụ: chủ đề về sự tĩnh lặng, thói quen tốt hoặc lỗi phong thủy cần sửa).
+    *   Chạy script điều phối:
+        ```bash
+        python skills/tao-creative-fb/scripts/run_video_mode.py
+        ```
+    *   Script sẽ chọn chủ đề và gọi trực tiếp Skill `tao-video-ai` để sinh storyboard `prompts.json`.
+
+2.  **Bước B: Sinh video mẫu**
+    *   Trợ lý tiếp tục điều hành quy trình sinh video của `tao-video-ai` để kết xuất ra file video mẫu `.mp4` dài 15-25s tại `skills/tao-video-ai/output/final_video.mp4`.
+    *   Tự động sinh caption bám sát Brand Voice (chứa các từ khóa cốt lõi: *biết ơn, đơn giản, cuộc đời, số mệnh*) kết hợp các hashtag phù hợp như `#suyngam #songtinhte #reels #shorts #tiktok`.
+
+3.  **Bước C: Gửi duyệt (Preview)**
+    *   Gửi file video preview và caption qua Telegram để Sếp Lợi duyệt:
+        *   Gọi công cụ `send_file` với tham số `path` là `"skills/tao-video-ai/output/final_video.mp4"` và `caption` là nội dung Caption/Hashtags.
+    *   Hỏi Sếp: *"Sếp duyệt video này để em tiến hành đăng tải lên các kênh nhé?"*.
+
+4.  **Bước D: Đăng video đa kênh (Publishing)**
+    *   Khi Sếp phê duyệt (ví dụ: *"OK", "Đăng đi", "Duyệt"*), chạy lệnh:
+        ```bash
+        python skills/tao-creative-fb/scripts/post_video.py --video "skills/tao-video-ai/output/final_video.mp4" --caption "[nội dung caption]"
+        ```
+    *   **Kênh Reels Facebook**: Đăng tải chính thức lên Facebook Page thông qua Meta Graph API bằng cách khởi tạo upload session, tải video lên và hoàn tất phát hành.
+    *   **Kênh TikTok & YouTube Shorts**: Nếu có cấu hình token, chạy upload qua API. Nếu không, in ra hướng dẫn chi tiết chỉ cách Sếp tải về máy để đăng thủ công nhanh nhất.
+    *   *(Lưu ý: Hỗ trợ truyền `--dry-run` để chạy kiểm tra mà không đăng tải thực tế)*.
+
+5.  **Bước E: Báo cáo kết quả**
+    *   Thông báo link 3 bài đăng trên Reels, TikTok và Shorts để Sếp Lợi dễ dàng theo dõi.
 
 ---
 

@@ -30,6 +30,15 @@ app.all('/api/cron-send-emails', require('./api/cron-send-emails'));
 app.use(express.static(__dirname));
 
 // Route định tuyến cho các trang HTML tĩnh (Clean URLs)
+app.get('/san-pham/:slug', (req, res) => {
+  res.sendFile(path.join(__dirname, 'product-landing.html'));
+});
+app.get('/san-pham/:slug/checkout', (req, res) => {
+  res.sendFile(path.join(__dirname, 'product-checkout.html'));
+});
+app.get('/san-pham/:slug/cam-on', (req, res) => {
+  res.sendFile(path.join(__dirname, 'product-thankyou.html'));
+});
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
@@ -47,6 +56,46 @@ app.get('/thank-you', (req, res) => {
 });
 app.get('/thank-you-mua-hang', (req, res) => {
   res.sendFile(path.join(__dirname, 'thank-you-mua-hang.html'));
+});
+
+// Endpoint tải file PDF sản phẩm số an toàn (sau khi đã thanh toán)
+app.get('/download', async (req, res) => {
+  const { orderId } = req.query;
+  if (!orderId) {
+    return res.status(400).send('Thiếu mã đơn hàng (orderId)');
+  }
+
+  try {
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+
+    // Kiểm tra đơn hàng trong DB
+    const { data: order, error } = await supabase
+      .from('orders')
+      .select('status')
+      .eq('id', orderId)
+      .single();
+
+    if (error || !order) {
+      return res.status(404).send('Không tìm thấy đơn hàng!');
+    }
+
+    if (order.status !== 'success') {
+      return res.status(403).send('Đơn hàng chưa được thanh toán thành công!');
+    }
+
+    const filePath = path.join(__dirname, 'EbookQuytrinhadsthoitrang.pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="EbookQuytrinhadsthoitrang.pdf"');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.sendFile(filePath);
+
+  } catch (err) {
+    console.error('Lỗi khi tải file:', err);
+    res.status(500).send('Lỗi máy chủ hệ thống');
+  }
 });
 
 // Route mặc định dẫn về index.html cho các đường dẫn lạ

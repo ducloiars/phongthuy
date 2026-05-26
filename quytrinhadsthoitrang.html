@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Thức Tối Ưu Chi Phí Ads Thời Trang Dưới 15K/Mess Cho Chủ Shop Tự Bơi</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* VARIABLES & DESIGN SYSTEM */
+        :root {
+            --primary-red: #A31D1D;
+            --dark-red: #7A1616;
+            --gold: #D4AF37;
+            --light-gold: #FDF6E3;
+            --border-gold: rgba(212, 175, 55, 0.4);
+            --text-dark: #2c2c2c;
+            --text-muted: #555555;
+            --white: #FFFFFF;
+            --bg-light: #fafafa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: #e0e0e0;
+            padding: 40px 0;
+        }
+
+        /* BOOK LAYOUT SIMULATION */
+        .book-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 50px 60px;
+            border-radius: 4px;
+        }
+
+        /* PRINT STYLING & PAGE BREAKS */
+        @media print {
+            body {
+                background-color: var(--white);
+                padding: 0;
+            }
+            .book-container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+
+        .page-break {
+            margin-top: 60px;
+            border-top: 1px solid #eee;
+            padding-top: 40px;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            margin-top: 20px;
+            color: var(--text-dark);
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* COVER PAGE */
+        .cover-page {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            border: 15px double var(--gold);
+            padding: 60px 40px;
+            margin-bottom: 80px;
+        }
+
+        .cover-title-container {
+            margin-top: 60px;
+        }
+
+        .cover-title {
+            font-size: 2.6rem;
+            color: var(--primary-red);
+            line-height: 1.3;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .cover-tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .cover-author {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .cover-footer {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-gold);
+            padding-top: 15px;
+            width: 80%;
+        }
+
+        /* TABLE OF CONTENTS */
+        .toc-section {
+            background-color: var(--bg-light);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+
+        .toc-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary-red);
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .toc-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .toc-link:hover {
+            color: var(--primary-red);
+        }
+
+        .toc-dots {
+            flex-grow: 1;
+            border-bottom: 2px dotted #ccc;
+            margin: 0 10px;
+            position: relative;
+            top: -4px;
+        }
+
+        .toc-page {
+            font-weight: bold;
+            color: var(--primary-red);
+        }
+
+        /* KEY TAKEAWAYS (BOXES) */
+        .takeaway-box {
+            background-color: var(--light-gold);
+            border-left: 5px solid var(--gold);
+            padding: 20px;
+            border-radius: 4px;
+            margin: 25px 0;
+        }
+
+        .takeaway-box h4 {
+            color: var(--dark-red);
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .takeaway-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        /* QUOTES STYLING */
+        blockquote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            border-left: 3px solid var(--primary-red);
+            padding-left: 20px;
+            margin: 25px 0;
+            line-height: 1.5;
+        }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-red);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* LISTS */
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* FOOTER / HEADER SIMULATION FOR WEB VIEW */
+        .running-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* RUNNING CONTROLLER FOR INSTRUCTIONS */
+        .print-btn-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .print-btn {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(163, 29, 29, 0.3);
+            transition: all 0.3s;
+        }
+
+        .print-btn:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-container no-print">
+        <button class="print-btn" onclick="window.print()">IN / XUẤT FILE PDF</button>
+    </div>
+
+    <div class="book-container">
+        
+        <!-- COVER PAGE -->
+        <div class="cover-page">
+            <div>
+                <p style="text-align: center; letter-spacing: 4px; font-weight: 600; font-size: 0.9rem; color: var(--gold);">ASSP FRAMEWORK</p>
+            </div>
+            
+            <div class="cover-title-container">
+                <h1 class="cover-title">CÔNG THỨC TỐI ƯU CHI PHÍ ADS THỜI TRANG DƯỚI 15K/MESS</h1>
+                <p style="font-size: 1.4rem; color: var(--gold); font-family: 'Playfair Display', serif; margin-bottom: 15px;">Dành Cho Chủ Shop Tự Bơi</p>
+                <div style="width: 80px; height: 3px; background-color: var(--gold); margin: 20px auto;"></div>
+                <p class="cover-tagline">"Ngừng đốt tiền cho agency ảo, tự làm chủ chiến dịch tin nhắn ra đơn chỉ sau 15 phút xem video và làm theo."</p>
+            </div>
+            
+            <div class="cover-footer">
+                <p class="cover-author">DUC LOI AI</p>
+                <p style="font-size: 0.85rem; letter-spacing: 1px;">Website: aikiemtien.online</p>
+                <p style="font-size: 0.8rem; margin-top: 10px; color: #a0aec0;">&copy; Copyright 2026 Duc Loi AI. All rights reserved.</p>
+            </div>
+        </div>
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="page-break"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Mục Lục</span>
+        </div>
+        
+        <div class="toc-section">
+            <h2 class="toc-title">Mục Lục Sách</h2>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#loi-khoi-dau" class="toc-link">Lời Khởi Đầu: Cách Dùng Bộ Tài Liệu</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">03</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#phan-1" class="toc-link">Phần 1: Tư Duy Target & Chuẩn Bị Nguyên Liệu</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">04</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#phan-2" class="toc-link">Phần 2: Công Thức Viết Content Giữ Chân 3 Giây</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">06</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#phan-3" class="toc-link">Phần 3: Quy Trình Setup Chiến Dịch Trong 60 Phút</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">08</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#phan-4" class="toc-link">Phần 4: 15 Mẫu Content Quảng Cáo "Điền Vào Chỗ Trống"</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">10</span>
+                </li>
+                <li class="toc-item">
+                    <a href="#phan-5" class="toc-link">Phần 5: Đọc Chỉ Số & Sơ Cứu Tài Khoản Khi Bị Khóa</a>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page">12</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- LỜI KHỞI ĐẦU -->
+        <div class="page-break" id="loi-khoi-dau"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Lời Khởi Đầu</span>
+        </div>
+        
+        <h2>Lời Khởi Đầu: Cách Dùng Bộ Tài Liệu Hiệu Quả Nhất</h2>
+        <p>Chào bạn, chủ shop thời trang thực chiến! Cuốn sổ tay này được thiết kế để giúp bạn bẻ gãy rào cản công nghệ và tự làm chủ chi phí quảng cáo của mình.</p>
+        <p>Bộ tài liệu này hoạt động hiệu quả nhất khi bạn kết hợp cả 3 công cụ sau:</p>
+        
+        <ol>
+            <li><strong>Cuốn Sổ Tay Này:</strong> Hướng dẫn tư duy viết bài, chọn ảnh và đọc chỉ số tối ưu mỗi ngày.</li>
+            <li><strong>Video Thực Hành 15 Phút:</strong> [Video hướng dẫn quay màn hình từng bước click chuột lên camp trên Facebook Ads Manager]. Video giúp bạn bắt chước làm theo 100% mà không sợ bấm nhầm nút.</li>
+            <li><strong>Bot Telegram Trợ Lý 1:1:</strong> Link quét kết nối ở cuối sách giúp bạn trực tiếp gửi bài viết content quảng cáo hoặc ảnh chụp chỉ số để nhận phản hồi chỉnh sửa 1:1 trong 30 ngày đầu tiên.</li>
+        </ol>
+
+        <div class="takeaway-box">
+            <h4>💡 Key Takeaway</h4>
+            <p>Đừng học lý thuyết suông. Hãy mở song song video thao tác bấm nút 15 phút, lên camp ngay tối nay và sử dụng Bot Telegram làm phao cứu sinh hỗ trợ trực tiếp khi gặp lỗi.</p>
+        </div>
+
+
+        <!-- PHẦN 1 -->
+        <div class="page-break" id="phan-1"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Phần 1</span>
+        </div>
+        
+        <h2>Phần 1: Tư Duy Target & Chuẩn Bị Nguyên Liệu Sạch</h2>
+        
+        <h3>1. Chuẩn bị nguyên liệu sạch trước khi Setup</h3>
+        <p>Để tránh việc vừa lên chiến dịch đã bị hạn chế hoặc tài khoản bị vô hiệu hóa bất thường, bạn cần chuẩn bị dàn nguyên liệu tối thiểu sau:</p>
+        <ul>
+            <li><strong>01 Fanpage Kháng:</strong> Nên dùng fanpage đã được xác minh hoặc page cũ có độ tương tác tốt. Đổi tên page rõ ràng kèm ngành hàng (Ví dụ: <em>Lyn Store - Thời Trang Thiết Kế</em>).</li>
+            <li><strong>02 Tài khoản quảng cáo (TKQC):</strong> 1 tài khoản chính để chạy, 1 tài khoản phụ làm dự phòng (nằm ở một nick Facebook khác để tránh bị khóa chùm).</li>
+            <li><strong>Thẻ thanh toán:</strong> Thẻ Visa/Mastercard (nên dùng ACB, Techcombank hoặc MB Bank có tính năng thanh toán quốc tế mượt mà).</li>
+        </ul>
+
+        <h3>2. Tư duy Target ngành Thời trang (Đơn giản hóa để ra đơn)</h3>
+        <p>Đừng cố gắng nhồi nhét quá nhiều sở thích (interest) phức tạp. Đối với thời trang, hình ảnh/video sản phẩm và content chính là bộ lọc target tốt nhất.</p>
+        <ul>
+            <li><strong>Target rộng (Broad Target):</strong> Chỉ target Độ tuổi + Giới tính + Vị trí địa lý. Thích hợp cho sản phẩm đại trà, dễ mặc (đầm basic, áo thun, đồ mặc nhà).</li>
+            <li><strong>Target hành vi đặc thù:</strong>
+                <ul>
+                    <li><em>Người dùng thiết bị di động:</em> Hệ điều hành iOS (thường có sức mua hàng thiết kế tốt hơn).</li>
+                    <li><em>Hành vi:</em> "Người mua hàng đã tương tác" (Engaged Shoppers) - tệp có thói quen gửi tin nhắn hỏi mua trên Facebook.</li>
+                </ul>
+            </li>
+            <li><strong>Loại trừ (Exclude):</strong> Loại trừ quản trị viên trang Facebook và người thanh toán quảng cáo Facebook trong 30 ngày qua (để né nick clone hoặc đối thủ dòm ngó).</li>
+        </ul>
+
+        <div class="takeaway-box">
+            <h4>💡 Key Takeaway</h4>
+            <p>Target rộng chính là xu hướng tối ưu tự động của thuật toán Meta. Hãy tập trung 80% công sức vào hình ảnh, video sản phẩm đẹp mắt thay vì loay hoay tìm kiếm sở thích ẩn.</p>
+        </div>
+
+
+        <!-- PHẦN 2 -->
+        <div class="page-break" id="phan-2"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Phần 2</span>
+        </div>
+        
+        <h2>Phần 2: Công Thức Viết Content Giữ Chân 3 Giây</h2>
+        <p>Quyết định khách hàng dừng lại lướt xem hay bỏ qua bài quảng cáo của bạn nằm ở 3 giây đầu tiên họ nhìn thấy bài viết trên bảng tin.</p>
+
+        <h3>1. Cấu trúc bài viết quảng cáo thời trang tiêu chuẩn (AIDA nâng cấp)</h3>
+        <ul>
+            <li><strong>Dòng tiêu đề (Hook):</strong> Đưa ra ưu đãi lớn nhất hoặc đánh thẳng vào nỗi đau khuyết điểm ngoại hình.
+                <blockquote>[SALE 50%] Chỉ hôm nay - Chiếc đầm che mọi khuyết điểm bắp tay to và bụng mỡ!</blockquote>
+            </li>
+            <li><strong>Mô tả sản phẩm (Body):</strong> Nêu bật chất liệu (mềm, mát, không nhăn), ứng dụng (đi làm, đi tiệc, đi chơi) và bảng quy đổi kích cỡ rõ ràng.</li>
+            <li><strong>Cam kết & Ưu đãi:</strong> Cho phép kiểm tra hàng trước khi nhận, hỗ trợ đổi trả size tận nhà trong vòng 7 ngày.</li>
+            <li><strong>Kêu gọi hành động (CTA):</strong> Nhấn nút "Gửi tin nhắn" để nhận ngay mã giảm giá 30k cho đơn đầu tiên.</li>
+        </ul>
+
+        <h3>2. Định dạng hình ảnh quảng cáo tối ưu</h3>
+        <p>Sử dụng bố cục 4 ảnh hình vuông (tỷ lệ 1:1) hoặc 1 ảnh dọc lớn (tỷ lệ 3:4 hoặc 2:3) đặt ở đầu và các ảnh vuông nhỏ xếp phía sau. Ảnh chụp thực tế sản phẩm của shop luôn mang lại hiệu quả chuyển đổi và niềm tin cao hơn ảnh mạng.</p>
+
+        <div class="takeaway-box">
+            <h4>💡 Key Takeaway</h4>
+            <p>Viết content thời trang không cần dùng từ ngữ hoa mỹ. Hãy viết thẳng thắn, giải quyết nỗi tự ti ngoại hình của khách hàng và đưa ra lời cam kết mua sắm an toàn, minh bạch.</p>
+        </div>
+
+
+        <!-- PHẦN 3 -->
+        <div class="page-break" id="phan-3"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Phần 3</span>
+        </div>
+        
+        <h2>Phần 3: Quy Trình Setup Chiến Dịch Trong 60 Phút</h2>
+        <p>Thực hiện các bước setup sau trên Trình quản lý quảng cáo (Ads Manager) kết hợp mở song song video hướng dẫn 15 phút:</p>
+
+        <h3>Bước 1: Tạo Chiến dịch (Campaign)</h3>
+        <p>Chọn mục tiêu chiến dịch là <strong>Lượt tương tác</strong> (Engagement) -> Chọn tiếp vị trí chuyển đổi là <strong>Tin nhắn</strong> (Messenger).</p>
+        <p>Bật tính năng <strong>Ngân sách chiến dịch Advantage (CBO)</strong>. Đặt ngân sách khởi điểm phù hợp từ 100k - 200k/ngày để Facebook tự động tối ưu phân bổ tiền.</p>
+
+        <h3>Bước 2: Tạo Nhóm quảng cáo (Ad Set)</h3>
+        <p>Chọn vị trí chuyển đổi là các ứng dụng nhắn tin (Messenger). Thiết lập vị trí quảng cáo thủ công: Chỉ giữ lại Facebook Feed, Instagram Feed và Messenger Inbox để tối ưu chi phí hiển thị.</p>
+        <p>Thiết lập tệp khách hàng: Chọn giới tính Nữ (hoặc Nam), độ tuổi phù hợp (Ví dụ: 22 - 35 tuổi), loại trừ các tệp đối thủ hoặc quản trị viên trang như hướng dẫn phần 1.</p>
+
+        <h3>Bước 3: Tạo Quảng cáo (Ad)</h3>
+        <p>Chọn Fanpage của shop. Tải lên bài viết có sẵn hoặc tự tạo quảng cáo mới (Upload ảnh và viết nội dung đã chuẩn bị). Thiết lập mẫu tin nhắn chào mừng bằng các câu hỏi gợi ý nhanh để kích thích khách bấm gửi tin nhắn.</p>
+
+        <div class="takeaway-box">
+            <h4>💡 Key Takeaway</h4>
+            <p>Sau khi bấm Đăng quảng cáo, hãy để chiến dịch chạy ổn định ít nhất 24 giờ. Tuyệt đối không chỉnh sửa gì trong thời gian Facebook đang phân phối thử nghiệm.</p>
+        </div>
+
+
+        <!-- PHẦN 4 -->
+        <div class="page-break" id="phan-4"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Phần 4</span>
+        </div>
+        
+        <h2>Phần 4: 15 Mẫu Content Quảng Cáo "Điền Vào Chỗ Trống"</h2>
+        <p>Dưới đây là 3 mẫu viết bài thực chiến điển hình được thiết kế cấu trúc sẵn cho shop quần áo:</p>
+
+        <h3>Mẫu 1: Content đánh vào nỗi đau khuyết điểm ngoại hình (Bán chạy nhất)</h3>
+        <blockquote>
+            <strong>Tiêu đề:</strong> CHUBBY MÀ VẪN XINH - CHIẾC ĐẦM [Tên Đầm] GIÚP NÀNG GIẤU GỌN 5KG MỠ THỪA!<br><br>
+            🌸 Nàng tự ti vì bắp tay chưa thon? Hay vòng 2 sau sinh chưa lấy lại vóc dáng? Đừng lo, [Tên Đầm] sinh ra để dành cho nàng.<br><br>
+            <strong>Đặc điểm nổi bật:</strong><br>
+            * Thiết kế dáng chữ A hack dáng cực đỉnh, che trọn khuyết điểm bụng dưới.<br>
+            * Chất liệu [Tên vải - Ví dụ: thun gân cao cấp] co giãn 4 chiều, mặc mát lịm tim, không lo hằn vết.<br>
+            * Tay bồng nhẹ nhàng che khuyết điểm vai thô, bắp tay to.<br><br>
+            🛒 <strong>ƯU ĐÃI TUẦN NÀY:</strong> Mua 1 đầm tặng ngay [Quà tặng] + Freeship toàn quốc khi đặt mua qua bài viết này.<br><br>
+            👇 Nhấp <strong>[GỬI TIN NHẮN]</strong> nhận ngay bảng size và tư vấn miễn phí từ nhân viên nha nàng!
+        </blockquote>
+
+        <h3>Mẫu 2: Content dạng review / trải nghiệm thực tế</h3>
+        <blockquote>
+            <strong>Tiêu đề:</strong> "LÚC MUA HẾT MÌNH, LÚC MẶC LÊN ĐẸP KHÔNG TƯỞNG!" 😍<br><br>
+            Feedback chân thực từ chị khách nhà [Tên Shop] khi nhận em [Tên Sản Phẩm]. Nhìn ảnh tự chụp cận chất vải thôi đã mê, mặc lên người thì chỉ có chuẩn form tôn dáng.<br><br>
+            ✔ Đi làm thanh lịch - Đi chơi năng động - Đi tiệc sang trọng. Chỉ 1 chiếc đầm cân mọi hoàn cảnh.<br>
+            ✔ Size số đầy đủ từ [Size nhỏ] đến [Size lớn] (từ 45kg đến 68kg đều mặc vừa).<br><br>
+            🎁 <strong>ĐẶC BIỆT:</strong> Được kiểm tra hàng thoải mái trước khi nhận. Không giống hình, không vừa size shop hỗ trợ đổi trả tận nhà miễn phí.<br><br>
+            👇 Inbox ngay cho shop để không bỏ lỡ đợt ưu đãi giảm giá [Phần trăm]% lớn nhất tháng này!
+        </blockquote>
+
+        <h3>Mẫu 3: Content xả kho / khuyến mãi thúc đẩy mua nhanh</h3>
+        <blockquote>
+            <strong>Tiêu đề:</strong> XẢ KHO KHÔNG LỢI NHUẬN - ĐỒNG GIÁ [Số tiền] CHI CÒN [Số lượng] CHIẾC CUỐI CÙNG!<br><br>
+            Cơ hội có 1-0-2 để sở hữu những item hot nhất mùa hè này của [Tên Shop] với mức giá hủy diệt.<br><br>
+            👉 Áo thun/Áo kiểu chỉ từ [Giá].<br>
+            👉 Chân váy/Quần jean đồng giá [Giá].<br>
+            👉 Đầm váy thiết kế giảm sốc còn [Giá] (Giá gốc [Giá gốc]).<br><br>
+            ⚠️ <strong>LƯU Ý:</strong><br>
+            * Chương trình chỉ áp dụng cho khách hàng mua sắm trực tuyến bằng cách nhắn tin cho shop tại bài viết này.<br>
+            * Số lượng mỗi mẫu chỉ còn vài chiếc, hết size sẽ không về thêm.<br><br>
+            ⚡ Bấm <strong>[GỬI TIN NHẮN]</strong> để nhận album hàng sale theo cân nặng của bạn ngay lập tức!
+        </blockquote>
+
+
+        <!-- PHẦN 5 -->
+        <div class="page-break" id="phan-5"></div>
+        <div class="running-header">
+            <span>Công Thức Tối Ưu Chi Phí Ads Thời Trang</span>
+            <span>Phần 5</span>
+        </div>
+        
+        <h2>Phần 5: Đọc Chỉ Số & Sơ Cứu Tài Khoản Khi Bị Khóa</h2>
+        <p>Đọc hiểu chỉ số quảng cáo giúp bạn biết được chiến dịch đang hiệu quả hay lãng phí tiền bạc:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Chỉ số quan trọng</th>
+                    <th>Ngưỡng an toàn (Thời trang)</th>
+                    <th>Hành động cần làm nếu vượt ngưỡng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Chi phí mỗi tin nhắn (Cost per Message)</strong></td>
+                    <td>Dưới 15.000đ/tin (Mục tiêu tối ưu)</td>
+                    <td>Nếu &gt; 25.000đ: Đổi ảnh/video khác hoặc viết lại tiêu đề thu hút hơn.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tần suất hiển thị (Frequency)</strong></td>
+                    <td>1.0 - 1.3</td>
+                    <td>Nếu &gt; 1.8: Tệp quá nhỏ, cần mở rộng target hoặc thay bài viết mới tránh nhàm chán.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tỷ lệ nhấp link (CTR)</strong></td>
+                    <td>Trên 1.5%</td>
+                    <td>Nếu &lt; 1%: Ảnh sản phẩm chưa đủ hút. Chụp lại ảnh rõ nét, tươi sáng hơn.</td>
+                </tr>
+                <tr>
+                    <td><strong>Tỷ lệ chốt đơn (CR)</strong></td>
+                    <td>15% - 20% trên tin nhắn</td>
+                    <td>Nếu &lt; 10%: Cách tư vấn có vấn đề hoặc giá cao. Cần xem lại kịch bản trực chat.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>🎁 PHẦN TẶNG KÈM: PHAO CỨU SINH KHI BỊ KHÓA TÀI KHOẢN</h3>
+        <p>Facebook quét tài khoản là không thể tránh khỏi. Dưới đây là các link kháng nghị trực tiếp:</p>
+        <ul>
+            <li><strong>Lỗi tài khoản cá nhân bị hạn chế:</strong> Gửi kháng nghị tại <a href="https://www.facebook.com/help/contact/273898596008265" target="_blank">Link kháng 273</a>.</li>
+            <li><strong>Lỗi Fanpage bị hạn chế (Die Page):</strong> Gửi kháng nghị tại <a href="https://www.facebook.com/help/contact/302891393699865" target="_blank">Link kháng 302</a>.</li>
+            <li><strong>Lỗi phương thức thanh toán bị từ chối:</strong> Gửi khiếu nại tại <a href="https://www.facebook.com/help/contact/189823244398562" target="_blank">Link kháng lỗi thanh toán</a>.</li>
+        </ul>
+
+        <h3>💬 KẾT NỐI TRỢ LÝ BOT TELEGRAM HỖ TRỢ 1:1</h3>
+        <p>Để nhận hỗ trợ sửa bài viết content quảng cáo hoặc check camp trực tiếp 1:1 từ chuyên gia trong 30 ngày đầu:</p>
+        <ul>
+            <li>Bước 1: Quét mã QR hoặc truy cập đường link kết nối: [Link kết nối trợ lý Bot Telegram].</li>
+            <li>Bước 2: Gõ lệnh <strong>`/start`</strong> và gửi bài viết hoặc hình ảnh chiến dịch bị lỗi để nhận sửa lỗi trực tiếp.</li>
+        </ul>
+
+        <div class="takeaway-box">
+            <h4>💡 Key Takeaway</h4>
+            <p>Khi gặp bão quét, hãy dọn sạch trình duyệt (Clear Cache & Cookie), reset modem mạng để lấy IP mới rồi mới tiến hành đăng nhập tài khoản quảng cáo dự phòng để setup lại chiến dịch.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,3 +1,14 @@
+---
+name: tao-video-ai
+description: |
+  What it does: Quy trình tự động hóa tạo video sản phẩm 15-25s từ ảnh sản phẩm bằng video AI (Higgsfield/Stream 4.5/Kling) hoặc local fallback render.
+  When to use it: Sử dụng khi cần tạo video Reels, Shorts hoặc TikTok từ hình ảnh sản phẩm có sẵn.
+trigger_phrases:
+  - "tạo video AI"
+  - "tao-video-ai"
+  - "sinh video sản phẩm"
+---
+
 # Skill: Tự Động Tạo Video Sản Phẩm AI (tao-video-ai)
 
 Skill này hướng dẫn quy trình tự động hóa sinh video quảng cáo sản phẩm thời trang cao cấp (Luxury fashion & Cinematic) từ hình ảnh có sẵn sử dụng các mô hình video AI (Higgsfield, Kling, Stream 4.5) kết hợp công cụ sinh prompt và biên tập tự động.

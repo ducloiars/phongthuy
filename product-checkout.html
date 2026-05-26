@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Đơn Hàng - Ads Thời Trang Thực Chiến</title>
+    
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--text-main);
+        }
+
+        .checkout-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .checkout-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border-top: 5px solid var(--gold);
+        }
+
+        .checkout-header {
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .checkout-header h1 {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .checkout-header p {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .checkout-body {
+            padding: 40px;
+        }
+
+        /* Form view styling */
+        .form-section {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-bg);
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(163, 29, 29, 0.1);
+            outline: none;
+        }
+
+        /* Payment view styling */
+        .payment-section {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .payment-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .qr-card {
+            text-align: center;
+            border: 2px dashed var(--gold);
+            padding: 30px 20px;
+            border-radius: 16px;
+            background: #fffdf5;
+        }
+
+        .qr-code {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: #fff3cd;
+            color: #856404;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 10px;
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .order-details-card {
+            background: var(--gray-bg);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #eee;
+        }
+
+        .detail-title {
+            color: var(--primary-red);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--dark-bg);
+            text-align: right;
+        }
+
+        .bank-info-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        .bank-info-box p {
+            margin-bottom: 5px;
+        }
+
+        .bank-info-box strong {
+            color: var(--dark-bg);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--primary-red);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+        
+        <!-- STEP BACK BUTTON -->
+        <button id="backBtn" class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Quay lại trang thông tin sản phẩm</button>
+
+        <div class="checkout-card">
+            
+            <div class="checkout-header">
+                <h1 id="checkoutTitle">ĐĂNG KÝ NHẬN TÀI LIỆU</h1>
+                <p id="checkoutSubtitle">Vui lòng nhập thông tin chính xác để hệ thống gửi link tải qua Email/Zalo</p>
+            </div>
+            
+            <div class="checkout-body">
+                
+                <!-- VIEW 1: CAPTURE CUSTOMER FORM -->
+                <div id="formView" class="form-section">
+                    <form id="orderForm">
+                        <div class="form-group">
+                            <label for="fullName">Họ và tên của bạn</label>
+                            <input type="text" id="fullName" placeholder="Ví dụ: Nguyễn Văn A" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phoneNumber">Số điện thoại / Zalo</label>
+                            <input type="tel" id="phoneNumber" placeholder="Ví dụ: 0912345678" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emailAddress">Địa chỉ Email chính thức</label>
+                            <input type="email" id="emailAddress" placeholder="Ví dụ: name@gmail.com" required>
+                            <span style="font-size: 0.8rem; color: #777; display: block; margin-top: 5px;">*Hệ thống sẽ gửi file PDF trực tiếp về hòm thư này.</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fbLink">Link Facebook cá nhân / Zalo nhận hỗ trợ</label>
+                            <input type="text" id="fbLink" placeholder="Ví dụ: facebook.com/username hoặc số Zalo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orderNote">Ghi chú (Không bắt buộc)</label>
+                            <textarea id="orderNote" placeholder="Khó khăn lớn nhất trong Ads bạn đang gặp là gì?" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="cta-button primary-cta form-btn" style="padding: 16px;">
+                            TIẾP TỤC THANH TOÁN
+                        </button>
+                    </form>
+                </div>
+
+                <!-- VIEW 2: QR PAYMENT (Hidden by default) -->
+                <div id="paymentView" class="payment-section" style="display: none;">
+                    <div class="qr-card">
+                        <img id="qrImage" src="" alt="QR Thanh Toán" class="qr-code">
+                        <p style="font-weight: 700; color: var(--dark-bg); font-size: 0.95rem;">Quét mã QR bằng ứng dụng ngân hàng</p>
+                        <div class="status-badge">
+                            <i class="fas fa-spinner fa-spin"></i> Đang chờ chuyển khoản...
+                        </div>
+                    </div>
+                    
+                    <div class="order-details-card">
+                        <div class="detail-title">Chi Tiết Giao Dịch</div>
+                        <div class="detail-row">
+                            <span class="detail-label">Mã đơn hàng:</span>
+                            <span class="detail-value" id="orderCode" style="color: var(--primary-red); font-family: monospace; font-size: 1.05rem;">---</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Sản phẩm:</span>
+                            <span class="detail-value" id="productName">---</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Số tiền cần chuyển:</span>
+                            <span class="detail-value" id="orderAmount" style="color: var(--primary-red); font-size: 1.15rem; font-weight: 700;">---</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Khách hàng:</span>
+                            <span class="detail-value" id="customerName">---</span>
+                        </div>
+
+                        <div class="bank-info-box">
+                            <p>Ngân hàng: <strong>MB Bank (Quân Đội)</strong></p>
+                            <p>Chủ TK: <strong>PHUNG DUC LOI</strong></p>
+                            <p>Số TK: <strong>688601106886</strong></p>
+                            <p>Nội dung CK: <strong id="bankMsg" style="color: var(--primary-red);">NTPT...</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SUPABASE CLIENT -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Supabase Init
+        const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeXZtcGh0Y3dwbXhtendxaHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDE2OTgsImV4cCI6MjA5NDQ3NzY5OH0.pB2XLzlTjpIit0IJJeDim3wMvy1bYvIWcl5raC2CQeI';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Product mapping by slug
+        const PRODUCT_MAP = {
+            'quy-trinh-ads-thoi-trang': {
+                id: 'ae2f7d29-7b56-442b-a24e-08bf4427cacf',
+                name: 'Công Thức Tối Ưu Chi Phí Ads Thời Trang Dưới 15K/Mess Cho Chủ Shop Tự Bơi',
+                price: 199000
+            },
+            'cam-nang-so-cuu-ads': {
+                id: '3753a9ee-d1da-4ea9-b687-75abff260b8f',
+                name: 'Cẩm Nang Sơ Cứu Ads & Quy Trình Kháng Tài Khoản Facebook',
+                price: 250000
+            },
+            'kich-ban-telegram-bot': {
+                id: 'eb2884be-9057-4b28-96ea-e978d9ad1f09',
+                name: 'Kịch Bản Telegram Bot Tư Vấn Thời Trang Tự Động',
+                price: 390000
+            }
+        };
+
+        // Parse path parts
+        const pathParts = window.location.pathname.split('/');
+        // slug will be at position 2 since path is /san-pham/:slug/checkout
+        const slug = pathParts[2] || 'quy-trinh-ads-thoi-trang';
+        const activeProduct = PRODUCT_MAP[slug] || PRODUCT_MAP['quy-trinh-ads-thoi-trang'];
+
+        // Elements
+        const formView = document.getElementById('formView');
+        const paymentView = document.getElementById('paymentView');
+        const checkoutTitle = document.getElementById('checkoutTitle');
+        const checkoutSubtitle = document.getElementById('checkoutSubtitle');
+        const backBtn = document.getElementById('backBtn');
+
+        // Form fields
+        const orderForm = document.getElementById('orderForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Payment fields
+        const qrImage = document.getElementById('qrImage');
+        const orderCodeText = document.getElementById('orderCode');
+        const productNameText = document.getElementById('productName');
+        const orderAmountText = document.getElementById('orderAmount');
+        const customerNameText = document.getElementById('customerName');
+        const bankMsgText = document.getElementById('bankMsg');
+
+        // Check if orderId is in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+
+        function goBack() {
+            window.location.href = `/san-pham/${slug}`;
+        }
+
+        async function init() {
+            if (orderId) {
+                // Show payment screen
+                formView.style.display = 'none';
+                paymentView.style.display = 'grid';
+                checkoutTitle.innerText = 'THANH TOÁN ĐƠN HÀNG';
+                checkoutSubtitle.innerText = 'Vui lòng thanh toán đúng số tiền và nội dung để nhận tài liệu tự động';
+                backBtn.innerText = 'Quay lại điền thông tin đăng ký';
+                backBtn.onclick = () => {
+                    window.location.href = `/san-pham/${slug}/checkout`;
+                };
+                
+                await loadOrderDetails(orderId);
+            } else {
+                // Show form screen
+                formView.style.display = 'block';
+                paymentView.style.display = 'none';
+                checkoutTitle.innerText = 'ĐĂNG KÝ NHẬN TÀI LIỆU';
+                checkoutSubtitle.innerText = 'Vui lòng nhập thông tin chính xác để hệ thống gửi link tải qua Email/Zalo';
+                backBtn.innerText = 'Quay lại trang thông tin sản phẩm';
+                backBtn.onclick = goBack;
+            }
+        }
+
+        async function loadOrderDetails(id) {
+            const { data: order, error } = await db
+                .from('orders')
+                .select('*, customers(name, email, phone), products(name)')
+                .eq('id', id)
+                .single();
+
+            if (error || !order) {
+                alert('Không tìm thấy thông tin đơn hàng này!');
+                window.location.href = `/san-pham/${slug}/checkout`;
+                return;
+            }
+
+            orderCodeText.innerText = order.order_code;
+            productNameText.innerText = order.products?.name || activeProduct.name;
+            orderAmountText.innerText = Number(order.amount).toLocaleString() + 'đ';
+            customerNameText.innerText = order.customers?.name || '---';
+            bankMsgText.innerText = order.order_code;
+
+            // MB Bank QR url via SePay
+            const qrUrl = `https://qr.sepay.vn/img?acc=688601106886&bank=MBBank&amount=${order.amount}&des=${order.order_code}`;
+            qrImage.src = qrUrl;
+
+            // Start polling status
+            pollOrderStatus(id);
+        }
+
+        function pollOrderStatus(id) {
+            const timer = setInterval(async () => {
+                const { data, error } = await db
+                    .from('orders')
+                    .select('status')
+                    .eq('id', id)
+                    .single();
+
+                if (data && data.status === 'success') {
+                    clearInterval(timer);
+                    document.querySelector('.status-badge').innerHTML = '<i class="fas fa-check-circle mr-2 text-green-500"></i> Thanh toán thành công!';
+                    document.querySelector('.status-badge').style.background = '#d4edda';
+                    document.querySelector('.status-badge').style.color = '#155724';
+                    
+                    setTimeout(() => {
+                        window.location.href = `/san-pham/${slug}/cam-on?orderId=${id}`;
+                    }, 1800);
+                }
+            }, 3000);
+        }
+
+        orderForm.onsubmit = async function(e) {
+            e.preventDefault();
+            submitBtn.innerText = 'ĐANG XỬ LÝ...';
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const email = document.getElementById('emailAddress').value.trim();
+            const fbLink = document.getElementById('fbLink').value.trim();
+            const note = document.getElementById('orderNote').value.trim();
+
+            try {
+                let customerId;
+
+                // Find customer by email
+                const { data: customerByEmail, error: emailError } = await db
+                    .from('customers')
+                    .select('id')
+                    .eq('email', email);
+
+                if (emailError) throw emailError;
+
+                if (customerByEmail && customerByEmail.length > 0) {
+                    customerId = customerByEmail[0].id;
+                    // Update phone and metadata if needed
+                    await db.from('customers').update({ phone }).eq('id', customerId);
+                } else {
+                    // Find customer by phone
+                    const { data: customerByPhone, error: phoneError } = await db
+                        .from('customers')
+                        .select('id')
+                        .eq('phone', phone);
+
+                    if (phoneError) throw phoneError;
+
+                    if (customerByPhone && customerByPhone.length > 0) {
+                        customerId = customerByPhone[0].id;
+                        await db.from('customers').update({ email }).eq('id', customerId);
+                    } else {
+                        // Create customer
+                        const { data: newCustomer, error: createError } = await db
+                            .from('customers')
+                            .insert([{ name, phone, email }])
+                            .select();
+
+                        if (createError) throw createError;
+                        customerId = newCustomer[0].id;
+                    }
+                }
+
+                // Generate order code prefix NTPT
+                const orderCode = 'NTPT' + Math.floor(Date.now() / 1000);
+
+                const orderData = {
+                    order_code: orderCode,
+                    customer_id: customerId,
+                    product_id: activeProduct.id,
+                    amount: activeProduct.price,
+                    address: fbLink,
+                    ghi_chu: note,
+                    status: 'pending'
+                };
+
+                const { data: newOrder, error: orderError } = await db
+                    .from('orders')
+                    .insert([orderData])
+                    .select()
+                    .single();
+
+                if (orderError) throw orderError;
+
+                // Redirect to payment view
+                window.location.href = `/san-pham/${slug}/checkout?orderId=${newOrder.id}`;
+
+            } catch (err) {
+                console.error('Lỗi khi đăng ký thanh toán:', err);
+                alert('Gặp lỗi khi tạo đơn hàng. Vui lòng thử lại!');
+                submitBtn.innerText = 'TIẾP TỤC THANH TOÁN';
+                submitBtn.disabled = false;
+            }
+        };
+
+        init();
+    </script>
+</body>
+</html>

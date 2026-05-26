@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Thành Công - Tải Tài Liệu</title>
+    
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--text-main);
+        }
+
+        .thankyou-container {
+            max-width: 650px;
+            margin: 80px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .thankyou-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            padding: 40px 30px;
+            border-top: 5px solid var(--gold);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            animation: scale-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scale-up {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        .thankyou-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+
+        .thankyou-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .download-box {
+            background: #fffdf5;
+            border: 2px dashed var(--gold);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 35px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 30px;
+            box-shadow: 0 6px 20px rgba(163, 29, 29, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 15px;
+            border: none;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(163, 29, 29, 0.5);
+            background: linear-gradient(135deg, var(--dark-red) 0%, #500e0e 100%);
+        }
+
+        .support-box {
+            background: var(--gray-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            border-left: 4px solid var(--gold);
+        }
+
+        .support-box h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--dark-bg);
+        }
+
+        .support-box p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .support-link {
+            color: var(--primary-red);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .support-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="thankyou-container">
+        <div class="thankyou-card">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h1 class="thankyou-title">Thanh Toán Thành Công!</h1>
+            <p class="thankyou-desc">Cảm ơn bạn đã tin tưởng lựa chọn tài liệu của chúng tôi. Đơn hàng của bạn đã được xác minh thành công trên hệ thống.</p>
+            
+            <div class="download-box">
+                <p style="font-weight: 600; margin-bottom: 15px; color: var(--dark-bg);">Tải tài liệu PDF của bạn tại đây:</p>
+                <button id="downloadBtn" class="download-btn">
+                    <i class="fas fa-cloud-download-alt"></i> TẢI XUỐNG EBOOK (PDF)
+                </button>
+                <p style="font-size: 0.85rem; color: #777; margin-bottom: 0;" id="autoDownloadText">Trình tải sẽ tự động bắt đầu sau vài giây...</p>
+            </div>
+
+            <div class="support-box">
+                <h4><i class="fas fa-headset" style="color: var(--gold); margin-right: 5px;"></i> Cần hỗ trợ khẩn cấp?</h4>
+                <p>Nếu bạn gặp khó khăn khi tải file hoặc cần tư vấn sử dụng, vui lòng liên hệ Bot Telegram hỗ trợ: <a id="fbSupportLink" href="https://t.me/tieuphaothu_bot" target="_blank" class="support-link">t.me/tieuphaothu_bot</a> để nhận hỗ trợ 1:1.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUPABASE CLIENT -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://ocyvmphtcwpmxmzwqhym.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jeXZtcGh0Y3dwbXhtendxaHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDE2OTgsImV4cCI6MjA5NDQ3NzY5OH0.pB2XLzlTjpIit0IJJeDim3wMvy1bYvIWcl5raC2CQeI';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+
+        async function verifyAndLoad() {
+            if (!orderId) {
+                alert('Mã đơn hàng không hợp lệ!');
+                window.location.href = '/sanpham';
+                return;
+            }
+
+            const { data: order, error } = await db
+                .from('orders')
+                .select('*, customers(*)')
+                .eq('id', orderId)
+                .single();
+
+            if (error || !order) {
+                alert('Không tìm thấy thông tin đơn hàng này!');
+                window.location.href = '/sanpham';
+                return;
+            }
+
+            if (order.status !== 'success') {
+                alert('Đơn hàng chưa được thanh toán thành công!');
+                // Redirect back to checkout
+                const pathParts = window.location.pathname.split('/');
+                const slug = pathParts[2] || 'quy-trinh-ads-thoi-trang';
+                window.location.href = `/san-pham/${slug}/checkout?orderId=${orderId}`;
+                return;
+            }
+
+            // Set Telegram bot support link
+            const fbSupportLink = document.getElementById('fbSupportLink');
+            fbSupportLink.href = 'https://t.me/tieuphaothu_bot';
+
+            const downloadUrl = `/download?orderId=${orderId}`;
+
+            // Trigger download button
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.onclick = () => {
+                window.location.href = downloadUrl;
+            };
+
+            // Auto download after 3 seconds
+            setTimeout(() => {
+                document.getElementById('autoDownloadText').innerText = 'Đang tiến hành tải xuống tài liệu...';
+                window.location.href = downloadUrl;
+            }, 3000);
+        }
+
+        verifyAndLoad();
+    </script>
+</body>
+</html>
