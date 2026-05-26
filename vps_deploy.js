@@ -17,7 +17,9 @@ const filesToUpload = [
   { local: 'product-landing.html', remote: '/opt/my-website/product-landing.html' },
   { local: 'product-checkout.html', remote: '/opt/my-website/product-checkout.html' },
   { local: 'product-thankyou.html', remote: '/opt/my-website/product-thankyou.html' },
-  { local: 'api/sepay-webhook.js', remote: '/opt/my-website/api/sepay-webhook.js' }
+  { local: 'api/sepay-webhook.js', remote: '/opt/my-website/api/sepay-webhook.js' },
+  { local: 'api/send-order-confirmation.js', remote: '/opt/my-website/api/send-order-confirmation.js' },
+  { local: 'api/admin-create-order.js', remote: '/opt/my-website/api/admin-create-order.js' }
 ];
 
 const conn = new Client();

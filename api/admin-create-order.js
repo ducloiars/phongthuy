@@ -76,21 +76,86 @@ module.exports = async (req, res) => {
 
     if (orderErr) throw orderErr;
 
-    // 4. Nếu đơn hàng tạo ở trạng thái 'success' hoặc 'pending', gửi Email xác nhận luôn
+    // 4. Nếu đơn hàng tạo ở trạng thái 'success', gửi Email xác nhận tự động qua Resend
     let emailResult = null;
-    try {
-      let htmlContent = EMAIL_ORDER_CONFIRMATION;
-      htmlContent = htmlContent.replace('{{product_name}}', newOrder.products?.name || 'Vật phẩm phong thủy');
-      htmlContent = htmlContent.replace('{{amount}}', Number(newOrder.amount).toLocaleString());
-      htmlContent = htmlContent.replace('{{order_code}}', newOrder.order_code);
+    if (status === 'success') {
+      try {
+        const isDigital = ['ae2f7d29-7b56-442b-a24e-08bf4427cacf', '3753a9ee-d1da-4ea9-b687-75abff260b8f', 'eb2884be-9057-4b28-96ea-e978d9ad1f09'].includes(newOrder.product_id) || 
+                          (newOrder.products?.name && (
+                            newOrder.products.name.includes('Ads') || 
+                            newOrder.products.name.includes('Thời Trang') || 
+                            newOrder.products.name.includes('Telegram') || 
+                            newOrder.products.name.includes('Tài liệu') ||
+                            newOrder.products.name.includes('Ebook') ||
+                            newOrder.products.name.includes('Sổ Tay') ||
+                            newOrder.products.name.includes('Cẩm Nang') ||
+                            newOrder.products.name.includes('Kịch Bản')
+                          ));
 
-      emailResult = await sendEmail({
-        to: customerEmail,
-        subject: `[NTPT] Xác nhận đơn hàng thành công #${newOrder.order_code}`,
-        html: htmlContent
-      });
-    } catch (mailErr) {
-      console.error('Lỗi khi gửi email xác nhận:', mailErr.message);
+        let subject, htmlContent, attachments;
+        if (isDigital) {
+          const host = req.headers.host || 'aikiemtien.online';
+          let cleanHost = host;
+          if (cleanHost.includes('localhost') || cleanHost.includes('127.0.0.1')) {
+            cleanHost = 'aikiemtien.online';
+          }
+          const protocol = (cleanHost === 'aikiemtien.online') ? 'https' : 'http';
+          const downloadLink = `${protocol}://${cleanHost}/download?orderId=${newOrder.id}`;
+          const supportContact = 'https://t.me/tieuphaothu_bot';
+
+          subject = `🎉 [${newOrder.products?.name || 'Tài liệu'}] — File của bạn đã sẵn sàng`;
+          htmlContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #d4af37; border-radius: 8px; background-color: #ffffff; color: #333333;">
+              <h2 style="color: #b22222; text-align: center; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">TÀI LIỆU ĐÃ SẴN SÀNG</h2>
+              <p>Chào <strong>${customerName || 'bạn'}</strong>,</p>
+              <p>Cảm ơn bạn đã mua <strong>${newOrder.products?.name || 'Tài liệu quảng cáo'}</strong>!</p>
+              <p>Bấm vào link dưới để tải file về máy:</p>
+              <p style="text-align: center; margin: 25px 0;">
+                <a href="${downloadLink}" style="background-color: #b22222; color: #ffffff; padding: 15px 30px; font-weight: bold; text-decoration: none; border-radius: 5px; font-size: 1.1rem; display: inline-block; box-shadow: 0 4px 10px rgba(178, 34, 34, 0.3);">→ TẢI FILE XUỐNG NGAY</a>
+              </p>
+              <p>Hoặc copy liên kết này dán vào trình duyệt: <a href="${downloadLink}">${downloadLink}</a></p>
+              <p>Lưu email này lại nếu cần tải lại sau nhé.</p>
+              <p>Nếu cần hỗ trợ: <a href="${supportContact}">${supportContact}</a></p>
+              <br>
+              <p><strong>Duc Loi AI</strong></p>
+              <p><a href="http://aikiemtien.online">aikiemtien.online</a></p>
+            </div>
+          `;
+
+          // Đọc và đính kèm file PDF trực tiếp vào email
+          const fs = require('fs');
+          const path = require('path');
+          const filePath = path.join(__dirname, '../EbookQuytrinhadsthoitrang.pdf');
+          if (fs.existsSync(filePath)) {
+            try {
+              const fileContent = fs.readFileSync(filePath);
+              attachments = [
+                {
+                  filename: 'EbookQuytrinhadsthoitrang.pdf',
+                  content: fileContent.toString('base64')
+                }
+              ];
+            } catch (readErr) {
+              console.error("Lỗi khi đọc file đính kèm:", readErr.message);
+            }
+          }
+        } else {
+          subject = `[NTPT] Xác nhận đơn hàng thành công #${newOrder.order_code}`;
+          htmlContent = EMAIL_ORDER_CONFIRMATION;
+          htmlContent = htmlContent.replace('{{product_name}}', newOrder.products?.name || 'Vật phẩm phong thủy');
+          htmlContent = htmlContent.replace('{{amount}}', Number(newOrder.amount).toLocaleString());
+          htmlContent = htmlContent.replace('{{order_code}}', newOrder.order_code);
+        }
+
+        emailResult = await sendEmail({
+          to: customerEmail,
+          subject,
+          html: htmlContent,
+          attachments
+        });
+      } catch (mailErr) {
+        console.error('Lỗi khi gửi email xác nhận:', mailErr.message);
+      }
     }
 
     return res.status(200).json({
